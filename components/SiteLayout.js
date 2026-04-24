@@ -17,26 +17,38 @@ export default function SiteLayout({ children, site }) {
   return (
     <div className={styles.siteFrame}>
       <header className={styles.header}>
-        <div className={styles.brandBlock}>
-          <Link className={styles.brand} href="/">
-            {site.brand}
-          </Link>
-          <p className={styles.brandNote}>{site.brandNote}</p>
-        </div>
-        <nav className={styles.nav} aria-label="Primary navigation">
-          {navigation.map((item) => (
-            <Link
-              className={isActive(router.pathname, item.href) ? styles.navLinkActive : styles.navLink}
-              href={item.href}
-              key={item.href}
-            >
-              {item.label}
+        <div className={styles.headerTopRow}>
+          <div className={styles.brandBlock}>
+            <Link className={styles.brand} href="/">
+              <span className={styles.brandMark} aria-hidden="true" />
+              {site.brand}
             </Link>
-          ))}
-        </nav>
-        <Link className={styles.headerCta} href="/markets">
-          Browse forecasts
-        </Link>
+            <p className={styles.brandNote}>{site.brandNote}</p>
+          </div>
+          <div className={styles.headerMeta}>
+            <span className={styles.metaPill}>News-linked markets</span>
+            <span className={styles.metaText}>Built for professional forecasting workflows</span>
+          </div>
+        </div>
+        <div className={styles.headerBottomRow}>
+          <nav className={styles.nav} aria-label="Primary navigation">
+            {navigation.map((item) => (
+              <Link
+                className={isActive(router.pathname, item.href) ? styles.navLinkActive : styles.navLink}
+                href={item.href}
+                key={item.href}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+          <div className={styles.headerActions}>
+            <span className={styles.utilityLabel}>Prototype</span>
+            <Link className={styles.headerCta} href="/markets">
+              Browse forecasts
+            </Link>
+          </div>
+        </div>
       </header>
 
       {children}

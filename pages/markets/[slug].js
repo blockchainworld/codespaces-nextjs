@@ -36,6 +36,8 @@ export async function getStaticProps({ params }) {
 }
 
 export default function MarketDetailPage({ site, market, relatedNews }) {
+  const noProbability = 100 - market.probability
+
   return (
     <>
       <Head>
@@ -67,11 +69,70 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
                 <span className={styles.statLabel}>Resolution date</span>
                 <strong>{market.resolutionDate}</strong>
               </div>
+              <div>
+                <span className={styles.statLabel}>Source quality</span>
+                <strong>{market.sourceQuality}</strong>
+              </div>
             </div>
           </section>
 
           <section className={styles.mainGrid}>
             <div className={styles.primaryColumn}>
+              <section className={styles.tradingCard}>
+                <div className={styles.tradingHeader}>
+                  <div>
+                    <p className={styles.sectionLabel}>Market balance</p>
+                    <h2>Yes / No positioning</h2>
+                  </div>
+                  <span className={styles.qualityBadge}>{market.conviction} conviction</span>
+                </div>
+
+                <div className={styles.sideBySideGrid}>
+                  <article className={styles.sidePanel}>
+                    <span className={styles.sideLabel}>Yes</span>
+                    <strong>{market.probability}%</strong>
+                    <p>{market.yesLabel}</p>
+                    <div className={styles.depthList}>
+                      {market.orderBook.yes.map((level) => (
+                        <div className={styles.depthRow} key={`${market.slug}-yes-${level.price}`}>
+                          <span>{Math.round(level.price * 100)}c</span>
+                          <strong>{level.size}</strong>
+                        </div>
+                      ))}
+                    </div>
+                  </article>
+
+                  <article className={styles.sidePanelMuted}>
+                    <span className={styles.sideLabel}>No</span>
+                    <strong>{noProbability}%</strong>
+                    <p>{market.noLabel}</p>
+                    <div className={styles.depthList}>
+                      {market.orderBook.no.map((level) => (
+                        <div className={styles.depthRow} key={`${market.slug}-no-${level.price}`}>
+                          <span>{Math.round(level.price * 100)}c</span>
+                          <strong>{level.size}</strong>
+                        </div>
+                      ))}
+                    </div>
+                  </article>
+                </div>
+
+                <div className={styles.terminalStats}>
+                  <div>
+                    <span>Depth</span>
+                    <strong>{market.liquidityLabel}</strong>
+                  </div>
+                  <div>
+                    <span>24h volume</span>
+                    <strong>{market.volumeLabel}</strong>
+                  </div>
+                  <div>
+                    <span>Participants</span>
+                    <strong>{market.participantsLabel}</strong>
+                  </div>
+                </div>
+              </section>
+
               <ProbabilityChart points={market.curve} />
 
               <section className={styles.detailCard}>
@@ -91,6 +152,10 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
                     <article className={styles.timelineItem} key={`${item.date}-${item.title}`}>
                       <span>{item.date}</span>
                       <div>
+                        <div className={styles.timelineMetaRow}>
+                          <strong className={styles.timelineImpact}>{item.impact} impact</strong>
+                          <em className={styles.timelineSourceQuality}>{item.sourceQuality}</em>
+                        </div>
                         <h3>{item.title}</h3>
                         <p>{item.detail}</p>
                         {item.relatedNewsSlug ? (
@@ -107,8 +172,29 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
 
             <aside className={styles.sidebarColumn}>
               <section className={styles.sidebarCard}>
-                <p className={styles.sectionLabel}>Settlement rule</p>
-                <p>{market.settlementRule}</p>
+                <p className={styles.sectionLabel}>Resolution panel</p>
+                <div className={styles.resolutionBox}>
+                  <strong>{market.status}</strong>
+                  <p>{market.settlementRule}</p>
+                </div>
+              </section>
+
+              <section className={styles.sidebarCard}>
+                <p className={styles.sectionLabel}>Market stats</p>
+                <div className={styles.sidebarStats}>
+                  <div>
+                    <span>Conviction</span>
+                    <strong>{market.conviction}</strong>
+                  </div>
+                  <div>
+                    <span>Source quality</span>
+                    <strong>{market.sourceQuality}</strong>
+                  </div>
+                  <div>
+                    <span>Participants</span>
+                    <strong>{market.participantsLabel}</strong>
+                  </div>
+                </div>
               </section>
 
               <section className={styles.sidebarCard}>

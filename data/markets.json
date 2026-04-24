@@ -2,6 +2,14 @@
   {
     "slug": "us-rates-cut-september",
     "category": "Macro",
+    "status": "Active",
+    "conviction": "High",
+    "liquidityLabel": "$3.8M depth",
+    "volumeLabel": "$912k 24h volume",
+    "participantsLabel": "4,320 traders",
+    "sourceQuality": "Tier-1 macro releases",
+    "yesLabel": "Cut arrives before September",
+    "noLabel": "Fed holds beyond summer",
     "title": "US rates cut before September?",
     "probability": 41,
     "move": "+8 pts today",
@@ -16,20 +24,38 @@
       "A benign inflation print would likely accelerate repricing across rate-sensitive assets."
     ],
     "curve": [22, 24, 26, 29, 31, 34, 33, 36, 41],
+    "orderBook": {
+      "yes": [
+        { "price": 0.41, "size": "$280k" },
+        { "price": 0.43, "size": "$190k" },
+        { "price": 0.45, "size": "$120k" }
+      ],
+      "no": [
+        { "price": 0.59, "size": "$310k" },
+        { "price": 0.57, "size": "$205k" },
+        { "price": 0.55, "size": "$140k" }
+      ]
+    },
     "timeline": [
       {
         "date": "Apr 18",
+        "impact": "High",
+        "sourceQuality": "Primary data",
         "title": "Factory reports miss in two regions",
         "detail": "Growth-sensitive contracts weaken and front-end rate cuts move higher.",
         "relatedNewsSlug": "factory-data-miss"
       },
       {
         "date": "Apr 21",
+        "impact": "Medium",
+        "sourceQuality": "Fed remarks",
         "title": "Governor remarks turn more balanced",
         "detail": "Language shifts from inflation persistence to downside growth risks."
       },
       {
         "date": "Apr 24",
+        "impact": "High",
+        "sourceQuality": "Market repricing",
         "title": "Short-end repricing accelerates",
         "detail": "Probability jumps as traders line up around an earlier easing window."
       }
@@ -39,6 +65,14 @@
   {
     "slug": "openai-gpt6-this-year",
     "category": "Technology",
+    "status": "Active",
+    "conviction": "Medium",
+    "liquidityLabel": "$2.1M depth",
+    "volumeLabel": "$684k 24h volume",
+    "participantsLabel": "3,120 traders",
+    "sourceQuality": "Supply-chain and partner signals",
+    "yesLabel": "GPT-6 launches in 2026",
+    "noLabel": "Only interim models ship",
     "title": "Will OpenAI ship GPT-6 this year?",
     "probability": 58,
     "move": "+11 pts this week",
@@ -53,20 +87,38 @@
       "Ecosystem chatter has shifted from capability rumors to launch-timing speculation."
     ],
     "curve": [17, 19, 23, 27, 34, 39, 47, 52, 58],
+    "orderBook": {
+      "yes": [
+        { "price": 0.58, "size": "$220k" },
+        { "price": 0.6, "size": "$150k" },
+        { "price": 0.62, "size": "$96k" }
+      ],
+      "no": [
+        { "price": 0.42, "size": "$210k" },
+        { "price": 0.4, "size": "$134k" },
+        { "price": 0.38, "size": "$88k" }
+      ]
+    },
     "timeline": [
       {
         "date": "Apr 14",
+        "impact": "High",
+        "sourceQuality": "Supplier commentary",
         "title": "Supplier guidance tilts to inference",
         "detail": "The mix shift implies large-scale serving demand instead of research-only usage.",
         "relatedNewsSlug": "chip-suppliers-inference-demand"
       },
       {
         "date": "Apr 19",
+        "impact": "Medium",
+        "sourceQuality": "Hiring data",
         "title": "Hiring expands in evaluation and launch roles",
         "detail": "Team composition begins to resemble a release program rather than exploratory research."
       },
       {
         "date": "Apr 24",
+        "impact": "High",
+        "sourceQuality": "Partner signal",
         "title": "Market reprices after partner commentary",
         "detail": "Probability reaches the high-50s as launch expectations spread."
       }
@@ -76,6 +128,14 @@
   {
     "slug": "oil-above-95-this-quarter",
     "category": "Energy",
+    "status": "Active",
+    "conviction": "Watchlist",
+    "liquidityLabel": "$1.6M depth",
+    "volumeLabel": "$472k 24h volume",
+    "participantsLabel": "2,410 traders",
+    "sourceQuality": "Policy and supply commentary",
+    "yesLabel": "Brent closes above $95",
+    "noLabel": "$95 remains out of reach",
     "title": "Will oil close above $95 this quarter?",
     "probability": 33,
     "move": "-5 pts after OPEC remarks",
@@ -90,20 +150,38 @@
       "Risk premium can return quickly if shipping disruptions worsen."
     ],
     "curve": [44, 46, 49, 43, 41, 39, 38, 36, 33],
+    "orderBook": {
+      "yes": [
+        { "price": 0.33, "size": "$144k" },
+        { "price": 0.35, "size": "$102k" },
+        { "price": 0.37, "size": "$76k" }
+      ],
+      "no": [
+        { "price": 0.67, "size": "$188k" },
+        { "price": 0.65, "size": "$126k" },
+        { "price": 0.63, "size": "$82k" }
+      ]
+    },
     "timeline": [
       {
         "date": "Apr 16",
+        "impact": "Medium",
+        "sourceQuality": "Shipping data",
         "title": "Shipping disruption raises tail risk",
         "detail": "Probability jumps as traders hedge the upside energy scenario."
       },
       {
         "date": "Apr 22",
+        "impact": "High",
+        "sourceQuality": "Producer remarks",
         "title": "OPEC officials cool speculative fears",
         "detail": "The path to $95 starts to look less immediate after supply comments.",
         "relatedNewsSlug": "tariff-package-narrows"
       },
       {
         "date": "Apr 24",
+        "impact": "Medium",
+        "sourceQuality": "Inventory release",
         "title": "Inventory release confirms softer setup",
         "detail": "The market slips further while retaining a geopolitical tail."
       }

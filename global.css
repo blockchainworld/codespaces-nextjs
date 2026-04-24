@@ -1,15 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Manrope:wght@400;500;600;700;800&display=swap');
+
 :root {
   color-scheme: light;
-  --bg: #f4efe5;
-  --surface: rgba(255, 252, 246, 0.82);
-  --surface-strong: #fffdf7;
-  --ink: #14213d;
-  --muted: #526071;
-  --line: rgba(20, 33, 61, 0.1);
-  --accent: #0f766e;
-  --accent-2: #155e75;
-  --warm: #b45309;
-  --shadow: 0 24px 60px rgba(20, 33, 61, 0.08);
+  --bg: #eef3f8;
+  --surface: rgba(255, 255, 255, 0.9);
+  --surface-strong: #ffffff;
+  --surface-muted: #f6f8fb;
+  --ink: #0f172a;
+  --muted: #667085;
+  --line: rgba(15, 23, 42, 0.09);
+  --line-strong: rgba(15, 23, 42, 0.16);
+  --accent: #2563eb;
+  --accent-2: #0f172a;
+  --success: #16a34a;
+  --warning: #d97706;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'Manrope', 'Segoe UI', sans-serif;
+  --shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
+  --shadow-strong: 0 20px 48px rgba(15, 23, 42, 0.12);
 }
 
 * {
@@ -23,18 +31,23 @@ html {
 body {
   margin: 0;
   background:
-    radial-gradient(circle at top, rgba(15, 118, 110, 0.16), transparent 28%),
-    linear-gradient(180deg, #f7f2e8 0%, #f4efe5 55%, #ebe3d4 100%);
+    radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 30%),
+    radial-gradient(circle at top right, rgba(15, 23, 42, 0.08), transparent 24%),
+    linear-gradient(180deg, #f6f9fc 0%, #eef3f8 52%, #e7edf4 100%);
   color: var(--ink);
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: var(--sans);
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.55;
   word-break: break-word;
   font-kerning: auto;
   font-variant: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+}
+
+#__next {
+  min-height: 100vh;
 }
 
 a {
@@ -49,5 +62,5 @@ select {
 }
 
 ::selection {
-  background: rgba(21, 94, 117, 0.16);
+  background: rgba(37, 99, 235, 0.18);
 }

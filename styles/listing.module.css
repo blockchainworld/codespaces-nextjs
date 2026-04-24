@@ -12,9 +12,9 @@
 .bannerCard {
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 28px;
+  border-radius: 22px;
   box-shadow: var(--shadow);
-  backdrop-filter: blur(18px);
+  backdrop-filter: blur(20px);
 }
 
 .heroCard,
@@ -27,16 +27,16 @@
 .sectionLabel,
 .dateLabel {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--mono);
   font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .eyebrow,
 .sectionLabel {
-  color: var(--warm);
+  color: var(--accent);
 }
 
 .dateLabel,
@@ -61,7 +61,7 @@
 .heroCard h1 {
   margin-top: 14px;
   max-width: 12ch;
-  font-size: clamp(3rem, 6vw, 5.6rem);
+  font-size: clamp(3rem, 6vw, 5rem);
   line-height: 0.95;
 }
 
@@ -73,7 +73,8 @@
 
 .cardGrid,
 .newsList,
-.twoColumnSection {
+.twoColumnSection,
+.statsGrid {
   display: grid;
   gap: 18px;
 }
@@ -92,6 +93,134 @@
   padding: 24px;
 }
 
+.explorerShell,
+.explorerToolbar {
+  display: grid;
+  gap: 18px;
+}
+
+.explorerToolbar {
+  padding: 22px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+}
+
+.categoryTabs,
+.controlsRow,
+.marketHeaderGroup,
+.probabilityRow,
+.resultsSummary,
+.heroMetadataRow,
+.newsTerminalBody {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.categoryTabs,
+.controlsRow {
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.tabButton,
+.tabActive {
+  min-height: 40px;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface-strong);
+  color: var(--muted);
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.tabActive {
+  border-color: rgba(37, 99, 235, 0.18);
+  background: rgba(37, 99, 235, 0.08);
+  color: var(--accent);
+}
+
+.searchField,
+.selectField {
+  display: grid;
+  gap: 8px;
+  min-width: 220px;
+}
+
+.searchField span,
+.selectField span,
+.statsGrid span,
+.convictionBlock span,
+.resultsSummary span {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.searchField input,
+.selectField select {
+  min-height: 46px;
+  padding: 0.8rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface-strong);
+  color: var(--ink);
+}
+
+.resultsSummary strong,
+.statsGrid strong,
+.convictionBlock strong,
+.heroMetadataCard strong,
+.signalScoreBox strong,
+.newsMetaGrid strong {
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.heroMetadataRow {
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.heroMetadataCard,
+.signalScoreBox,
+.newsMetaGrid div {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface-muted);
+}
+
+.heroMetadataCard {
+  min-width: 168px;
+}
+
+.heroMetadataCard span,
+.signalScoreBox span,
+.newsMetaGrid span {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.heroMetadataCard strong,
+.signalScoreBox strong {
+  display: block;
+  margin-top: 8px;
+}
+
 .marketHeader {
   display: flex;
   justify-content: space-between;
@@ -101,17 +230,74 @@
 
 .move {
   color: var(--accent);
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(22, 163, 74, 0.1);
+  color: var(--success);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .probability {
   margin-top: 20px;
   font-size: clamp(2.8rem, 5vw, 4rem);
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: -0.06em;
   line-height: 0.9;
+}
+
+.probabilityRow {
+  justify-content: space-between;
+  align-items: end;
+}
+
+.convictionBlock {
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+}
+
+.trackBar {
+  overflow: hidden;
+  height: 10px;
+  margin-top: 14px;
+  border-radius: 999px;
+  background: #e7ecf3;
+}
+
+.trackBar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), #60a5fa);
+}
+
+.statsGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 18px;
+}
+
+.statsGrid div {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface-muted);
 }
 
 .tagRow,
@@ -128,21 +314,67 @@
 .tag {
   padding: 0.45rem 0.72rem;
   border-radius: 999px;
-  background: rgba(15, 118, 110, 0.08);
-  color: var(--accent-2);
-  font-family: Arial, Helvetica, sans-serif;
+  background: rgba(37, 99, 235, 0.08);
+  color: var(--accent);
+  font-family: var(--mono);
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .inlineLink {
   display: inline-flex;
   margin-top: 18px;
-  color: var(--accent-2);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--accent);
+  font-family: var(--sans);
   font-size: 0.95rem;
   font-weight: 700;
   text-decoration: none;
+}
+
+.newsTerminalList,
+.newsMetaGrid {
+  display: grid;
+  gap: 18px;
+}
+
+.newsTerminalCard {
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+}
+
+.newsTerminalBody {
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 12px;
+}
+
+.newsTerminalBody h2 {
+  margin: 0;
+  max-width: 22ch;
+  letter-spacing: -0.04em;
+}
+
+.newsTerminalBody p {
+  margin: 10px 0 0;
+  color: var(--muted);
+}
+
+.signalScoreBox {
+  min-width: 120px;
+}
+
+.newsMetaGrid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 18px;
+}
+
+.newsMetaGrid strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.96rem;
 }
 
 .bannerCard {
@@ -155,8 +387,17 @@
 @media (max-width: 960px) {
   .cardGrid,
   .twoColumnSection,
-  .bannerCard {
+  .bannerCard,
+  .newsMetaGrid {
     grid-template-columns: 1fr;
+  }
+
+  .controlsRow {
+    justify-content: stretch;
+  }
+
+  .newsTerminalBody {
+    flex-direction: column;
   }
 }
 

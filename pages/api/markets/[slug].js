@@ -1,4 +1,4 @@
-import { getMarketBySlug } from '../../../lib/contentApi'
+import { createItemResponse, getMarketBySlug } from '../../../lib/contentApi'
 
 export default async function handler(req, res) {
   const market = await getMarketBySlug(req.query.slug)
@@ -8,5 +8,5 @@ export default async function handler(req, res) {
     return
   }
 
-  res.status(200).json(market)
+  res.status(200).json(createItemResponse(market))
 }

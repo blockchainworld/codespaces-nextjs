@@ -2,6 +2,12 @@
   {
     "slug": "factory-data-miss",
     "source": "Reuters pulse",
+    "desk": "Macro",
+    "urgency": "Immediate",
+    "impact": "High",
+    "sourceQuality": "Primary economic release",
+    "updateLag": "3 min lag",
+    "signalScore": 91,
     "publishedAt": "April 24, 2026",
     "headline": "Factory data misses estimates across two regions",
     "summary": "A synchronized manufacturing miss is shifting macro markets from inflation anxiety toward downside growth protection.",
@@ -15,11 +21,22 @@
       "The same evidence can affect rates, equities, and election confidence simultaneously.",
       "Users need the story linked directly to the markets it is moving."
     ],
+    "keyEvidence": [
+      "Two regional surveys broke lower inside the same reporting window.",
+      "Rate-sensitive assets repriced before equity leadership fully adjusted.",
+      "The surprise changed the tone of policy expectations rather than just the level of data noise."
+    ],
     "relatedMarketSlugs": ["us-rates-cut-september"]
   },
   {
     "slug": "tariff-package-narrows",
     "source": "Policy tracker",
+    "desk": "Politics",
+    "urgency": "Developing",
+    "impact": "Medium",
+    "sourceQuality": "Adviser guidance",
+    "updateLag": "8 min lag",
+    "signalScore": 74,
     "publishedAt": "April 23, 2026",
     "headline": "Campaign advisers hint at a narrower tariff package",
     "summary": "A less aggressive proposal compresses several tail-risk scenarios and lowers the probability of an immediate energy spike.",
@@ -33,11 +50,22 @@
       "Tail-risk compression can be as important as headline upside.",
       "News pages should map directly to the forecasts they influence."
     ],
+    "keyEvidence": [
+      "The latest framing narrows the scope of tariff application.",
+      "Imported inflation assumptions softened after the remarks.",
+      "Energy-linked tail scenarios were repriced lower almost immediately."
+    ],
     "relatedMarketSlugs": ["oil-above-95-this-quarter"]
   },
   {
     "slug": "chip-suppliers-inference-demand",
     "source": "AI brief",
+    "desk": "Technology",
+    "urgency": "Immediate",
+    "impact": "High",
+    "sourceQuality": "Supplier commentary",
+    "updateLag": "5 min lag",
+    "signalScore": 88,
     "publishedAt": "April 24, 2026",
     "headline": "Chip suppliers signal higher allocation to inference demand",
     "summary": "Allocation shifts toward inference workloads imply deployment preparation, not just ongoing research experimentation.",
@@ -50,6 +78,11 @@
       "Supply-chain commentary can act as an early launch indicator.",
       "Operational signals often matter more than vague executive hints.",
       "Evidence quality should be visible next to the forecast itself."
+    ],
+    "keyEvidence": [
+      "Allocation language shifted from training-heavy to inference-heavy demand.",
+      "Serving capacity matters most when launch timing becomes concrete.",
+      "The market treated this as operational confirmation, not just narrative hype."
     ],
     "relatedMarketSlugs": ["openai-gpt6-this-year"]
   }

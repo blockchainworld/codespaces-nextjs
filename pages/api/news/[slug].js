@@ -1,4 +1,4 @@
-import { getNewsBySlug } from '../../../lib/contentApi'
+import { createItemResponse, getNewsBySlug } from '../../../lib/contentApi'
 
 export default async function handler(req, res) {
   const story = await getNewsBySlug(req.query.slug)
@@ -8,5 +8,5 @@ export default async function handler(req, res) {
     return
   }
 
-  res.status(200).json(story)
+  res.status(200).json(createItemResponse(story))
 }

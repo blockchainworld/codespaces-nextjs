@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import SiteLayout from '../../components/SiteLayout'
 import {
+  getGeneratedAt,
   getMarketsForNews,
   getNewsBySlug,
   getNewsSlugs,
@@ -27,14 +28,16 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {
+      generatedAt: getGeneratedAt(),
       site,
       story,
       relatedMarkets,
     },
+    revalidate: 300,
   }
 }
 
-export default function NewsDetailPage({ site, story, relatedMarkets }) {
+export default function NewsDetailPage({ site, story, relatedMarkets, generatedAt }) {
   return (
     <>
       <Head>
@@ -62,11 +65,40 @@ export default function NewsDetailPage({ site, story, relatedMarkets }) {
                 <span className={styles.statLabel}>Related markets</span>
                 <strong>{relatedMarkets.length}</strong>
               </div>
+              <div>
+                <span className={styles.statLabel}>Signal score</span>
+                <strong>{story.signalScore}</strong>
+              </div>
             </div>
           </section>
 
           <section className={styles.mainGrid}>
             <div className={styles.primaryColumn}>
+              <section className={styles.tradingCard}>
+                <div className={styles.tradingHeader}>
+                  <div>
+                    <p className={styles.sectionLabel}>Signal classification</p>
+                    <h2>{story.impact} impact, {story.urgency.toLowerCase()} urgency</h2>
+                  </div>
+                  <span className={styles.qualityBadge}>{story.sourceQuality}</span>
+                </div>
+
+                <div className={styles.terminalStats}>
+                  <div>
+                    <span>Desk</span>
+                    <strong>{story.desk}</strong>
+                  </div>
+                  <div>
+                    <span>Update lag</span>
+                    <strong>{story.updateLag}</strong>
+                  </div>
+                  <div>
+                    <span>Last sync</span>
+                    <strong>{generatedAt.slice(11, 16)} UTC</strong>
+                  </div>
+                </div>
+              </section>
+
               <section className={styles.detailCard}>
                 <p className={styles.sectionLabel}>Story analysis</p>
                 <div className={styles.proseBlock}>
@@ -84,9 +116,36 @@ export default function NewsDetailPage({ site, story, relatedMarkets }) {
                   ))}
                 </div>
               </section>
+
+              <section className={styles.detailCard}>
+                <p className={styles.sectionLabel}>Key evidence</p>
+                <div className={styles.bulletList}>
+                  {story.keyEvidence.map((item) => (
+                    <p key={item}>{item}</p>
+                  ))}
+                </div>
+              </section>
             </div>
 
             <aside className={styles.sidebarColumn}>
+              <section className={styles.sidebarCard}>
+                <p className={styles.sectionLabel}>Signal panel</p>
+                <div className={styles.sidebarStats}>
+                  <div>
+                    <span>Source</span>
+                    <strong>{story.source}</strong>
+                  </div>
+                  <div>
+                    <span>Quality</span>
+                    <strong>{story.sourceQuality}</strong>
+                  </div>
+                  <div>
+                    <span>Impact</span>
+                    <strong>{story.impact}</strong>
+                  </div>
+                </div>
+              </section>
+
               <section className={styles.sidebarCard}>
                 <p className={styles.sectionLabel}>Moves these forecasts</p>
                 <div className={styles.relatedList}>
@@ -95,6 +154,10 @@ export default function NewsDetailPage({ site, story, relatedMarkets }) {
                       <span>{market.category}</span>
                       <h3>{market.title}</h3>
                       <p>{market.description}</p>
+                      <div className={styles.relatedMarketMeta}>
+                        <strong>{market.probability}%</strong>
+                        <span>{market.move}</span>
+                      </div>
                       <Link className={styles.inlineLink} href={`/markets/${market.slug}`}>
                         Open market
                       </Link>

@@ -1,7 +1,7 @@
 import Head from 'next/head'
-import Link from 'next/link'
+import NewsDesk from '../../components/NewsDesk'
 import SiteLayout from '../../components/SiteLayout'
-import { getNewsStories, getSiteContent } from '../../lib/contentApi'
+import { getGeneratedAt, getNewsStories, getSiteContent } from '../../lib/contentApi'
 import styles from '../../styles/listing.module.css'
 
 export async function getStaticProps() {
@@ -9,13 +9,15 @@ export async function getStaticProps() {
 
   return {
     props: {
+      generatedAt: getGeneratedAt(),
       site,
       newsStories,
     },
+    revalidate: 300,
   }
 }
 
-export default function NewsPage({ site, newsStories }) {
+export default function NewsPage({ site, newsStories, generatedAt }) {
   return (
     <>
       <Head>
@@ -30,27 +32,27 @@ export default function NewsPage({ site, newsStories }) {
         <main className={styles.pageShell}>
           <section className={styles.heroCard}>
             <p className={styles.eyebrow}>Evidence stream</p>
-            <h1>Source reporting mapped directly to market repricing.</h1>
+            <h1>Signal intelligence mapped directly to market repricing.</h1>
             <p className={styles.heroText}>
-              The news layer is not a separate blog. It is the reasoning surface that explains why the probability changed.
+              This is not a blog feed. It is the signal layer: sources, urgency, impact, and update quality presented in a way that helps you decide which inputs deserve immediate attention.
             </p>
+            <div className={styles.heroMetadataRow}>
+              <div className={styles.heroMetadataCard}>
+                <span>Signals tracked</span>
+                <strong>{newsStories.length}</strong>
+              </div>
+              <div className={styles.heroMetadataCard}>
+                <span>Latest sync</span>
+                <strong>{generatedAt.slice(11, 16)} UTC</strong>
+              </div>
+              <div className={styles.heroMetadataCard}>
+                <span>Refresh cadence</span>
+                <strong>5 min ISR</strong>
+              </div>
+            </div>
           </section>
 
-          <section className={styles.newsList}>
-            {newsStories.map((story) => (
-              <article className={styles.newsCard} key={story.slug}>
-                <div className={styles.marketHeader}>
-                  <p className={styles.sectionLabel}>{story.source}</p>
-                  <span className={styles.dateLabel}>{story.publishedAt}</span>
-                </div>
-                <h2>{story.headline}</h2>
-                <p>{story.summary}</p>
-                <Link className={styles.inlineLink} href={`/news/${story.slug}`}>
-                  Open story detail
-                </Link>
-              </article>
-            ))}
-          </section>
+          <NewsDesk newsStories={newsStories} />
         </main>
       </SiteLayout>
     </>
