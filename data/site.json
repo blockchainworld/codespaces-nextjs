@@ -1,12 +1,12 @@
 {
   "brand": "Predict.info",
-  "brandNote": "News-linked forecasts for macro, politics, technology, and energy.",
-  "footerNote": "A product direction for transparent forecasting built around linked evidence, not empty price action.",
+  "brandNote": "Prediction markets with linked evidence.",
+  "footerNote": "Prediction markets with source-linked signals, explicit rules, and auditable evidence trails.",
   "navigation": [
     { "href": "/", "label": "Home" },
     { "href": "/markets", "label": "Markets" },
     { "href": "/news", "label": "News" },
-    { "href": "/about", "label": "About" }
+    { "href": "/about", "label": "Methodology" }
   ],
   "metrics": [
     { "label": "Markets tracked", "value": "120+" },

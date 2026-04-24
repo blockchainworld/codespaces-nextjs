@@ -22,17 +22,17 @@ export default function MarketsPage({ site, markets }) {
         <title>Markets | Predict.info</title>
         <meta
           name="description"
-          content="Browse macro, technology, and energy forecasts with linked evidence and explicit settlement rules."
+          content="Active prediction markets with linked evidence and explicit settlement rules."
         />
       </Head>
 
       <SiteLayout site={site}>
         <main className={styles.pageShell}>
           <section className={styles.heroCard}>
-            <p className={styles.eyebrow}>Forecast library</p>
-            <h1>Live questions organized for fast scanning and stronger judgment.</h1>
+            <p className={styles.eyebrow}>Markets desk</p>
+            <h1>Active markets organized for fast scanning and direct comparison.</h1>
             <p className={styles.heroText}>
-              Browse active markets by category, sort for what matters, and move from headline to probability to source trail without losing context.
+              Filter by desk, sort by movement or conviction, and open the full market record with rules and linked signals.
             </p>
           </section>
 

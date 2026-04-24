@@ -26,8 +26,8 @@ export default function SiteLayout({ children, site }) {
             <p className={styles.brandNote}>{site.brandNote}</p>
           </div>
           <div className={styles.headerMeta}>
-            <span className={styles.metaPill}>News-linked markets</span>
-            <span className={styles.metaText}>Built for professional forecasting workflows</span>
+            <span className={styles.metaPill}>Live markets</span>
+            <span className={styles.metaText}>Updated with linked signals</span>
           </div>
         </div>
         <div className={styles.headerBottomRow}>
@@ -43,7 +43,6 @@ export default function SiteLayout({ children, site }) {
             ))}
           </nav>
           <div className={styles.headerActions}>
-            <span className={styles.utilityLabel}>Prototype</span>
             <Link className={styles.headerCta} href="/markets">
               Browse forecasts
             </Link>

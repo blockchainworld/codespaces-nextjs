@@ -60,9 +60,9 @@
 .brandNote,
 .footerText {
   margin: 6px 0 0;
-  max-width: 44ch;
+  max-width: 36ch;
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .headerMeta,
@@ -74,7 +74,6 @@
 
 .metaPill,
 .metaText,
-.utilityLabel,
 .footerLabel {
   font-family: var(--mono);
   font-size: 0.77rem;
@@ -94,7 +93,7 @@
 }
 
 .metaText,
-.utilityLabel {
+.footerLink {
   color: var(--muted);
 }
 
@@ -158,10 +157,6 @@
   flex-wrap: wrap;
   gap: 8px;
   justify-content: flex-end;
-}
-
-.footerLink {
-  color: var(--muted);
 }
 
 @media (max-width: 960px) {

@@ -24,17 +24,17 @@ export default function NewsPage({ site, newsStories, generatedAt }) {
         <title>News | Predict.info</title>
         <meta
           name="description"
-          content="Review the source reporting that moves forecast probabilities across Predict.info markets."
+          content="Source-level signals and reporting mapped directly to active markets."
         />
       </Head>
 
       <SiteLayout site={site}>
         <main className={styles.pageShell}>
           <section className={styles.heroCard}>
-            <p className={styles.eyebrow}>Evidence stream</p>
-            <h1>Signal intelligence mapped directly to market repricing.</h1>
+            <p className={styles.eyebrow}>Signals desk</p>
+            <h1>High-signal reporting mapped directly to market repricing.</h1>
             <p className={styles.heroText}>
-              This is not a blog feed. It is the signal layer: sources, urgency, impact, and update quality presented in a way that helps you decide which inputs deserve immediate attention.
+              Review source, urgency, impact, and quality before following a signal into the market.
             </p>
             <div className={styles.heroMetadataRow}>
               <div className={styles.heroMetadataCard}>
@@ -47,7 +47,7 @@ export default function NewsPage({ site, newsStories, generatedAt }) {
               </div>
               <div className={styles.heroMetadataCard}>
                 <span>Refresh cadence</span>
-                <strong>5 min ISR</strong>
+                <strong>5 min refresh</strong>
               </div>
             </div>
           </section>

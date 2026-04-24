@@ -20,6 +20,11 @@ export async function getStaticProps() {
 
 function Home({ site, markets, newsStories, principles, siteMetrics }) {
   const featuredMarket = markets[0]
+  const topSignals = newsStories.slice(0, 2)
+  const topMovers = [...markets]
+    .sort((left, right) => Number.parseInt(right.move, 10) - Number.parseInt(left.move, 10))
+    .slice(0, 3)
+  const featuredSignals = newsStories.slice(0, 3)
 
   return (
     <>
@@ -27,7 +32,7 @@ function Home({ site, markets, newsStories, principles, siteMetrics }) {
         <title>Predict.info | News-driven forecasting</title>
         <meta
           name="description"
-          content="Predict.info turns breaking news into transparent, evidence-linked forecasts across macro, politics, technology, and energy."
+          content="Prediction markets with linked evidence, source-level signals, and explicit market rules."
         />
       </Head>
 
@@ -35,20 +40,17 @@ function Home({ site, markets, newsStories, principles, siteMetrics }) {
         <main className={styles.pageShell}>
           <section className={styles.hero}>
             <div className={styles.heroCopy}>
-              <div className={styles.heroBadgeRow}>
-                <p className={styles.eyebrow}>Professional prediction intelligence</p>
-                <span className={styles.liveBadge}>Live prototype</span>
-              </div>
-              <h1>Forecast the next move before the headline becomes the market.</h1>
+              <p className={styles.eyebrow}>Live forecasting terminal</p>
+              <h1>Live markets with visible evidence.</h1>
               <p className={styles.heroText}>
-                Predict.info combines live probability markets with a news-native research layer. Instead of showing a raw number in isolation, it shows what changed, why it changed, and which reporting source actually moved the forecast.
+                Track price, move size, resolution terms, and linked signals in one view.
               </p>
               <div className={styles.ctaRow}>
                 <Link className={styles.primaryCta} href="/markets">
-                  Explore live markets
+                  View markets
                 </Link>
                 <Link className={styles.secondaryCta} href="/news">
-                  Inspect the news layer
+                  View signals
                 </Link>
               </div>
               <div className={styles.heroMetaGrid}>
@@ -59,12 +61,34 @@ function Home({ site, markets, newsStories, principles, siteMetrics }) {
                   </div>
                 ))}
               </div>
+              <div className={styles.terminalStrip}>
+                <div className={styles.terminalStripHeader}>
+                  <span>Top movers</span>
+                  <span>24h</span>
+                </div>
+                <div className={styles.terminalStripList}>
+                  {topMovers.map((market) => (
+                    <article className={styles.terminalStripRow} key={market.slug}>
+                      <p>{market.title}</p>
+                      <strong>{market.move}</strong>
+                    </article>
+                  ))}
+                </div>
+              </div>
+              <div className={styles.heroSignalStrip}>
+                {topSignals.map((story) => (
+                  <article className={styles.signalStripItem} key={story.slug}>
+                    <span>{story.desk}</span>
+                    <p>{story.headline}</p>
+                  </article>
+                ))}
+              </div>
             </div>
 
             <aside className={styles.heroPanel}>
               <div className={styles.boardHeader}>
                 <div>
-                  <span className={styles.panelLabel}>Market board</span>
+                  <span className={styles.panelLabel}>Lead market</span>
                   <h2>{featuredMarket.title}</h2>
                 </div>
                 <span className={styles.panelMeta}>{featuredMarket.move}</span>
@@ -105,10 +129,10 @@ function Home({ site, markets, newsStories, principles, siteMetrics }) {
 
           <section className={styles.sectionBlock}>
             <div className={styles.sectionIntro}>
-              <p className={styles.sectionLabel}>Market coverage</p>
-              <h2>Structured like a product, not a promo page.</h2>
+              <p className={styles.sectionLabel}>Active markets</p>
+              <h2>High-signal questions in live view.</h2>
               <p>
-                Each market card is compact, legible, and tied to a resolution rule. The product should feel fast enough for daily use and credible enough for decision support.
+                Current probability, move magnitude, and resolution timing should be readable immediately.
               </p>
             </div>
             <div className={styles.marketGrid}>
@@ -146,11 +170,11 @@ function Home({ site, markets, newsStories, principles, siteMetrics }) {
           <section className={styles.storyGrid}>
             <div className={styles.newsroomColumn}>
               <div className={styles.sectionIntro}>
-                <p className={styles.sectionLabel}>Signal stream</p>
-                <h2>News drives the repricing layer.</h2>
+                <p className={styles.sectionLabel}>Latest signals</p>
+                <h2>Source events moving active markets.</h2>
               </div>
               <div className={styles.feedList}>
-                {newsStories.map((item) => (
+                {featuredSignals.map((item) => (
                   <article className={styles.feedItem} key={item.slug}>
                     <div className={styles.feedTopline}>
                       <p className={styles.feedSource}>{item.source}</p>
@@ -168,8 +192,8 @@ function Home({ site, markets, newsStories, principles, siteMetrics }) {
 
             <div className={styles.explainerColumn}>
               <div className={styles.sectionIntro}>
-                <p className={styles.sectionLabel}>Operating principles</p>
-                <h2>The interface should make causality obvious.</h2>
+                <p className={styles.sectionLabel}>Methodology</p>
+                <h2>Rules, evidence, and market structure.</h2>
               </div>
               <div className={styles.principlesList}>
                 {principles.map((principle, index) => (
@@ -180,7 +204,7 @@ function Home({ site, markets, newsStories, principles, siteMetrics }) {
                 ))}
               </div>
               <div className={styles.routeCard}>
-                <p className={styles.routeLabel}>Explore the product surface</p>
+                <p className={styles.routeLabel}>Open key views</p>
                 <div className={styles.routeLinks}>
                   <Link className={styles.routeLink} href="/markets">
                     Markets index
@@ -189,21 +213,11 @@ function Home({ site, markets, newsStories, principles, siteMetrics }) {
                     News index
                   </Link>
                   <Link className={styles.routeLink} href="/about">
-                    About the product
+                    Methodology
                   </Link>
                 </div>
               </div>
             </div>
-          </section>
-
-          <section className={styles.bottomBanner}>
-            <div>
-              <p className={styles.sectionLabel}>Design direction</p>
-              <h2>Closer to Polymarket in product rigor, stronger on news intelligence.</h2>
-            </div>
-            <p className={styles.bottomText}>
-              The right benchmark is not a playful landing page. It is a credible market product with faster visual parsing, sharper card structure, and clearer cause-and-effect between reporting and probability.
-            </p>
           </section>
         </main>
       </SiteLayout>
