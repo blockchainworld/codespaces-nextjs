@@ -1,0 +1,21 @@
+{
+  "brand": "Predict.info",
+  "brandNote": "News-linked forecasts for macro, politics, technology, and energy.",
+  "footerNote": "A product direction for transparent forecasting built around linked evidence, not empty price action.",
+  "navigation": [
+    { "href": "/", "label": "Home" },
+    { "href": "/markets", "label": "Markets" },
+    { "href": "/news", "label": "News" },
+    { "href": "/about", "label": "About" }
+  ],
+  "metrics": [
+    { "label": "Markets tracked", "value": "120+" },
+    { "label": "Linked sources", "value": "2,400" },
+    { "label": "Median update lag", "value": "4 min" }
+  ],
+  "principles": [
+    "Every prediction page starts with a clear question, settlement rule, and end date.",
+    "Evidence is organized as a timeline so users can see why probability moved, not just that it moved.",
+    "News and markets stay connected: each headline links to the forecast it is actually influencing."
+  ]
+}

@@ -1,0 +1,130 @@
+.siteFrame {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 24px 0 64px;
+}
+
+.header,
+.footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 20px;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 26px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.header {
+  padding: 18px 22px;
+}
+
+.brand {
+  display: inline-block;
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.brandNote,
+.footerText {
+  margin: 6px 0 0;
+  max-width: 44ch;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.nav {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.navLink,
+.navLinkActive,
+.headerCta,
+.footerLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0.75rem 0.95rem;
+  border-radius: 999px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.navLink {
+  color: var(--muted);
+}
+
+.navLinkActive {
+  background: rgba(15, 118, 110, 0.12);
+  color: var(--accent-2);
+}
+
+.headerCta {
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, #0f766e, #155e75);
+  color: #f8fafc;
+}
+
+.footer {
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-top: 28px;
+  padding: 24px;
+}
+
+.footerLabel {
+  margin: 0;
+  color: var(--warm);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.footerLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.footerLink {
+  color: var(--muted);
+}
+
+@media (max-width: 960px) {
+  .header,
+  .footer {
+    grid-template-columns: 1fr;
+  }
+
+  .nav,
+  .footerLinks {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .siteFrame {
+    width: min(100% - 20px, 1180px);
+    padding: 18px 0 44px;
+  }
+
+  .header,
+  .footer {
+    border-radius: 22px;
+  }
+}

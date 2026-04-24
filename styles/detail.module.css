@@ -1,0 +1,291 @@
+.pageShell {
+  display: grid;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.heroCard,
+.detailCard,
+.sidebarCard,
+.chartShell {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.heroCard,
+.detailCard,
+.sidebarCard,
+.chartShell {
+  padding: 28px;
+}
+
+.heroTopline,
+.heroStats,
+.mainGrid,
+.timelineItem,
+.chartMeta,
+.chartFooter,
+.tagRow {
+  display: flex;
+}
+
+.heroTopline,
+.chartMeta {
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+}
+
+.eyebrow,
+.sectionLabel,
+.statLabel,
+.chartLabel,
+.relatedItem span,
+.timelineItem span,
+.chartPoint span {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.eyebrow,
+.sectionLabel,
+.timelineItem span,
+.chartLabel {
+  color: var(--warm);
+}
+
+.backLink,
+.inlineLink {
+  color: var(--accent-2);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.heroCard h1,
+.detailCard h2,
+.sidebarCard h3,
+.relatedItem h3,
+.timelineItem h3 {
+  margin: 0;
+  letter-spacing: -0.04em;
+}
+
+.heroCard h1 {
+  margin-top: 14px;
+  max-width: 14ch;
+  font-size: clamp(3rem, 6vw, 5.2rem);
+  line-height: 0.95;
+}
+
+.heroText,
+.detailCard p,
+.sidebarCard p,
+.relatedItem p,
+.timelineItem p,
+.chartMeta p,
+.proseBlock p {
+  color: var(--muted);
+}
+
+.heroText {
+  max-width: 62ch;
+  margin: 20px 0 0;
+  font-size: 1.08rem;
+}
+
+.heroStats {
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 26px;
+}
+
+.heroStats div {
+  min-width: 180px;
+  padding: 16px;
+  border-radius: 20px;
+  background: var(--surface-strong);
+  border: 1px solid rgba(20, 33, 61, 0.08);
+}
+
+.statLabel {
+  color: var(--muted);
+}
+
+.heroStats strong,
+.chartMeta strong,
+.chartPoint strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 1.6rem;
+  letter-spacing: -0.04em;
+}
+
+.mainGrid {
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.primaryColumn {
+  display: grid;
+  flex: 1.25;
+  gap: 20px;
+}
+
+.sidebarColumn {
+  display: grid;
+  flex: 0.75;
+  gap: 20px;
+}
+
+.bulletList,
+.relatedList,
+.proseBlock {
+  display: grid;
+  gap: 14px;
+}
+
+.bulletList p,
+.proseBlock p {
+  margin: 0;
+}
+
+.timelineList {
+  display: grid;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.timelineItem {
+  gap: 18px;
+  align-items: flex-start;
+  padding-top: 18px;
+  border-top: 1px solid rgba(20, 33, 61, 0.08);
+}
+
+.timelineItem:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.timelineItem span {
+  min-width: 72px;
+}
+
+.chartShell {
+  overflow: hidden;
+}
+
+.chartMeta p {
+  margin: 0;
+  max-width: 30ch;
+  text-align: right;
+}
+
+.chartSvg {
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+}
+
+.chartGrid {
+  stroke: rgba(20, 33, 61, 0.12);
+  stroke-width: 1;
+}
+
+.chartTick {
+  fill: var(--muted);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+}
+
+.chartArea {
+  fill: rgba(15, 118, 110, 0.12);
+}
+
+.chartLine {
+  fill: none;
+  stroke: var(--accent);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 4;
+}
+
+.chartDot {
+  fill: var(--surface-strong);
+  stroke: var(--accent-2);
+  stroke-width: 3;
+}
+
+.chartFooter {
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.chartPoint {
+  min-width: 68px;
+  padding: 0.75rem 0.9rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(20, 33, 61, 0.08);
+}
+
+.tagRow {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  padding: 0.45rem 0.72rem;
+  border-radius: 999px;
+  background: rgba(15, 118, 110, 0.08);
+  color: var(--accent-2);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.relatedItem {
+  padding-top: 16px;
+  border-top: 1px solid rgba(20, 33, 61, 0.08);
+}
+
+.relatedItem:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+@media (max-width: 960px) {
+  .mainGrid {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .heroCard,
+  .detailCard,
+  .sidebarCard,
+  .chartShell {
+    border-radius: 22px;
+    padding: 20px;
+  }
+
+  .heroTopline,
+  .chartMeta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .chartMeta p {
+    text-align: left;
+  }
+}

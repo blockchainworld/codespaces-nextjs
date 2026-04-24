@@ -1,11 +1,413 @@
-.main {
-  padding: 20px 20px 60px;
-  max-width: 680px;
-  margin: 0 auto;
+.pageShell {
+  display: grid;
+  gap: 24px;
+  margin-top: 24px;
 }
 
-.hr {
-  border: none;
-  border-bottom: 1px solid #efefef;
-  margin: 3em auto;
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.9fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+.heroCopy,
+.heroPanel,
+.marketCard,
+.feedItem,
+.explainerColumn,
+.bottomBanner,
+.routeCard {
+  background: var(--surface);
+  backdrop-filter: blur(18px);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.heroCopy {
+  border-radius: 32px;
+  padding: 40px;
+}
+
+.eyebrow,
+.sectionLabel,
+.panelLabel,
+.feedSource,
+.signalCategory,
+.metricLabel {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.eyebrow,
+.sectionLabel,
+.signalCategory {
+  color: var(--warm);
+}
+
+.heroCopy h1,
+.sectionIntro h2,
+.bottomBanner h2,
+.signalCard h2 {
+  margin: 0;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+.heroCopy h1 {
+  max-width: 12ch;
+  margin-top: 16px;
+  font-size: clamp(3.4rem, 7vw, 6.6rem);
+}
+
+.heroText {
+  max-width: 60ch;
+  margin: 24px 0 0;
+  color: var(--muted);
+  font-size: 1.08rem;
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.primaryCta,
+.secondaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.9rem 1.15rem;
+  border: 1px solid rgba(20, 33, 61, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.52);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.primaryCta {
+  background: linear-gradient(135deg, #0f766e, #155e75);
+  color: #f8fafc;
+}
+
+.heroPanel {
+  border-radius: 32px;
+  padding: 24px;
+}
+
+.panelHeader,
+.marketTopline,
+.metricRow,
+.tagRow,
+.storyGrid,
+.sectionBlock {
+  display: flex;
+}
+
+.panelHeader,
+.marketTopline {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panelMeta,
+.marketDescription,
+.feedItem p,
+.bottomText,
+.sectionIntro p,
+.signalCard p {
+  color: var(--muted);
+}
+
+.panelMeta {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.88rem;
+}
+
+.signalCard {
+  margin-top: 18px;
+  padding: 22px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(20, 33, 61, 0.04), rgba(20, 33, 61, 0.02));
+  border: 1px solid rgba(20, 33, 61, 0.08);
+}
+
+.signalCard h2 {
+  margin-top: 10px;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+}
+
+.metricRow {
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.metricRow div {
+  flex: 1;
+  padding: 16px;
+  border-radius: 20px;
+  background: var(--surface-strong);
+  border: 1px solid rgba(20, 33, 61, 0.08);
+}
+
+.metricRow strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 1.7rem;
+  letter-spacing: -0.04em;
+}
+
+.sectionBlock,
+.storyGrid {
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.sectionIntro {
+  max-width: 60ch;
+}
+
+.sectionIntro h2,
+.bottomBanner h2 {
+  margin-top: 8px;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+}
+
+.marketGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.marketCard {
+  border-radius: 28px;
+  padding: 24px;
+}
+
+.marketTopline p,
+.marketTopline span,
+.tag,
+.feedSource,
+.principleItem span {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.marketTopline p {
+  margin: 0;
+  max-width: 16ch;
+  font-size: 1.18rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.marketTopline span {
+  color: var(--accent);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.marketProbability {
+  margin-top: 22px;
+  font-size: clamp(2.8rem, 5vw, 4.4rem);
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+}
+
+.marketDescription {
+  margin: 16px 0 0;
+}
+
+.tagRow {
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.tag {
+  padding: 0.45rem 0.72rem;
+  border-radius: 999px;
+  background: rgba(15, 118, 110, 0.08);
+  color: var(--accent-2);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.storyGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+}
+
+.newsroomColumn,
+.explainerColumn {
+  min-width: 0;
+}
+
+.feedList,
+.principlesList {
+  display: grid;
+  gap: 16px;
+}
+
+.feedItem {
+  border-radius: 24px;
+  padding: 22px;
+}
+
+.feedSource {
+  color: var(--accent-2);
+}
+
+.feedItem h3 {
+  margin: 10px 0 8px;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.explainerColumn {
+  display: grid;
+  gap: 18px;
+  border-radius: 28px;
+  padding: 28px;
+}
+
+.principleItem {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  align-items: start;
+  padding-top: 16px;
+  border-top: 1px solid rgba(20, 33, 61, 0.08);
+}
+
+.principleItem:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.principleItem span {
+  color: var(--accent);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.principleItem p {
+  margin: 0;
+  font-size: 1.08rem;
+}
+
+.routeCard {
+  border-radius: 24px;
+  padding: 20px;
+}
+
+.routeLabel,
+.inlineLink,
+.routeLink {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.routeLabel {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.routeLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.inlineLink,
+.routeLink {
+  color: var(--accent-2);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.inlineLink {
+  display: inline-flex;
+  margin-top: 18px;
+}
+
+.bottomBanner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+  gap: 24px;
+  align-items: end;
+  margin-top: 24px;
+  padding: 28px;
+  border-radius: 28px;
+}
+
+.bottomText {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+@media (max-width: 960px) {
+  .hero,
+  .storyGrid,
+  .marketGrid,
+  .bottomBanner {
+    grid-template-columns: 1fr;
+  }
+
+  .heroCopy {
+    padding: 28px;
+  }
+
+  .heroCopy h1 {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .pageShell {
+    width: min(100% - 20px, 1180px);
+    padding: 20px 0 44px;
+  }
+
+  .heroCopy,
+  .heroPanel,
+  .marketCard,
+  .feedItem,
+  .explainerColumn,
+  .bottomBanner {
+    border-radius: 22px;
+  }
+
+  .heroCopy,
+  .heroPanel,
+  .explainerColumn,
+  .bottomBanner,
+  .marketCard,
+  .feedItem {
+    padding: 20px;
+  }
+
+  .metricRow {
+    flex-direction: column;
+  }
+
+  .sectionIntro h2,
+  .bottomBanner h2,
+  .signalCard h2 {
+    line-height: 1;
+  }
 }

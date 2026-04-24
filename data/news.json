@@ -1,0 +1,56 @@
+[
+  {
+    "slug": "factory-data-miss",
+    "source": "Reuters pulse",
+    "publishedAt": "April 24, 2026",
+    "headline": "Factory data misses estimates across two regions",
+    "summary": "A synchronized manufacturing miss is shifting macro markets from inflation anxiety toward downside growth protection.",
+    "body": [
+      "Two regional factory surveys surprised to the downside within the same week, pushing traders to reconsider how restrictive monetary policy still is.",
+      "For Predict.info, the important signal is not the headline alone but the way it changes the market map. Rate-cut odds rose because the miss affected a chain of related expectations: growth, payroll sensitivity, and the credibility of a later easing path.",
+      "Stories like this belong at the center of a forecasting platform because they generate second-order consequences across multiple markets rather than only affecting one asset class."
+    ],
+    "takeaways": [
+      "Growth-sensitive forecasts move first when economic misses cluster together.",
+      "The same evidence can affect rates, equities, and election confidence simultaneously.",
+      "Users need the story linked directly to the markets it is moving."
+    ],
+    "relatedMarketSlugs": ["us-rates-cut-september"]
+  },
+  {
+    "slug": "tariff-package-narrows",
+    "source": "Policy tracker",
+    "publishedAt": "April 23, 2026",
+    "headline": "Campaign advisers hint at a narrower tariff package",
+    "summary": "A less aggressive proposal compresses several tail-risk scenarios and lowers the probability of an immediate energy spike.",
+    "body": [
+      "Campaign policy hints rarely settle markets on their own, but they can sharply reduce uncertainty when the prior expectation was broad and punitive.",
+      "The narrower package matters because it changes how traders price imported inflation, trade retaliation, and energy demand spillovers at the same time.",
+      "In a forecast product, this is the kind of update that belongs in an evidence timeline with explicit market links, not buried in a separate news silo."
+    ],
+    "takeaways": [
+      "Specific policy language matters more than generic campaign noise.",
+      "Tail-risk compression can be as important as headline upside.",
+      "News pages should map directly to the forecasts they influence."
+    ],
+    "relatedMarketSlugs": ["oil-above-95-this-quarter"]
+  },
+  {
+    "slug": "chip-suppliers-inference-demand",
+    "source": "AI brief",
+    "publishedAt": "April 24, 2026",
+    "headline": "Chip suppliers signal higher allocation to inference demand",
+    "summary": "Allocation shifts toward inference workloads imply deployment preparation, not just ongoing research experimentation.",
+    "body": [
+      "Supplier commentary often reveals product timing before official launches do. When allocation moves toward inference, it suggests someone is preparing to serve users at scale.",
+      "That makes the news relevant to the GPT-6 market even without a direct company announcement. It is exactly the kind of indirect but high-signal evidence that should appear alongside the probability curve.",
+      "A forecasting product becomes more valuable when it helps users distinguish between low-value hype and operational signals that historically precede launches."
+    ],
+    "takeaways": [
+      "Supply-chain commentary can act as an early launch indicator.",
+      "Operational signals often matter more than vague executive hints.",
+      "Evidence quality should be visible next to the forecast itself."
+    ],
+    "relatedMarketSlugs": ["openai-gpt6-this-year"]
+  }
+]
