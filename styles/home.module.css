@@ -1,7 +1,7 @@
 .pageShell {
   display: grid;
   gap: 24px;
-  margin-top: 24px;
+  margin-top: 12px;
 }
 
 .hero {
@@ -53,7 +53,6 @@
 
 .heroCopy h1,
 .sectionIntro h2,
-.bottomBanner h2,
 .boardHeader h2 {
   margin: 0;
   letter-spacing: -0.05em;
@@ -61,16 +60,40 @@
 }
 
 .heroCopy h1 {
-  max-width: 11ch;
-  margin-top: 18px;
-  font-size: clamp(3.5rem, 7vw, 6.2rem);
+  max-width: 10ch;
+  margin-top: 10px;
+  font-size: clamp(2.6rem, 5vw, 4.5rem);
+}
+
+.heroHeaderRow,
+.heroActionCluster,
+.heroDashboardGrid {
+  display: flex;
+  gap: 14px;
+}
+
+.heroHeaderRow {
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.heroActionCluster {
+  flex: 0 0 auto;
+  align-items: center;
+}
+
+.heroDashboardGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(240px, 0.8fr);
+  gap: 12px;
+  margin-top: 16px;
 }
 
 .heroText {
   max-width: 42ch;
-  margin: 20px 0 0;
+  margin: 16px 0 0;
   color: var(--muted);
-  font-size: 1.02rem;
+  font-size: 1rem;
 }
 
 .ctaRow {
@@ -113,7 +136,7 @@
 
 .heroPanel {
   border-radius: 24px;
-  padding: 24px;
+  padding: 20px;
 }
 
 .boardHeader,
@@ -272,8 +295,8 @@
 .heroMetaGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 24px;
+  gap: 10px;
+  margin-top: 18px;
 }
 
 .terminalStrip,
@@ -346,9 +369,9 @@
 }
 
 .signalStripItem {
-  display: flex;
-  gap: 12px;
-  align-items: center;
+  display: grid;
+  align-content: start;
+  gap: 10px;
   padding: 14px 16px;
   border: 1px solid var(--line);
   border-radius: 16px;
@@ -370,6 +393,15 @@
   font-size: 0.94rem;
   font-weight: 700;
   line-height: 1.3;
+}
+
+.signalStripItem strong {
+  color: var(--success);
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .metaCard {
@@ -586,7 +618,8 @@
   .hero,
   .storyGrid,
   .marketGrid,
-  .heroMetaGrid {
+  .heroMetaGrid,
+  .heroDashboardGrid {
     grid-template-columns: 1fr;
   }
 
@@ -596,6 +629,10 @@
 
   .heroCopy h1 {
     max-width: 100%;
+  }
+
+  .heroHeaderRow {
+    flex-direction: column;
   }
 }
 

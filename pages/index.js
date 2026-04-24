@@ -20,11 +20,11 @@ export async function getStaticProps() {
 
 function Home({ site, markets, newsStories, principles, siteMetrics }) {
   const featuredMarket = markets[0]
-  const topSignals = newsStories.slice(0, 2)
   const topMovers = [...markets]
     .sort((left, right) => Number.parseInt(right.move, 10) - Number.parseInt(left.move, 10))
     .slice(0, 3)
   const featuredSignals = newsStories.slice(0, 3)
+  const latestSignal = newsStories[0]
 
   return (
     <>
@@ -40,18 +40,19 @@ function Home({ site, markets, newsStories, principles, siteMetrics }) {
         <main className={styles.pageShell}>
           <section className={styles.hero}>
             <div className={styles.heroCopy}>
-              <p className={styles.eyebrow}>Live forecasting terminal</p>
-              <h1>Live markets with visible evidence.</h1>
-              <p className={styles.heroText}>
-                Track price, move size, resolution terms, and linked signals in one view.
-              </p>
-              <div className={styles.ctaRow}>
-                <Link className={styles.primaryCta} href="/markets">
-                  View markets
-                </Link>
-                <Link className={styles.secondaryCta} href="/news">
-                  View signals
-                </Link>
+              <div className={styles.heroHeaderRow}>
+                <div>
+                  <p className={styles.eyebrow}>Live forecasting terminal</p>
+                  <h1>Market state in one screen.</h1>
+                </div>
+                <div className={styles.heroActionCluster}>
+                  <Link className={styles.primaryCta} href="/markets">
+                    Markets
+                  </Link>
+                  <Link className={styles.secondaryCta} href="/news">
+                    Signals
+                  </Link>
+                </div>
               </div>
               <div className={styles.heroMetaGrid}>
                 {siteMetrics.map((metric) => (
@@ -61,27 +62,26 @@ function Home({ site, markets, newsStories, principles, siteMetrics }) {
                   </div>
                 ))}
               </div>
-              <div className={styles.terminalStrip}>
-                <div className={styles.terminalStripHeader}>
-                  <span>Top movers</span>
-                  <span>24h</span>
+              <div className={styles.heroDashboardGrid}>
+                <div className={styles.terminalStrip}>
+                  <div className={styles.terminalStripHeader}>
+                    <span>Top movers</span>
+                    <span>24h</span>
+                  </div>
+                  <div className={styles.terminalStripList}>
+                    {topMovers.map((market) => (
+                      <article className={styles.terminalStripRow} key={market.slug}>
+                        <p>{market.title}</p>
+                        <strong>{market.move}</strong>
+                      </article>
+                    ))}
+                  </div>
                 </div>
-                <div className={styles.terminalStripList}>
-                  {topMovers.map((market) => (
-                    <article className={styles.terminalStripRow} key={market.slug}>
-                      <p>{market.title}</p>
-                      <strong>{market.move}</strong>
-                    </article>
-                  ))}
-                </div>
-              </div>
-              <div className={styles.heroSignalStrip}>
-                {topSignals.map((story) => (
-                  <article className={styles.signalStripItem} key={story.slug}>
-                    <span>{story.desk}</span>
-                    <p>{story.headline}</p>
-                  </article>
-                ))}
+                <article className={styles.signalStripItem}>
+                  <span>{latestSignal.desk}</span>
+                  <p>{latestSignal.headline}</p>
+                  <strong>{latestSignal.updateLag}</strong>
+                </article>
               </div>
             </div>
 

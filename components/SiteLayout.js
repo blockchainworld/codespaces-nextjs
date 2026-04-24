@@ -17,36 +17,26 @@ export default function SiteLayout({ children, site }) {
   return (
     <div className={styles.siteFrame}>
       <header className={styles.header}>
-        <div className={styles.headerTopRow}>
-          <div className={styles.brandBlock}>
-            <Link className={styles.brand} href="/">
-              <span className={styles.brandMark} aria-hidden="true" />
-              {site.brand}
+        <Link className={styles.brand} href="/">
+          <span className={styles.brandMark} aria-hidden="true" />
+          {site.brand}
+        </Link>
+        <nav className={styles.nav} aria-label="Primary navigation">
+          {navigation.map((item) => (
+            <Link
+              className={isActive(router.pathname, item.href) ? styles.navLinkActive : styles.navLink}
+              href={item.href}
+              key={item.href}
+            >
+              {item.label}
             </Link>
-            <p className={styles.brandNote}>{site.brandNote}</p>
-          </div>
-          <div className={styles.headerMeta}>
-            <span className={styles.metaPill}>Live markets</span>
-            <span className={styles.metaText}>Updated with linked signals</span>
-          </div>
-        </div>
-        <div className={styles.headerBottomRow}>
-          <nav className={styles.nav} aria-label="Primary navigation">
-            {navigation.map((item) => (
-              <Link
-                className={isActive(router.pathname, item.href) ? styles.navLinkActive : styles.navLink}
-                href={item.href}
-                key={item.href}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-          <div className={styles.headerActions}>
-            <Link className={styles.headerCta} href="/markets">
-              Browse forecasts
-            </Link>
-          </div>
+          ))}
+        </nav>
+        <div className={styles.headerActions}>
+          <span className={styles.metaPill}>Live</span>
+          <Link className={styles.headerCta} href="/markets">
+            Browse forecasts
+          </Link>
         </div>
       </header>
 
