@@ -49,25 +49,53 @@ export default function NewsDetailPage({ site, story, relatedMarkets, generatedA
         <main className={styles.pageShell}>
           <section className={styles.heroCard}>
             <div className={styles.heroTopline}>
-              <p className={styles.eyebrow}>{story.source}</p>
+              <div className={styles.heroMetaCluster}>
+                <p className={styles.eyebrow}>{story.source}</p>
+                <span className={styles.headerStatusPill}>{story.urgency}</span>
+              </div>
               <Link className={styles.backLink} href="/news">
                 Back to all news
               </Link>
             </div>
             <h1>{story.headline}</h1>
-            <p className={styles.heroText}>{story.summary}</p>
             <div className={styles.heroStats}>
+              <div>
+                <span className={styles.statLabel}>Desk</span>
+                <strong>{story.desk}</strong>
+              </div>
               <div>
                 <span className={styles.statLabel}>Published</span>
                 <strong>{story.publishedAt}</strong>
+              </div>
+              <div>
+                <span className={styles.statLabel}>Impact</span>
+                <strong>{story.impact}</strong>
+              </div>
+              <div>
+                <span className={styles.statLabel}>Signal score</span>
+                <strong>{story.signalScore}</strong>
+              </div>
+              <div>
+                <span className={styles.statLabel}>Update lag</span>
+                <strong>{story.updateLag}</strong>
               </div>
               <div>
                 <span className={styles.statLabel}>Related markets</span>
                 <strong>{relatedMarkets.length}</strong>
               </div>
               <div>
-                <span className={styles.statLabel}>Signal score</span>
-                <strong>{story.signalScore}</strong>
+                <span className={styles.statLabel}>Source quality</span>
+                <strong>{story.sourceQuality}</strong>
+              </div>
+            </div>
+            <div className={styles.topRuleBar}>
+              <div>
+                <span className={styles.ruleLabel}>Signal summary</span>
+                <p>{story.summary}</p>
+              </div>
+              <div className={styles.ruleMeta}>
+                <span>{generatedAt.slice(11, 16)} UTC sync</span>
+                <span>{story.source}</span>
               </div>
             </div>
           </section>
@@ -78,16 +106,12 @@ export default function NewsDetailPage({ site, story, relatedMarkets, generatedA
                 <div className={styles.tradingHeader}>
                   <div>
                     <p className={styles.sectionLabel}>Signal classification</p>
-                    <h2>{story.impact} impact, {story.urgency.toLowerCase()} urgency</h2>
+                    <h2>{story.impact} impact</h2>
                   </div>
                   <span className={styles.qualityBadge}>{story.sourceQuality}</span>
                 </div>
 
                 <div className={styles.terminalStats}>
-                  <div>
-                    <span>Desk</span>
-                    <strong>{story.desk}</strong>
-                  </div>
                   <div>
                     <span>Update lag</span>
                     <strong>{story.updateLag}</strong>
@@ -142,6 +166,10 @@ export default function NewsDetailPage({ site, story, relatedMarkets, generatedA
                   <div>
                     <span>Impact</span>
                     <strong>{story.impact}</strong>
+                  </div>
+                  <div>
+                    <span>Urgency</span>
+                    <strong>{story.urgency}</strong>
                   </div>
                 </div>
               </section>
