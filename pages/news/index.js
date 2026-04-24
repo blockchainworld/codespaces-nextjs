@@ -18,6 +18,8 @@ export async function getStaticProps() {
 }
 
 export default function NewsPage({ site, newsStories, generatedAt }) {
+  const highImpactCount = newsStories.filter((story) => story.impact === 'High').length
+
   return (
     <>
       <Head>
@@ -30,24 +32,23 @@ export default function NewsPage({ site, newsStories, generatedAt }) {
 
       <SiteLayout site={site}>
         <main className={styles.pageShell}>
-          <section className={styles.heroCard}>
-            <p className={styles.eyebrow}>Signals desk</p>
-            <h1>High-signal reporting mapped directly to market repricing.</h1>
-            <p className={styles.heroText}>
-              Review source, urgency, impact, and quality before following a signal into the market.
-            </p>
-            <div className={styles.heroMetadataRow}>
-              <div className={styles.heroMetadataCard}>
-                <span>Signals tracked</span>
+          <section className={styles.signalHeroShell}>
+            <div>
+              <p className={styles.eyebrow}>Signal feed</p>
+              <h1 className={styles.signalHeroTitle}>Evidence that moves active contracts.</h1>
+            </div>
+            <div className={styles.signalHeroStats}>
+              <div>
+                <span>Signals</span>
                 <strong>{newsStories.length}</strong>
               </div>
-              <div className={styles.heroMetadataCard}>
-                <span>Latest sync</span>
-                <strong>{generatedAt.slice(11, 16)} UTC</strong>
+              <div>
+                <span>High impact</span>
+                <strong>{highImpactCount}</strong>
               </div>
-              <div className={styles.heroMetadataCard}>
-                <span>Refresh cadence</span>
-                <strong>5 min refresh</strong>
+              <div>
+                <span>Sync</span>
+                <strong>{generatedAt.slice(11, 16)} UTC</strong>
               </div>
             </div>
           </section>

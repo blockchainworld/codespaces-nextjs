@@ -54,91 +54,102 @@ export default function MarketsExplorer({ markets }) {
 
   return (
     <section className={styles.explorerShell}>
-      <div className={styles.explorerToolbar}>
-        <div className={styles.categoryTabs}>
-          {categories.map((category) => (
-            <button
-              className={activeCategory === category ? styles.tabActive : styles.tabButton}
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              type="button"
-            >
-              {category}
-            </button>
-          ))}
+      <div className={styles.marketToolbarShell}>
+        <div className={styles.marketToolbarTopline}>
+          <div className={styles.categoryTabs}>
+            {categories.map((category) => (
+              <button
+                className={activeCategory === category ? styles.marketTabActive : styles.marketTabButton}
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                type="button"
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          <div className={styles.marketSummary}>
+            <strong>{filteredMarkets.length}</strong>
+            <span>contracts</span>
+          </div>
         </div>
 
-        <div className={styles.controlsRow}>
-          <label className={styles.searchField}>
-            <span>Search</span>
+        <div className={styles.marketControlsRow}>
+          <label className={styles.marketSearchField}>
+            <span>Search markets</span>
             <input
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Fed, AI, oil, election"
+              placeholder="Fed, AI, oil"
               type="search"
               value={query}
             />
           </label>
 
-          <label className={styles.selectField}>
+          <label className={styles.marketSelectField}>
             <span>Sort</span>
             <select onChange={(event) => setSortBy(event.target.value)} value={sortBy}>
-              <option value="probability">Highest probability</option>
+              <option value="probability">Highest chance</option>
               <option value="movers">Largest move</option>
-              <option value="conviction">Strongest conviction</option>
+              <option value="conviction">Highest conviction</option>
             </select>
           </label>
         </div>
       </div>
 
-      <div className={styles.resultsSummary}>
-        <strong>{filteredMarkets.length}</strong>
-        <span>markets in view</span>
-      </div>
+      <div className={styles.marketListShell}>
+        <div className={styles.marketListHeader}>
+          <span>Market</span>
+          <span>Yes</span>
+          <span>No</span>
+          <span>Move</span>
+          <span>Volume</span>
+          <span>Depth</span>
+          <span>Status</span>
+        </div>
 
-      <div className={styles.cardGrid}>
-        {filteredMarkets.map((market) => (
-          <article className={styles.marketCard} key={market.slug}>
-            <div className={styles.marketHeader}>
-              <div className={styles.marketHeaderGroup}>
-                <p className={styles.sectionLabel}>{market.category}</p>
+        <div className={styles.marketListBody}>
+          {categories.map((category) => (
+            category
+          ))}
+        </div>
+
+        {filteredMarkets.map((market) => {
+          const negativePrice = 100 - market.probability
+          const moveTone = parseMove(market.move) >= 0 ? styles.marketMoveUp : styles.marketMoveDown
+
+          return (
+            <article className={styles.marketListRow} key={market.slug}>
+              <div className={styles.marketIdentityCell}>
+                <div className={styles.marketIdentityTopline}>
+                  <span className={styles.sectionLabel}>{market.category}</span>
+                  <span className={styles.marketConviction}>{market.conviction}</span>
+                </div>
+                <Link className={styles.marketQuestionLink} href={`/markets/${market.slug}`}>
+                  {market.title}
+                </Link>
+                <p>{market.description}</p>
+              </div>
+
+              <div className={styles.marketPriceCell}>
+                <span>Yes</span>
+                <strong>{market.probability}c</strong>
+              </div>
+
+              <div className={styles.marketPriceCell}>
+                <span>No</span>
+                <strong>{negativePrice}c</strong>
+              </div>
+
+              <div className={`${styles.marketStatCell} ${moveTone}`}>{market.move}</div>
+              <div className={styles.marketStatCell}>{market.volumeLabel}</div>
+              <div className={styles.marketStatCell}>{market.liquidityLabel}</div>
+              <div className={styles.marketStatusCell}>
                 <span className={styles.statusPill}>{market.status}</span>
               </div>
-              <span className={styles.move}>{market.move}</span>
-            </div>
-            <h2>{market.title}</h2>
-            <div className={styles.probabilityRow}>
-              <div className={styles.probability}>{market.probability}%</div>
-              <div className={styles.convictionBlock}>
-                <span>Conviction</span>
-                <strong>{market.conviction}</strong>
-              </div>
-            </div>
-            <div className={styles.trackBar}>
-              <span style={{ width: `${market.probability}%` }} />
-            </div>
-            <p>{market.description}</p>
-            <div className={styles.statsGrid}>
-              <div>
-                <span>Depth</span>
-                <strong>{market.liquidityLabel}</strong>
-              </div>
-              <div>
-                <span>Volume</span>
-                <strong>{market.volumeLabel}</strong>
-              </div>
-            </div>
-            <div className={styles.tagRow}>
-              {market.tags.map((tag) => (
-                <span className={styles.tag} key={tag}>
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <Link className={styles.inlineLink} href={`/markets/${market.slug}`}>
-              Open market detail
-            </Link>
-          </article>
-        ))}
+            </article>
+          )
+        })}
       </div>
     </section>
   )

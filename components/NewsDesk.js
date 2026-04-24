@@ -49,23 +49,30 @@ export default function NewsDesk({ newsStories }) {
 
   return (
     <section className={styles.explorerShell}>
-      <div className={styles.explorerToolbar}>
-        <div className={styles.categoryTabs}>
-          {desks.map((desk) => (
-            <button
-              className={activeDesk === desk ? styles.tabActive : styles.tabButton}
-              key={desk}
-              onClick={() => setActiveDesk(desk)}
-              type="button"
-            >
-              {desk}
-            </button>
-          ))}
+      <div className={styles.signalToolbarShell}>
+        <div className={styles.signalToolbarTopline}>
+          <div className={styles.categoryTabs}>
+            {desks.map((desk) => (
+              <button
+                className={activeDesk === desk ? styles.signalTabActive : styles.signalTabButton}
+                key={desk}
+                onClick={() => setActiveDesk(desk)}
+                type="button"
+              >
+                {desk}
+              </button>
+            ))}
+          </div>
+
+          <div className={styles.signalSummary}>
+            <strong>{filteredStories.length}</strong>
+            <span>signals</span>
+          </div>
         </div>
 
-        <div className={styles.controlsRow}>
-          <label className={styles.searchField}>
-            <span>Search</span>
+        <div className={styles.signalControlsRow}>
+          <label className={styles.signalSearchField}>
+            <span>Search signals</span>
             <input
               onChange={(event) => setQuery(event.target.value)}
               placeholder="inflation, tariffs, AI supply"
@@ -74,7 +81,7 @@ export default function NewsDesk({ newsStories }) {
             />
           </label>
 
-          <label className={styles.selectField}>
+          <label className={styles.signalSelectField}>
             <span>Sort</span>
             <select onChange={(event) => setSortBy(event.target.value)} value={sortBy}>
               <option value="latest">Latest signal</option>
@@ -85,52 +92,40 @@ export default function NewsDesk({ newsStories }) {
         </div>
       </div>
 
-      <div className={styles.resultsSummary}>
-        <strong>{filteredStories.length}</strong>
-        <span>signals in view</span>
-      </div>
+      <section className={styles.signalFeedShell}>
+        <div className={styles.signalFeedHeader}>
+          <span>Signal</span>
+          <span>Desk</span>
+          <span>Score</span>
+          <span>Impact</span>
+          <span>Lag</span>
+          <span>Source</span>
+        </div>
 
-      <section className={styles.newsTerminalList}>
+        <div className={styles.signalFeedBody}>
+          {desks.map((desk) => (
+            desk
+          ))}
+        </div>
+
         {filteredStories.map((story) => (
-          <article className={styles.newsTerminalCard} key={story.slug}>
-            <div className={styles.marketHeader}>
-              <div className={styles.marketHeaderGroup}>
-                <p className={styles.sectionLabel}>{story.desk}</p>
+          <article className={styles.signalFeedRow} key={story.slug}>
+            <div className={styles.signalIdentityCell}>
+              <div className={styles.signalIdentityTopline}>
                 <span className={styles.statusPill}>{story.urgency}</span>
+                <span className={styles.signalQuality}>{story.sourceQuality}</span>
               </div>
-              <span className={styles.move}>{story.updateLag}</span>
+              <Link className={styles.signalHeadlineLink} href={`/news/${story.slug}`}>
+                {story.headline}
+              </Link>
+              <p>{story.summary}</p>
             </div>
-            <div className={styles.newsTerminalBody}>
-              <div>
-                <h2>{story.headline}</h2>
-                <p>{story.summary}</p>
-              </div>
-              <div className={styles.signalScoreBox}>
-                <span>Signal score</span>
-                <strong>{story.signalScore}</strong>
-              </div>
-            </div>
-            <div className={styles.newsMetaGrid}>
-              <div>
-                <span>Source</span>
-                <strong>{story.source}</strong>
-              </div>
-              <div>
-                <span>Impact</span>
-                <strong>{story.impact}</strong>
-              </div>
-              <div>
-                <span>Quality</span>
-                <strong>{story.sourceQuality}</strong>
-              </div>
-              <div>
-                <span>Published</span>
-                <strong>{story.publishedAt}</strong>
-              </div>
-            </div>
-            <Link className={styles.inlineLink} href={`/news/${story.slug}`}>
-              Open signal detail
-            </Link>
+
+            <div className={styles.signalMetaCell}>{story.desk}</div>
+            <div className={styles.signalScoreCell}>{story.signalScore}</div>
+            <div className={styles.signalMetaCell}>{story.impact}</div>
+            <div className={styles.signalMetaCell}>{story.updateLag}</div>
+            <div className={styles.signalMetaCell}>{story.source}</div>
           </article>
         ))}
       </section>

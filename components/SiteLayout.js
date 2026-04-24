@@ -17,25 +17,30 @@ export default function SiteLayout({ children, site }) {
   return (
     <div className={styles.siteFrame}>
       <header className={styles.header}>
-        <Link className={styles.brand} href="/">
-          <span className={styles.brandMark} aria-hidden="true" />
-          {site.brand}
-        </Link>
-        <nav className={styles.nav} aria-label="Primary navigation">
-          {navigation.map((item) => (
-            <Link
-              className={isActive(router.pathname, item.href) ? styles.navLinkActive : styles.navLink}
-              href={item.href}
-              key={item.href}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        <div className={styles.headerPrimary}>
+          <Link className={styles.brand} href="/">
+            <span className={styles.brandMark} aria-hidden="true" />
+            {site.brand}
+          </Link>
+          <nav className={styles.nav} aria-label="Primary navigation">
+            {navigation.map((item) => (
+              <Link
+                className={isActive(router.pathname, item.href) ? styles.navLinkActive : styles.navLink}
+                href={item.href}
+                key={item.href}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
         <div className={styles.headerActions}>
-          <span className={styles.metaPill}>Live</span>
+          <Link className={styles.searchLink} href="/markets">
+            <span className={styles.searchHint}>Search</span>
+            <span className={styles.searchTarget}>markets, signals</span>
+          </Link>
           <Link className={styles.headerCta} href="/markets">
-            Browse forecasts
+            Trade markets
           </Link>
         </div>
       </header>

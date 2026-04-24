@@ -37,6 +37,7 @@ export async function getStaticProps({ params }) {
 
 export default function MarketDetailPage({ site, market, relatedNews }) {
   const noProbability = 100 - market.probability
+  const moveTone = market.move.startsWith('+') ? styles.metricToneUp : styles.metricToneDown
 
   return (
     <>
@@ -58,40 +59,32 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
               </Link>
             </div>
             <h1>{market.title}</h1>
-            <div className={styles.heroStats}>
-              <div>
+            <div className={styles.heroQuoteStrip}>
+              <div className={styles.heroQuoteCard}>
                 <span className={styles.statLabel}>Yes</span>
-                <strong>{market.probability}%</strong>
+                <strong>{market.probability}c</strong>
               </div>
-              <div>
+              <div className={styles.heroQuoteCard}>
                 <span className={styles.statLabel}>No</span>
-                <strong>{noProbability}%</strong>
+                <strong>{noProbability}c</strong>
               </div>
-              <div>
+              <div className={styles.heroQuoteCard}>
                 <span className={styles.statLabel}>24h move</span>
-                <strong>{market.move}</strong>
+                <strong className={moveTone}>{market.move}</strong>
               </div>
-              <div>
-                <span className={styles.statLabel}>Resolves</span>
-                <strong>{market.resolutionDate}</strong>
-              </div>
-              <div>
+              <div className={styles.heroQuoteCard}>
                 <span className={styles.statLabel}>Volume</span>
                 <strong>{market.volumeLabel}</strong>
               </div>
-              <div>
-                <span className={styles.statLabel}>Depth</span>
-                <strong>{market.liquidityLabel}</strong>
-              </div>
-              <div>
-                <span className={styles.statLabel}>Source quality</span>
-                <strong>{market.sourceQuality}</strong>
+              <div className={styles.heroQuoteCard}>
+                <span className={styles.statLabel}>Resolves</span>
+                <strong>{market.resolutionDate}</strong>
               </div>
             </div>
             <div className={styles.topRuleBar}>
               <div>
                 <span className={styles.ruleLabel}>Settlement rule</span>
-                <p>{market.settlementRule}</p>
+                <p className={styles.ruleText}>{market.settlementRule}</p>
               </div>
               <div className={styles.ruleMeta}>
                 <span>{market.conviction} conviction</span>
@@ -105,20 +98,22 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
               <section className={styles.tradingCard}>
                 <div className={styles.tradingHeader}>
                   <div>
-                    <p className={styles.sectionLabel}>Price ladder</p>
-                    <h2>Yes / No</h2>
+                    <p className={styles.sectionLabel}>Market book</p>
+                    <h2>Order depth and live pricing</h2>
                   </div>
                   <span className={styles.qualityBadge}>{market.conviction} conviction</span>
                 </div>
 
-                <div className={styles.sideBySideGrid}>
-                  <article className={styles.sidePanel}>
-                    <span className={styles.sideLabel}>Yes</span>
-                    <strong>{market.probability}%</strong>
-                    <p>{market.yesLabel}</p>
-                    <div className={styles.depthList}>
+                <div className={styles.terminalTradingGrid}>
+                  <article className={styles.tradePanelYes}>
+                    <div className={styles.tradePanelHeader}>
+                      <span className={styles.sideLabel}>Yes</span>
+                      <strong>{market.probability}c</strong>
+                    </div>
+                    <p className={styles.tradeCaption}>{market.yesLabel}</p>
+                    <div className={styles.orderbookList}>
                       {market.orderBook.yes.map((level) => (
-                        <div className={styles.depthRow} key={`${market.slug}-yes-${level.price}`}>
+                        <div className={styles.orderbookLine} key={`${market.slug}-yes-${level.price}`}>
                           <span>{Math.round(level.price * 100)}c</span>
                           <strong>{level.size}</strong>
                         </div>
@@ -126,13 +121,15 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
                     </div>
                   </article>
 
-                  <article className={styles.sidePanelMuted}>
-                    <span className={styles.sideLabel}>No</span>
-                    <strong>{noProbability}%</strong>
-                    <p>{market.noLabel}</p>
-                    <div className={styles.depthList}>
+                  <article className={styles.tradePanelNo}>
+                    <div className={styles.tradePanelHeader}>
+                      <span className={styles.sideLabel}>No</span>
+                      <strong>{noProbability}c</strong>
+                    </div>
+                    <p className={styles.tradeCaption}>{market.noLabel}</p>
+                    <div className={styles.orderbookList}>
                       {market.orderBook.no.map((level) => (
-                        <div className={styles.depthRow} key={`${market.slug}-no-${level.price}`}>
+                        <div className={styles.orderbookLine} key={`${market.slug}-no-${level.price}`}>
                           <span>{Math.round(level.price * 100)}c</span>
                           <strong>{level.size}</strong>
                         </div>
@@ -141,7 +138,7 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
                   </article>
                 </div>
 
-                <div className={styles.terminalStats}>
+                <div className={styles.terminalStatsCompact}>
                   <div>
                     <span>Depth</span>
                     <strong>{market.liquidityLabel}</strong>
@@ -154,13 +151,17 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
                     <span>Participants</span>
                     <strong>{market.participantsLabel}</strong>
                   </div>
+                  <div>
+                    <span>Source quality</span>
+                    <strong>{market.sourceQuality}</strong>
+                  </div>
                 </div>
               </section>
 
               <ProbabilityChart points={market.curve} />
 
               <section className={styles.detailCard}>
-                <p className={styles.sectionLabel}>Current thesis</p>
+                <p className={styles.sectionLabel}>Key drivers</p>
                 <h2>{market.thesis}</h2>
                 <div className={styles.bulletList}>
                   {market.keyDrivers.map((driver) => (
@@ -196,8 +197,8 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
 
             <aside className={styles.sidebarColumn}>
               <section className={styles.sidebarCard}>
-                <p className={styles.sectionLabel}>Market stats</p>
-                <div className={styles.sidebarStats}>
+                <p className={styles.sectionLabel}>Contract snapshot</p>
+                <div className={styles.sidebarStatsCompact}>
                   <div>
                     <span>Conviction</span>
                     <strong>{market.conviction}</strong>
@@ -214,6 +215,10 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
                     <span>Status</span>
                     <strong>{market.status}</strong>
                   </div>
+                  <div>
+                    <span>Resolves</span>
+                    <strong>{market.resolutionDate}</strong>
+                  </div>
                 </div>
               </section>
 
@@ -229,11 +234,14 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
               </section>
 
               <section className={styles.sidebarCard}>
-                <p className={styles.sectionLabel}>Related news</p>
-                <div className={styles.relatedList}>
+                <p className={styles.sectionLabel}>Linked signals</p>
+                <div className={styles.compactRelatedList}>
                   {relatedNews.map((story) => (
-                    <article className={styles.relatedItem} key={story.slug}>
-                      <span>{story.source}</span>
+                    <article className={styles.signalCardCompact} key={story.slug}>
+                      <div className={styles.signalCardTopline}>
+                        <span>{story.source}</span>
+                        <strong>{story.signalScore}</strong>
+                      </div>
                       <h3>{story.headline}</h3>
                       <p>{story.summary}</p>
                       <Link className={styles.inlineLink} href={`/news/${story.slug}`}>

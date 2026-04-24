@@ -1,7 +1,7 @@
 .siteFrame {
-  width: min(1200px, calc(100% - 32px));
+  width: min(1280px, calc(100% - 36px));
   margin: 0 auto;
-  padding: 12px 0 56px;
+  padding: 8px 0 36px;
 }
 
 .header,
@@ -12,25 +12,31 @@
   gap: 16px;
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 20px;
+  border-radius: var(--radius-panel);
   box-shadow: var(--shadow-strong);
-  backdrop-filter: blur(20px);
 }
 
 .header {
   position: sticky;
-  top: 8px;
+  top: 10px;
   z-index: 20;
-  padding: 10px 14px;
+  padding: 8px 12px;
+}
+
+.headerPrimary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   color: var(--ink);
   font-family: var(--sans);
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-decoration: none;
@@ -38,11 +44,10 @@
 }
 
 .brandMark {
-  width: 12px;
-  height: 12px;
-  border-radius: 4px;
-  background: linear-gradient(135deg, var(--accent), #60a5fa);
-  box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.12);
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: linear-gradient(135deg, #111827, #475569);
 }
 
 .footer {
@@ -56,32 +61,21 @@
   margin: 6px 0 0;
   max-width: 36ch;
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 0.86rem;
 }
 
 .headerActions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
-.metaPill,
 .footerLabel {
   font-family: var(--mono);
   font-size: 0.74rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-}
-
-.metaPill {
-  display: inline-flex;
-  align-items: center;
-  min-height: 30px;
-  padding: 0.35rem 0.62rem;
-  border-radius: 999px;
-  background: rgba(37, 99, 235, 0.08);
-  color: var(--accent);
 }
 
 .footerLink {
@@ -91,24 +85,24 @@
 .nav {
   display: inline-flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 4px;
   align-items: center;
-  flex: 1;
-  justify-content: center;
+  min-width: 0;
 }
 
 .navLink,
 .navLinkActive,
+.searchLink,
 .headerCta,
 .footerLink {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 38px;
-  padding: 0.62rem 0.86rem;
-  border-radius: 999px;
+  min-height: 34px;
+  padding: 0.52rem 0.76rem;
+  border-radius: var(--radius-control);
   font-family: var(--sans);
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-weight: 600;
   text-decoration: none;
   transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
@@ -119,25 +113,53 @@
 }
 
 .navLink:hover,
+.searchLink:hover,
 .footerLink:hover {
   color: var(--ink);
 }
 
 .navLinkActive {
-  background: rgba(37, 99, 235, 0.1);
-  color: var(--accent);
+  background: #eef2f7;
+  color: var(--ink);
+}
+
+.searchLink {
+  min-width: 190px;
+  justify-content: space-between;
+  border: 1px solid var(--line);
+  background: var(--surface-muted);
+  color: var(--muted);
+}
+
+.searchHint,
+.searchTarget {
+  display: inline-flex;
+  align-items: center;
+}
+
+.searchHint {
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.searchTarget {
+  font-size: 0.82rem;
 }
 
 .headerCta {
-  border: 1px solid rgba(37, 99, 235, 0.12);
-  background: linear-gradient(135deg, var(--accent), #1d4ed8);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: #111827;
   color: #f8fafc;
-  box-shadow: 0 14px 28px rgba(37, 99, 235, 0.24);
+  box-shadow: none;
 }
 
 .footer {
-  margin-top: 28px;
-  padding: 20px;
+  margin-top: 18px;
+  padding: 16px 18px;
 }
 
 .footerLabel {
@@ -164,21 +186,27 @@
     align-items: flex-start;
   }
 
+  .headerPrimary,
   .nav,
   .footerLinks,
   .headerActions {
     justify-content: flex-start;
+  }
+
+  .headerPrimary {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
 @media (max-width: 640px) {
   .siteFrame {
     width: min(100% - 20px, 1180px);
-    padding: 10px 0 40px;
+    padding: 8px 0 34px;
   }
 
   .header,
   .footer {
-    border-radius: 18px;
+    border-radius: var(--radius-panel);
   }
 }

@@ -1,7 +1,7 @@
 .pageShell {
   display: grid;
-  gap: 24px;
-  margin-top: 24px;
+  gap: 18px;
+  margin-top: 18px;
 }
 
 .heroCard,
@@ -12,15 +12,14 @@
 .bannerCard {
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 22px;
+  border-radius: var(--radius-panel);
   box-shadow: var(--shadow);
-  backdrop-filter: blur(20px);
 }
 
 .heroCard,
 .sectionCard,
 .bannerCard {
-  padding: 32px;
+  padding: 24px;
 }
 
 .eyebrow,
@@ -61,14 +60,14 @@
 .heroCard h1 {
   margin-top: 14px;
   max-width: 12ch;
-  font-size: clamp(3rem, 6vw, 5rem);
+  font-size: clamp(2.4rem, 5vw, 4rem);
   line-height: 0.95;
 }
 
 .heroText {
   max-width: 58ch;
-  margin: 20px 0 0;
-  font-size: 1.08rem;
+  margin: 16px 0 0;
+  font-size: 0.98rem;
 }
 
 .cardGrid,
@@ -90,7 +89,7 @@
 .marketCard,
 .newsCard,
 .featureCard {
-  padding: 24px;
+  padding: 18px;
 }
 
 .explorerShell,
@@ -100,10 +99,10 @@
 }
 
 .explorerToolbar {
-  padding: 22px;
+  padding: 16px;
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 22px;
+  border-radius: var(--radius-panel);
   box-shadow: var(--shadow);
 }
 
@@ -188,7 +187,7 @@
 
 .heroMetadataRow {
   flex-wrap: wrap;
-  margin-top: 24px;
+  margin-top: 18px;
 }
 
 .heroMetadataCard,
@@ -418,5 +417,512 @@
   .featureCard,
   .bannerCard {
     padding: 20px;
+  }
+}
+
+.marketHeroShell,
+.marketToolbarShell,
+.marketListShell {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.05);
+}
+
+.marketHeroShell,
+.marketToolbarShell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px;
+}
+
+.marketHeroTitle {
+  margin: 8px 0 0;
+  max-width: 14ch;
+  letter-spacing: -0.05em;
+  font-size: clamp(1.8rem, 4vw, 2.9rem);
+  line-height: 0.96;
+}
+
+.marketHeroStats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.marketHeroStats div,
+.marketSummary,
+.marketPriceCell,
+.marketStatCell {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.marketHeroStats span,
+.marketSummary span,
+.marketPriceCell span,
+.marketControlsRow span,
+.marketStatCell,
+.marketConviction {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.marketHeroStats span,
+.marketSummary span,
+.marketPriceCell span,
+.marketStatCell,
+.marketConviction {
+  color: var(--muted);
+}
+
+.marketHeroStats strong,
+.marketSummary strong,
+.marketPriceCell strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+
+.marketToolbarShell {
+  display: grid;
+  gap: 16px;
+}
+
+.marketToolbarTopline,
+.marketControlsRow,
+.marketIdentityTopline,
+.marketListHeader,
+.marketListRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.marketToolbarTopline,
+.marketControlsRow,
+.marketListHeader,
+.marketListRow {
+  justify-content: space-between;
+}
+
+.marketTabButton,
+.marketTabActive {
+  min-height: 36px;
+  padding: 0.58rem 0.82rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #f8fafc;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.marketTabActive {
+  background: #111827;
+  border-color: #111827;
+  color: #f8fafc;
+}
+
+.marketSearchField,
+.marketSelectField {
+  display: grid;
+  gap: 8px;
+}
+
+.marketSearchField {
+  min-width: min(420px, 100%);
+  flex: 1;
+}
+
+.marketSelectField {
+  min-width: 180px;
+}
+
+.marketSearchField input,
+.marketSelectField select {
+  min-height: 42px;
+  padding: 0.74rem 0.88rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #f8fafc;
+  color: var(--ink);
+}
+
+.marketListShell {
+  overflow: hidden;
+}
+
+.marketListHeader,
+.marketListRow {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) 110px 110px 132px 160px 148px 100px;
+  padding: 12px 16px;
+}
+
+.marketListHeader {
+  background: #f1f5f9;
+  color: #64748b;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.marketListRow {
+  align-items: center;
+  border-top: 1px solid var(--line);
+}
+
+.marketIdentityCell {
+  display: grid;
+  gap: 6px;
+}
+
+.marketIdentityTopline {
+  justify-content: flex-start;
+}
+
+.marketQuestionLink {
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-decoration: none;
+}
+
+.marketIdentityCell p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.marketPriceCell strong {
+  font-size: 1rem;
+}
+
+.marketMoveUp {
+  color: var(--success);
+}
+
+.marketMoveDown {
+  color: #dc2626;
+}
+
+.marketStatusCell {
+  display: flex;
+  justify-content: flex-start;
+}
+
+@media (max-width: 1080px) {
+  .marketHeroShell,
+  .marketToolbarTopline,
+  .marketControlsRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .marketHeroStats {
+    width: 100%;
+  }
+
+  .marketListHeader,
+  .marketListRow {
+    grid-template-columns: minmax(0, 2.4fr) 110px 110px 132px;
+  }
+
+  .marketListHeader span:nth-child(5),
+  .marketListHeader span:nth-child(6),
+  .marketListHeader span:nth-child(7),
+  .marketListRow > :nth-child(5),
+  .marketListRow > :nth-child(6),
+  .marketListRow > :nth-child(7) {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .marketHeroShell,
+  .marketToolbarShell {
+    padding: 12px;
+  }
+
+  .marketHeroStats {
+    grid-template-columns: 1fr;
+  }
+
+  .marketListHeader {
+    display: none;
+  }
+
+  .marketListRow {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .marketPriceCell,
+  .marketStatCell,
+  .marketStatusCell {
+    justify-self: stretch;
+  }
+
+  .marketControlsRow {
+    width: 100%;
+  }
+
+  .marketSearchField,
+  .marketSelectField {
+    min-width: 100%;
+    width: 100%;
+  }
+}
+
+.signalHeroShell,
+.signalToolbarShell,
+.signalFeedShell {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.05);
+}
+
+.signalHeroShell,
+.signalToolbarShell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px;
+}
+
+.signalHeroTitle {
+  margin: 8px 0 0;
+  max-width: 14ch;
+  letter-spacing: -0.05em;
+  font-size: clamp(1.8rem, 4vw, 2.9rem);
+  line-height: 0.96;
+}
+
+.signalHeroStats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.signalHeroStats div,
+.signalSummary,
+.signalScoreCell,
+.signalMetaCell {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.signalHeroStats span,
+.signalSummary span,
+.signalControlsRow span,
+.signalMetaCell,
+.signalQuality {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.signalHeroStats strong,
+.signalSummary strong,
+.signalScoreCell {
+  display: block;
+  margin-top: 8px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+
+.signalToolbarShell {
+  display: grid;
+  gap: 16px;
+}
+
+.signalToolbarTopline,
+.signalControlsRow,
+.signalIdentityTopline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.signalTabButton,
+.signalTabActive {
+  min-height: 36px;
+  padding: 0.58rem 0.82rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #f8fafc;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.signalTabActive {
+  background: #111827;
+  border-color: #111827;
+  color: #f8fafc;
+}
+
+.signalSearchField,
+.signalSelectField {
+  display: grid;
+  gap: 8px;
+}
+
+.signalSearchField {
+  min-width: min(420px, 100%);
+  flex: 1;
+}
+
+.signalSelectField {
+  min-width: 180px;
+}
+
+.signalSearchField input,
+.signalSelectField select {
+  min-height: 42px;
+  padding: 0.74rem 0.88rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #f8fafc;
+  color: var(--ink);
+}
+
+.signalFeedShell {
+  overflow: hidden;
+}
+
+.signalFeedHeader,
+.signalFeedRow {
+  display: grid;
+  grid-template-columns: minmax(0, 3.3fr) 100px 96px 112px 110px 160px;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 16px;
+}
+
+.signalFeedHeader {
+  background: #f1f5f9;
+  color: #64748b;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.signalFeedRow {
+  border-top: 1px solid var(--line);
+}
+
+.signalIdentityCell {
+  display: grid;
+  gap: 6px;
+}
+
+.signalHeadlineLink {
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.signalHeadlineLink:hover {
+  color: var(--accent);
+}
+
+.signalIdentityCell p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.signalScoreCell {
+  margin-top: 0;
+}
+
+@media (max-width: 1080px) {
+  .signalHeroShell,
+  .signalToolbarTopline,
+  .signalControlsRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .signalHeroStats {
+    width: 100%;
+  }
+
+  .signalFeedHeader,
+  .signalFeedRow {
+    grid-template-columns: minmax(0, 2.7fr) 100px 96px 112px;
+  }
+
+  .signalFeedHeader span:nth-child(5),
+  .signalFeedHeader span:nth-child(6),
+  .signalFeedRow > :nth-child(5),
+  .signalFeedRow > :nth-child(6) {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .signalHeroShell,
+  .signalToolbarShell {
+    padding: 12px;
+  }
+
+  .signalHeroStats {
+    grid-template-columns: 1fr;
+  }
+
+  .signalFeedHeader {
+    display: none;
+  }
+
+  .signalFeedRow {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .signalControlsRow {
+    width: 100%;
+  }
+
+  .signalSearchField,
+  .signalSelectField {
+    min-width: 100%;
+    width: 100%;
   }
 }

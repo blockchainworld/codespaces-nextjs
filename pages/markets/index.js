@@ -16,6 +16,8 @@ export async function getStaticProps() {
 }
 
 export default function MarketsPage({ site, markets }) {
+  const categoryCount = new Set(markets.map((market) => market.category)).size
+
   return (
     <>
       <Head>
@@ -28,12 +30,21 @@ export default function MarketsPage({ site, markets }) {
 
       <SiteLayout site={site}>
         <main className={styles.pageShell}>
-          <section className={styles.heroCard}>
-            <p className={styles.eyebrow}>Markets desk</p>
-            <h1>Active markets organized for fast scanning and direct comparison.</h1>
-            <p className={styles.heroText}>
-              Filter by desk, sort by movement or conviction, and open the full market record with rules and linked signals.
-            </p>
+          <section className={styles.marketHeroShell}>
+            <div>
+              <p className={styles.eyebrow}>Markets</p>
+              <h1 className={styles.marketHeroTitle}>Live contracts priced for fast comparison.</h1>
+            </div>
+            <div className={styles.marketHeroStats}>
+              <div>
+                <span>Active</span>
+                <strong>{markets.length}</strong>
+              </div>
+              <div>
+                <span>Categories</span>
+                <strong>{categoryCount}</strong>
+              </div>
+            </div>
           </section>
 
           <MarketsExplorer markets={markets} />
