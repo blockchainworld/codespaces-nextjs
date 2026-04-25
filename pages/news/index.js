@@ -18,8 +18,6 @@ export async function getStaticProps() {
 }
 
 export default function NewsPage({ site, newsStories, generatedAt }) {
-  const highImpactCount = newsStories.filter((story) => story.impact === 'High').length
-
   return (
     <>
       <Head>
@@ -32,28 +30,7 @@ export default function NewsPage({ site, newsStories, generatedAt }) {
 
       <SiteLayout site={site}>
         <main className={styles.pageShell}>
-          <section className={styles.signalHeroShell}>
-            <div>
-              <p className={styles.eyebrow}>Signal feed</p>
-              <h1 className={styles.signalHeroTitle}>Evidence that moves active contracts.</h1>
-            </div>
-            <div className={styles.signalHeroStats}>
-              <div>
-                <span>Signals</span>
-                <strong>{newsStories.length}</strong>
-              </div>
-              <div>
-                <span>High impact</span>
-                <strong>{highImpactCount}</strong>
-              </div>
-              <div>
-                <span>Sync</span>
-                <strong>{generatedAt.slice(11, 16)} UTC</strong>
-              </div>
-            </div>
-          </section>
-
-          <NewsDesk newsStories={newsStories} />
+          <NewsDesk generatedAt={generatedAt} newsStories={newsStories} />
         </main>
       </SiteLayout>
     </>

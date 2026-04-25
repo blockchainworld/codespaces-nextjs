@@ -29,22 +29,6 @@ export default function SiteLayout({ children, site }) {
             <span className={styles.searchPlaceholder}>Search markets, topics, signals...</span>
           </Link>
         </div>
-        <div className={styles.headerUtility}>
-          <Link className={styles.utilityLink} href="/about">
-            How it works
-          </Link>
-          <Link className={styles.utilityGhost} href="/markets">
-            Log in
-          </Link>
-          <Link className={styles.utilityPrimary} href="/markets">
-            Sign Up
-          </Link>
-          <button className={styles.menuButton} type="button" aria-label="Open navigation menu">
-            <span />
-            <span />
-            <span />
-          </button>
-        </div>
       </header>
 
       <div className={styles.categoryBar}>
@@ -64,10 +48,7 @@ export default function SiteLayout({ children, site }) {
       {children}
 
       <footer className={styles.footer}>
-        <div>
-          <p className={styles.footerLabel}>{site.brand}</p>
-          <p className={styles.footerText}>{site.footerNote}</p>
-        </div>
+        <p className={styles.footerLabel}>{site.brand}</p>
         <div className={styles.footerLinks}>
           {navigation.map((item) => (
             <Link className={styles.footerLink} href={item.href} key={item.href}>

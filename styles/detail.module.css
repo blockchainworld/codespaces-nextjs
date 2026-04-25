@@ -459,6 +459,15 @@
   border-top: none;
 }
 
+.marketHeaderMeta span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0.28rem 0.54rem;
+  border-radius: 999px;
+  background: var(--surface-muted);
+}
+
 @media (max-width: 960px) {
   .mainGrid {
     flex-direction: column;

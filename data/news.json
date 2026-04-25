@@ -10,6 +10,9 @@
     "signalScore": 91,
     "publishedAt": "April 24, 2026",
     "headline": "Factory data misses estimates across two regions",
+    "liveMatch": {
+      "terms": ["factory", "data", "miss", "rates"]
+    },
     "summary": "A synchronized manufacturing miss is shifting macro markets from inflation anxiety toward downside growth protection.",
     "body": [
       "Two regional factory surveys surprised to the downside within the same week, pushing traders to reconsider how restrictive monetary policy still is.",
@@ -39,6 +42,9 @@
     "signalScore": 74,
     "publishedAt": "April 23, 2026",
     "headline": "Campaign advisers hint at a narrower tariff package",
+    "liveMatch": {
+      "terms": ["tariff", "package", "campaign", "policy"]
+    },
     "summary": "A less aggressive proposal compresses several tail-risk scenarios and lowers the probability of an immediate energy spike.",
     "body": [
       "Campaign policy hints rarely settle markets on their own, but they can sharply reduce uncertainty when the prior expectation was broad and punitive.",
@@ -68,6 +74,9 @@
     "signalScore": 88,
     "publishedAt": "April 24, 2026",
     "headline": "Chip suppliers signal higher allocation to inference demand",
+    "liveMatch": {
+      "terms": ["chip", "suppliers", "inference", "openai", "ai"]
+    },
     "summary": "Allocation shifts toward inference workloads imply deployment preparation, not just ongoing research experimentation.",
     "body": [
       "Supplier commentary often reveals product timing before official launches do. When allocation moves toward inference, it suggests someone is preparing to serve users at scale.",

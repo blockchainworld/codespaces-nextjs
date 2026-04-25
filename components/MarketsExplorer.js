@@ -1,16 +1,13 @@
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
+import { compareMarketActivity, getMovePoints } from '../lib/marketRank'
 import styles from '../styles/listing.module.css'
 
 const sortOptions = {
+  activity: compareMarketActivity,
   probability: (left, right) => right.probability - left.probability,
-  movers: (left, right) => parseMove(right.move) - parseMove(left.move),
+  movers: (left, right) => getMovePoints(right.move) - getMovePoints(left.move),
   conviction: (left, right) => convictionRank(right.conviction) - convictionRank(left.conviction),
-}
-
-function parseMove(move) {
-  const normalized = Number.parseInt(move, 10)
-  return Number.isNaN(normalized) ? 0 : normalized
 }
 
 function convictionRank(value) {
@@ -28,7 +25,7 @@ function convictionRank(value) {
 export default function MarketsExplorer({ markets }) {
   const categories = ['All', ...new Set(markets.map((market) => market.category))]
   const [activeCategory, setActiveCategory] = useState('All')
-  const [sortBy, setSortBy] = useState('probability')
+  const [sortBy, setSortBy] = useState('activity')
   const [query, setQuery] = useState('')
 
   const filteredMarkets = useMemo(() => {
@@ -55,6 +52,17 @@ export default function MarketsExplorer({ markets }) {
   return (
     <section className={styles.explorerShell}>
       <div className={styles.marketToolbarShell}>
+        <div className={styles.marketToolbarLabelRow}>
+          <div>
+            <p className={styles.sectionLabel}>Markets</p>
+            <h1 className={styles.marketToolbarTitle}>All markets</h1>
+          </div>
+          <div className={styles.marketInlineStats}>
+            <span>{filteredMarkets.length} live</span>
+            <span>{categories.length - 1} sectors</span>
+          </div>
+        </div>
+
         <div className={styles.marketToolbarTopline}>
           <div className={styles.categoryTabs}>
             {categories.map((category) => (
@@ -68,16 +76,11 @@ export default function MarketsExplorer({ markets }) {
               </button>
             ))}
           </div>
-
-          <div className={styles.marketSummary}>
-            <strong>{filteredMarkets.length}</strong>
-            <span>contracts</span>
-          </div>
         </div>
 
         <div className={styles.marketControlsRow}>
           <label className={styles.marketSearchField}>
-            <span>Search markets</span>
+            <span>Search</span>
             <input
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Fed, AI, oil"
@@ -89,6 +92,7 @@ export default function MarketsExplorer({ markets }) {
           <label className={styles.marketSelectField}>
             <span>Sort</span>
             <select onChange={(event) => setSortBy(event.target.value)} value={sortBy}>
+              <option value="activity">Most active</option>
               <option value="probability">Highest chance</option>
               <option value="movers">Largest move</option>
               <option value="conviction">Highest conviction</option>
@@ -108,15 +112,9 @@ export default function MarketsExplorer({ markets }) {
           <span>Status</span>
         </div>
 
-        <div className={styles.marketListBody}>
-          {categories.map((category) => (
-            category
-          ))}
-        </div>
-
         {filteredMarkets.map((market) => {
           const negativePrice = 100 - market.probability
-          const moveTone = parseMove(market.move) >= 0 ? styles.marketMoveUp : styles.marketMoveDown
+          const moveTone = getMovePoints(market.move) >= 0 ? styles.marketMoveUp : styles.marketMoveDown
 
           return (
             <article className={styles.marketListRow} key={market.slug}>
@@ -124,11 +122,12 @@ export default function MarketsExplorer({ markets }) {
                 <div className={styles.marketIdentityTopline}>
                   <span className={styles.sectionLabel}>{market.category}</span>
                   <span className={styles.marketConviction}>{market.conviction}</span>
+                  {market.liveMetadata?.overlaid ? <span className={styles.marketLiveBadge}>Live</span> : null}
                 </div>
                 <Link className={styles.marketQuestionLink} href={`/markets/${market.slug}`}>
                   {market.title}
                 </Link>
-                <p>{market.description}</p>
+                <p>{market.tags.join(' / ')}</p>
               </div>
 
               <div className={styles.marketPriceCell}>

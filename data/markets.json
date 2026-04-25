@@ -15,6 +15,9 @@
     "move": "+8 pts today",
     "description": "Combines central bank language, inflation prints, and labor-market headlines into one live probability.",
     "tags": ["Fed watch", "Inflation", "Labor"],
+    "liveMatch": {
+      "terms": ["fed", "rate", "cut", "september"]
+    },
     "resolutionDate": "September 18, 2026",
     "settlementRule": "Resolves YES if the Federal Reserve lowers its target rate before the September 2026 meeting concludes.",
     "thesis": "Softening activity data and a slower hiring pulse have shifted the market from inflation anxiety toward growth protection.",
@@ -78,6 +81,9 @@
     "move": "+11 pts this week",
     "description": "Tracks executive comments, model leaks, hiring signals, and launch-adjacent reporting across the AI beat.",
     "tags": ["Model releases", "Inference", "AI infrastructure"],
+    "liveMatch": {
+      "terms": ["openai", "gpt-6", "gpt6", "this year"]
+    },
     "resolutionDate": "December 31, 2026",
     "settlementRule": "Resolves YES if OpenAI publicly launches a product branded GPT-6 before the end of 2026.",
     "thesis": "Supply-chain commentary and talent signals suggest the organization is preparing for a major model cycle rather than incremental iteration only.",
@@ -141,6 +147,9 @@
     "move": "-5 pts after OPEC remarks",
     "description": "Links geopolitical news, supply announcements, and inventory releases to a continuously updated market view.",
     "tags": ["Supply risk", "OPEC", "Inventories"],
+    "liveMatch": {
+      "terms": ["oil", "95", "quarter", "brent"]
+    },
     "resolutionDate": "June 30, 2026",
     "settlementRule": "Resolves YES if front-month Brent crude settles above $95 at any official daily close before quarter end.",
     "thesis": "The geopolitical bid remains real, but fresh producer messaging has reduced the odds of an immediate supply squeeze.",

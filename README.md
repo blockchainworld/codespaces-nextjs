@@ -69,6 +69,39 @@ The current content model is intentionally simple and file-based.
 
 This means the next migration step can replace JSON reads inside `lib/contentApi.js` with a CMS, database, or external market feed without rewriting page structure.
 
+## Live Data Adapters
+
+The repository now includes an optional live data layer in `lib/liveData.js`.
+
+It is intentionally separate from the current page content model so you can test real external feeds without breaking the editorial market and news pages.
+
+Supported providers now:
+
+- `polymarket` for live market snapshots
+- `newsapi` for live headline ingestion
+
+Copy `.env.example` to `.env.local` and set:
+
+```bash
+PREDICTINFO_ENABLE_LIVE_DATA=true
+PREDICTINFO_ENABLE_LIVE_OVERLAY=true
+PREDICTINFO_MARKET_PROVIDER=polymarket
+PREDICTINFO_NEWS_PROVIDER=newsapi
+NEWSAPI_KEY=your_key_here
+```
+
+New live API routes:
+
+- `GET /api/live/status`
+- `GET /api/live/markets`
+- `GET /api/live/news`
+
+These routes return normalized external data that can later be merged into the main UI once you decide which live fields should override the editorial defaults.
+
+When `PREDICTINFO_ENABLE_LIVE_OVERLAY=true`, `lib/contentApi.js` will keep using your editorial records as the base model and only overlay live fields such as probability, move, volume, liquidity, status, and live headline/source metadata when a configured match is found.
+
+This is the intended production direction: live feeds update market state, while your own rules, evidence timelines, linked-market relationships, and settlement logic remain under your control.
+
 ## API Endpoints
 
 The repository includes minimal API routes for future frontend or external integration work:
@@ -78,6 +111,9 @@ The repository includes minimal API routes for future frontend or external integ
 - `GET /api/markets/[slug]`
 - `GET /api/news`
 - `GET /api/news/[slug]`
+- `GET /api/live/status`
+- `GET /api/live/markets`
+- `GET /api/live/news`
 
 ## Deployment
 

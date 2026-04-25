@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import SiteLayout from '../components/SiteLayout'
 import { getHomepageContent } from '../lib/contentApi'
+import { sortMarketsByActivity } from '../lib/marketRank'
 import styles from '../styles/home.module.css'
 
 const topicTabs = ['Trending', 'Breaking', 'New', 'Politics', 'Sports', 'Crypto', 'Tech', 'Economy', 'More']
@@ -14,19 +15,18 @@ export async function getStaticProps() {
       site,
       markets,
       newsStories,
-      principles: site.principles,
     },
+    revalidate: 300,
   }
 }
 
-function Home({ site, markets, newsStories, principles }) {
-  const featuredMarket = markets[0]
+function Home({ site, markets, newsStories }) {
+  const rankedMarkets = sortMarketsByActivity(markets)
+  const featuredMarket = rankedMarkets[0]
   const breakingStories = newsStories.slice(0, 3)
-  const hotTopics = [...markets]
-    .sort((left, right) => Number.parseInt(right.move, 10) - Number.parseInt(left.move, 10))
-    .slice(0, 5)
+  const hotTopics = rankedMarkets.slice(0, 5)
   const marketTabs = Array.from(
-    new Set(['All', ...markets.map((market) => market.category), ...markets.flatMap((market) => market.tags)])
+    new Set(['All', ...rankedMarkets.map((market) => market.category), ...rankedMarkets.flatMap((market) => market.tags)])
   ).slice(0, 10)
 
   return (
@@ -55,6 +55,9 @@ function Home({ site, markets, newsStories, principles }) {
                 <div>
                   <p className={styles.eyebrow}>{featuredMarket.category}</p>
                   <h1>{featuredMarket.title}</h1>
+                  {featuredMarket.liveMetadata?.overlaid ? (
+                    <span className={styles.liveIndicator}>Live from {featuredMarket.liveMetadata.source}</span>
+                  ) : null}
                 </div>
                 <div className={styles.featureActions}>
                   <button className={styles.iconGhost} type="button" aria-label="Copy market link">
@@ -117,6 +120,12 @@ function Home({ site, markets, newsStories, principles }) {
               <div className={styles.featureFooter}>
                 <span>{featuredMarket.volumeLabel}</span>
                 <span>Ends {featuredMarket.resolutionDate}</span>
+                {featuredMarket.liveMetadata?.overlaid ? <span>{featuredMarket.liveMetadata.source} feed</span> : null}
+                {featuredMarket.liveMetadata?.url ? (
+                  <a className={styles.inlineLink} href={featuredMarket.liveMetadata.url} rel="noreferrer" target="_blank">
+                    Open source market
+                  </a>
+                ) : null}
                 <Link className={styles.inlineLink} href={`/markets/${featuredMarket.slug}`}>
                   Open market
                 </Link>
@@ -197,10 +206,10 @@ function Home({ site, markets, newsStories, principles }) {
             </div>
 
             <div className={styles.marketList}>
-              {markets.map((market) => (
+              {rankedMarkets.map((market) => (
                 <article className={styles.marketListRow} key={market.slug}>
                   <div className={styles.marketIdentity}>
-                    <span>{market.category}</span>
+                    <span>{market.liveMetadata?.overlaid ? `${market.category} / live` : market.category}</span>
                     <Link className={styles.marketQuestion} href={`/markets/${market.slug}`}>
                       {market.title}
                     </Link>
@@ -212,15 +221,6 @@ function Home({ site, markets, newsStories, principles }) {
                 </article>
               ))}
             </div>
-          </section>
-
-          <section className={styles.advantageStrip}>
-            {principles.map((principle, index) => (
-              <article className={styles.advantageCard} key={principle}>
-                <span>0{index + 1}</span>
-                <p>{principle}</p>
-              </article>
-            ))}
           </section>
         </main>
       </SiteLayout>

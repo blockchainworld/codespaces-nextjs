@@ -420,7 +420,6 @@
   }
 }
 
-.marketHeroShell,
 .marketToolbarShell,
 .marketListShell {
   background: var(--surface);
@@ -429,31 +428,13 @@
   box-shadow: 0 10px 26px rgba(15, 23, 42, 0.05);
 }
 
-.marketHeroShell,
 .marketToolbarShell {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
   gap: 14px;
   padding: 14px;
 }
 
-.marketHeroTitle {
-  margin: 8px 0 0;
-  max-width: 14ch;
-  letter-spacing: -0.05em;
-  font-size: clamp(1.8rem, 4vw, 2.9rem);
-  line-height: 0.96;
-}
-
-.marketHeroStats {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(120px, 1fr));
-  gap: 10px;
-}
-
-.marketHeroStats div,
-.marketSummary,
+.marketInlineStats,
 .marketPriceCell,
 .marketStatCell {
   padding: 12px 14px;
@@ -462,8 +443,7 @@
   background: #f8fafc;
 }
 
-.marketHeroStats span,
-.marketSummary span,
+.marketInlineStats span,
 .marketPriceCell span,
 .marketControlsRow span,
 .marketStatCell,
@@ -475,16 +455,13 @@
   text-transform: uppercase;
 }
 
-.marketHeroStats span,
-.marketSummary span,
+.marketInlineStats span,
 .marketPriceCell span,
 .marketStatCell,
 .marketConviction {
   color: var(--muted);
 }
 
-.marketHeroStats strong,
-.marketSummary strong,
 .marketPriceCell strong {
   display: block;
   margin-top: 8px;
@@ -494,11 +471,7 @@
   color: var(--ink);
 }
 
-.marketToolbarShell {
-  display: grid;
-  gap: 16px;
-}
-
+.marketToolbarLabelRow,
 .marketToolbarTopline,
 .marketControlsRow,
 .marketIdentityTopline,
@@ -509,11 +482,32 @@
   gap: 12px;
 }
 
+
+.marketToolbarLabelRow,
 .marketToolbarTopline,
 .marketControlsRow,
 .marketListHeader,
 .marketListRow {
   justify-content: space-between;
+}
+
+.marketToolbarTitle {
+  margin: 6px 0 0;
+  color: var(--ink);
+  font-size: clamp(1.35rem, 2.5vw, 1.9rem);
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.marketInlineStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 10px;
+}
+
+.marketInlineStats span {
+  padding: 0.25rem 0.4rem;
 }
 
 .marketTabButton,
@@ -568,7 +562,7 @@
 .marketListHeader,
 .marketListRow {
   display: grid;
-  grid-template-columns: minmax(0, 3fr) 110px 110px 132px 160px 148px 100px;
+  grid-template-columns: minmax(0, 3.2fr) 100px 100px 110px 132px 132px 92px;
   padding: 12px 16px;
 }
 
@@ -596,6 +590,21 @@
   justify-content: flex-start;
 }
 
+.marketLiveBadge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0.2rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.08);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .marketQuestionLink {
   color: var(--ink);
   font-size: 1rem;
@@ -607,7 +616,11 @@
 .marketIdentityCell p {
   margin: 0;
   color: var(--muted);
-  font-size: 0.9rem;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .marketPriceCell strong {
@@ -628,15 +641,11 @@
 }
 
 @media (max-width: 1080px) {
-  .marketHeroShell,
+  .marketToolbarLabelRow,
   .marketToolbarTopline,
   .marketControlsRow {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .marketHeroStats {
-    width: 100%;
   }
 
   .marketListHeader,
@@ -655,13 +664,8 @@
 }
 
 @media (max-width: 720px) {
-  .marketHeroShell,
   .marketToolbarShell {
     padding: 12px;
-  }
-
-  .marketHeroStats {
-    grid-template-columns: 1fr;
   }
 
   .marketListHeader {
@@ -691,7 +695,6 @@
   }
 }
 
-.signalHeroShell,
 .signalToolbarShell,
 .signalFeedShell {
   background: var(--surface);
@@ -700,31 +703,13 @@
   box-shadow: 0 10px 26px rgba(15, 23, 42, 0.05);
 }
 
-.signalHeroShell,
 .signalToolbarShell {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
   gap: 14px;
   padding: 14px;
 }
 
-.signalHeroTitle {
-  margin: 8px 0 0;
-  max-width: 14ch;
-  letter-spacing: -0.05em;
-  font-size: clamp(1.8rem, 4vw, 2.9rem);
-  line-height: 0.96;
-}
-
-.signalHeroStats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(120px, 1fr));
-  gap: 10px;
-}
-
-.signalHeroStats div,
-.signalSummary,
+.signalInlineStats,
 .signalScoreCell,
 .signalMetaCell {
   padding: 12px 14px;
@@ -733,8 +718,7 @@
   background: #f8fafc;
 }
 
-.signalHeroStats span,
-.signalSummary span,
+.signalInlineStats span,
 .signalControlsRow span,
 .signalMetaCell,
 .signalQuality {
@@ -746,8 +730,6 @@
   text-transform: uppercase;
 }
 
-.signalHeroStats strong,
-.signalSummary strong,
 .signalScoreCell {
   display: block;
   margin-top: 8px;
@@ -757,11 +739,7 @@
   color: var(--ink);
 }
 
-.signalToolbarShell {
-  display: grid;
-  gap: 16px;
-}
-
+.signalToolbarLabelRow,
 .signalToolbarTopline,
 .signalControlsRow,
 .signalIdentityTopline {
@@ -769,6 +747,25 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+}
+
+.signalToolbarTitle {
+  margin: 6px 0 0;
+  color: var(--ink);
+  font-size: clamp(1.35rem, 2.5vw, 1.9rem);
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.signalInlineStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 10px;
+}
+
+.signalInlineStats span {
+  padding: 0.25rem 0.4rem;
 }
 
 .signalTabButton,
@@ -872,15 +869,11 @@
 }
 
 @media (max-width: 1080px) {
-  .signalHeroShell,
+  .signalToolbarLabelRow,
   .signalToolbarTopline,
   .signalControlsRow {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .signalHeroStats {
-    width: 100%;
   }
 
   .signalFeedHeader,
@@ -897,13 +890,8 @@
 }
 
 @media (max-width: 720px) {
-  .signalHeroShell,
   .signalToolbarShell {
     padding: 12px;
-  }
-
-  .signalHeroStats {
-    grid-template-columns: 1fr;
   }
 
   .signalFeedHeader {

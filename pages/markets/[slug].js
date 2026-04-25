@@ -32,6 +32,7 @@ export async function getStaticProps({ params }) {
       market,
       relatedNews,
     },
+    revalidate: 300,
   }
 }
 
@@ -84,6 +85,7 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
             <div className={styles.marketHeaderMeta}>
               <span>{market.volumeLabel}</span>
               <span>{market.resolutionDate}</span>
+              {market.liveMetadata?.overlaid ? <span>Live from {market.liveMetadata.source}</span> : null}
             </div>
           </section>
 
@@ -104,6 +106,7 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
                 <div className={styles.eventQuestionMeta}>
                   <span>{market.category}</span>
                   <span>{market.sourceQuality}</span>
+                  {market.liveMetadata?.overlaid ? <span>Live overlay active</span> : null}
                 </div>
 
                 <div className={styles.quickBookList}>
@@ -262,6 +265,11 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
                     <strong>{market.tags.join(', ')}</strong>
                   </div>
                 </div>
+                {market.liveMetadata?.url ? (
+                  <a className={styles.inlineLink} href={market.liveMetadata.url} rel="noreferrer" target="_blank">
+                    View source market
+                  </a>
+                ) : null}
               </section>
 
               <section className={styles.sidebarCard}>

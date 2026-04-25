@@ -5,8 +5,7 @@
   "navigation": [
     { "href": "/", "label": "Home" },
     { "href": "/markets", "label": "Markets" },
-    { "href": "/news", "label": "News" },
-    { "href": "/about", "label": "Methodology" }
+    { "href": "/news", "label": "News" }
   ],
   "metrics": [
     { "label": "Markets tracked", "value": "120+" },

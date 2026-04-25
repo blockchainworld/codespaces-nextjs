@@ -20,7 +20,7 @@ function impactRank(value) {
   return 1
 }
 
-export default function NewsDesk({ newsStories }) {
+export default function NewsDesk({ generatedAt, newsStories }) {
   const desks = ['All', ...new Set(newsStories.map((story) => story.desk))]
   const [activeDesk, setActiveDesk] = useState('All')
   const [sortBy, setSortBy] = useState('latest')
@@ -50,6 +50,17 @@ export default function NewsDesk({ newsStories }) {
   return (
     <section className={styles.explorerShell}>
       <div className={styles.signalToolbarShell}>
+        <div className={styles.signalToolbarLabelRow}>
+          <div>
+            <p className={styles.sectionLabel}>News</p>
+            <h1 className={styles.signalToolbarTitle}>Signal desk</h1>
+          </div>
+          <div className={styles.signalInlineStats}>
+            <span>{filteredStories.length} signals</span>
+            <span>{generatedAt.slice(11, 16)} UTC</span>
+          </div>
+        </div>
+
         <div className={styles.signalToolbarTopline}>
           <div className={styles.categoryTabs}>
             {desks.map((desk) => (
@@ -63,16 +74,11 @@ export default function NewsDesk({ newsStories }) {
               </button>
             ))}
           </div>
-
-          <div className={styles.signalSummary}>
-            <strong>{filteredStories.length}</strong>
-            <span>signals</span>
-          </div>
         </div>
 
         <div className={styles.signalControlsRow}>
           <label className={styles.signalSearchField}>
-            <span>Search signals</span>
+            <span>Search</span>
             <input
               onChange={(event) => setQuery(event.target.value)}
               placeholder="inflation, tariffs, AI supply"
@@ -100,12 +106,6 @@ export default function NewsDesk({ newsStories }) {
           <span>Impact</span>
           <span>Lag</span>
           <span>Source</span>
-        </div>
-
-        <div className={styles.signalFeedBody}>
-          {desks.map((desk) => (
-            desk
-          ))}
         </div>
 
         {filteredStories.map((story) => (
