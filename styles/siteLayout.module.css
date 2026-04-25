@@ -16,7 +16,8 @@
 }
 
 .header,
-.categoryBar {
+.categoryBar,
+.commandBar {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius-panel);
@@ -157,6 +158,74 @@
   padding: 16px 18px;
 }
 
+.commandBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 10px;
+  padding: 10px 12px;
+}
+
+.commandBarMeta,
+.commandBarActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.commandBarLabel,
+.commandMetric span {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.commandMetric {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 0.48rem 0.68rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-muted);
+}
+
+.commandMetric strong {
+  color: var(--ink);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.commandAction,
+.commandActionPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0.56rem 0.86rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.commandActionPrimary {
+  background: #111827;
+  color: #f8fafc;
+}
+
+.commandAction {
+  border: 1px solid var(--line);
+  background: var(--surface-muted);
+  color: var(--ink);
+}
+
 .footerLabel {
   margin: 0;
   color: var(--accent);
@@ -172,11 +241,13 @@
 @media (max-width: 960px) {
   .header,
   .categoryBar,
+  .commandBar,
   .footer {
     position: static;
   }
 
   .header,
+  .commandBar,
   .footer {
     flex-direction: column;
     align-items: flex-start;
@@ -184,6 +255,8 @@
 
   .headerPrimary,
   .nav,
+  .commandBarMeta,
+  .commandBarActions,
   .footerLinks {
     justify-content: flex-start;
   }

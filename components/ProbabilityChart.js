@@ -12,12 +12,13 @@ function buildPath(points, width, height, padding) {
     .join(' ')
 }
 
-export default function ProbabilityChart({ points }) {
+export default function ProbabilityChart({ points, labels }) {
   const width = 680
   const height = 260
   const padding = 28
   const path = buildPath(points, width, height, padding)
   const step = (width - padding * 2) / Math.max(points.length - 1, 1)
+  const pointLabels = Array.isArray(labels) && labels.length === points.length ? labels : points.map((_, index) => `W${index + 1}`)
 
   return (
     <div className={styles.chartShell}>
@@ -51,7 +52,7 @@ export default function ProbabilityChart({ points }) {
       <div className={styles.chartFooter}>
         {points.map((value, index) => (
           <div className={styles.chartPoint} key={`${value}-${index}`}>
-            <span>W{index + 1}</span>
+            <span>{pointLabels[index]}</span>
             <strong>{value}%</strong>
           </div>
         ))}

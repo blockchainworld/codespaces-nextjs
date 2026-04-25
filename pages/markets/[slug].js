@@ -39,6 +39,9 @@ export async function getStaticProps({ params }) {
 export default function MarketDetailPage({ site, market, relatedNews }) {
   const noProbability = 100 - market.probability
   const moveTone = market.move.startsWith('+') ? styles.metricToneUp : styles.metricToneDown
+  const latestTimelineItem = market.timeline[market.timeline.length - 1]
+  const leadSignal = relatedNews[0]
+  const chartLabels = market.curve.map((_, index) => market.timeline[index]?.date || `T${index + 1}`)
   const quickBookRows = [
     {
       label: 'Market price',
@@ -81,7 +84,15 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
                 Back to all markets
               </Link>
             </div>
-            <h1>{market.title}</h1>
+            <div className={styles.heroTitleRow}>
+              {market.liveMetadata?.icon ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img alt="" className={styles.heroMarketIcon} src={market.liveMetadata.icon} />
+              ) : (
+                <span className={styles.heroMarketFallback}>{market.category.slice(0, 1)}</span>
+              )}
+              <h1>{market.title}</h1>
+            </div>
             <div className={styles.marketHeaderMeta}>
               <span>{market.volumeLabel}</span>
               <span>{market.resolutionDate}</span>
@@ -94,7 +105,7 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
               <section className={styles.eventSurface}>
                 <div className={styles.eventSurfaceHeader}>
                   <div>
-                    <p className={styles.sectionLabel}>Market</p>
+                    <p className={styles.sectionLabel}>Price discovery</p>
                     <h2>{market.title}</h2>
                   </div>
                   <div className={styles.eventHeaderActions}>
@@ -107,6 +118,42 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
                   <span>{market.category}</span>
                   <span>{market.sourceQuality}</span>
                   {market.liveMetadata?.overlaid ? <span>Live overlay active</span> : null}
+                </div>
+
+                <div className={styles.terminalStatsCompact}>
+                  <div>
+                    <span>Probability</span>
+                    <strong>{market.probability}% yes</strong>
+                  </div>
+                  <div>
+                    <span>Move</span>
+                    <strong className={moveTone}>{market.move}</strong>
+                  </div>
+                  <div>
+                    <span>Resolution</span>
+                    <strong>{market.resolutionDate}</strong>
+                  </div>
+                  <div>
+                    <span>Participants</span>
+                    <strong>{market.participantsLabel}</strong>
+                  </div>
+                </div>
+
+                <div className={styles.marketNarrativeStrip}>
+                  <div>
+                    <span>Why now</span>
+                    <strong>{market.thesis}</strong>
+                  </div>
+                  <div>
+                    <span>Latest repricing</span>
+                    <strong>{latestTimelineItem?.title || 'Awaiting next event'}</strong>
+                  </div>
+                  {leadSignal ? (
+                    <div>
+                      <span>Lead signal</span>
+                      <strong>{leadSignal.headline}</strong>
+                    </div>
+                  ) : null}
                 </div>
 
                 <div className={styles.quickBookList}>
@@ -151,26 +198,65 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
               </section>
 
               <section className={styles.detailCard}>
-                <div className={styles.sectionTabs}>
-                  <span className={styles.sectionTabActive}>Rules</span>
-                  <span className={styles.sectionTab}>Market Context</span>
+                <div className={styles.detailSectionHeader}>
+                  <div>
+                    <p className={styles.sectionLabel}>Why this market moved</p>
+                    <h2>{market.thesis}</h2>
+                  </div>
+                  <span className={styles.qualityBadge}>{market.sourceQuality}</span>
                 </div>
-                <div className={styles.ruleBlock}>
-                  <p className={styles.sectionLabel}>Rules</p>
-                  <p className={styles.ruleBody}>{market.settlementRule}</p>
-                </div>
-                <div className={styles.contextBlock}>
-                  <p className={styles.sectionLabel}>Market Context</p>
-                  <h2>{market.thesis}</h2>
-                </div>
-                <div className={styles.bulletList}>
-                  {market.keyDrivers.map((driver) => (
-                    <p key={driver}>{driver}</p>
-                  ))}
+
+                <div className={styles.whyNowGrid}>
+                  <div className={styles.ruleBlock}>
+                    <p className={styles.sectionLabel}>Settlement rule</p>
+                    <p className={styles.ruleBody}>{market.settlementRule}</p>
+                  </div>
+
+                  <div className={styles.driverBlock}>
+                    <p className={styles.sectionLabel}>Key drivers</p>
+                    <div className={styles.bulletList}> 
+                      {market.keyDrivers.map((driver) => (
+                        <p key={driver}>{driver}</p>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </section>
 
-              <ProbabilityChart points={market.curve} />
+              <ProbabilityChart labels={chartLabels} points={market.curve} />
+
+              <section className={styles.detailCard}>
+                <div className={styles.detailSectionHeader}>
+                  <div>
+                    <p className={styles.sectionLabel}>Signal map</p>
+                    <h2>Information currently linked to this contract</h2>
+                  </div>
+                  <Link className={styles.inlineLink} href="/news">
+                    Open all signals
+                  </Link>
+                </div>
+
+                <div className={styles.signalTerminalGrid}>
+                  {relatedNews.map((story) => (
+                    <article className={styles.signalTerminalCard} key={story.slug}>
+                      <div className={styles.signalCardTopline}>
+                        <span>{story.source}</span>
+                        <strong>{story.signalScore}</strong>
+                      </div>
+                      <h3>{story.headline}</h3>
+                      <p>{story.summary}</p>
+                      <div className={styles.signalTerminalMeta}>
+                        <span>{story.sourceQuality}</span>
+                        <span>{story.updateLag}</span>
+                        <span>{story.publishedAt}</span>
+                      </div>
+                      <Link className={styles.inlineLink} href={`/news/${story.slug}`}>
+                        Open story
+                      </Link>
+                    </article>
+                  ))}
+                </div>
+              </section>
 
               <section className={styles.detailCard}>
                 <p className={styles.sectionLabel}>Evidence timeline</p>
@@ -201,48 +287,50 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
               <section className={styles.tradeTicketCard}>
                 <div className={styles.ticketHeader}>
                   <div>
-                    <span className={styles.sectionLabel}>Trade ticket</span>
+                    <span className={styles.sectionLabel}>Live quote</span>
                     <h3>{market.timeline[market.timeline.length - 1]?.date || market.resolutionDate}</h3>
                   </div>
-                  <span className={styles.ticketMode}>Market</span>
+                  <span className={styles.ticketMode}>{market.liveMetadata?.overlaid ? 'Overlay' : 'Editorial'}</span>
                 </div>
 
-                <div className={styles.ticketTabs}>
-                  <button className={styles.ticketTabActive} type="button">
-                    Buy
-                  </button>
-                  <button className={styles.ticketTab} type="button">
-                    Sell
-                  </button>
+                <div className={styles.ticketSummaryGrid}>
+                  <div>
+                    <span>24h move</span>
+                    <strong>{market.move}</strong>
+                  </div>
+                  <div>
+                    <span>Volume</span>
+                    <strong>{market.volumeLabel}</strong>
+                  </div>
                 </div>
 
                 <div className={styles.ticketOutcomeSwitch}>
                   <button className={styles.ticketOutcomeYes} type="button">
-                    Yes {market.probability}c
+                    Yes {market.probability}c bid
                   </button>
                   <button className={styles.ticketOutcomeNo} type="button">
-                    No {noProbability}c
+                    No {noProbability}c ask
                   </button>
                 </div>
 
                 <div className={styles.ticketAmountBlock}>
-                  <span>Amount</span>
-                  <strong>$0</strong>
+                  <span>Execution</span>
+                  <strong>{market.liveMetadata?.url ? 'External' : 'Offline'}</strong>
                 </div>
 
-                <div className={styles.ticketChipRow}>
-                  {['+$1', '+$5', '+$10', '+$100', 'Max'].map((chip) => (
-                    <button className={styles.ticketChip} key={chip} type="button">
-                      {chip}
-                    </button>
-                  ))}
-                </div>
+                {market.liveMetadata?.url ? (
+                  <a className={styles.tradeSubmitButton} href={market.liveMetadata.url} rel="noreferrer" target="_blank">
+                    Open source market
+                  </a>
+                ) : (
+                  <div className={styles.ticketDisclaimer}>Live execution is not connected for this contract yet.</div>
+                )}
 
-                <button className={styles.tradeSubmitButton} type="button">
-                  Trade
-                </button>
-
-                <p className={styles.ticketDisclaimer}>By trading, you agree to the Terms of Use.</p>
+                <p className={styles.ticketDisclaimer}>
+                  {market.liveMetadata?.overlaid
+                    ? 'Quotes are derived from the linked live market feed and refreshed through overlay updates.'
+                    : 'This contract currently uses the editorial model and local pricing assumptions.'}
+                </p>
               </section>
 
               <section className={styles.sidebarCard}>
@@ -270,25 +358,6 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
                     View source market
                   </a>
                 ) : null}
-              </section>
-
-              <section className={styles.sidebarCard}>
-                <p className={styles.sectionLabel}>Linked signals</p>
-                <div className={styles.compactRelatedList}>
-                  {relatedNews.map((story) => (
-                    <article className={styles.signalCardCompact} key={story.slug}>
-                      <div className={styles.signalCardTopline}>
-                        <span>{story.source}</span>
-                        <strong>{story.signalScore}</strong>
-                      </div>
-                      <h3>{story.headline}</h3>
-                      <p>{story.summary}</p>
-                      <Link className={styles.inlineLink} href={`/news/${story.slug}`}>
-                        Open story
-                      </Link>
-                    </article>
-                  ))}
-                </div>
               </section>
             </aside>
           </section>

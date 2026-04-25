@@ -49,6 +49,8 @@ export default function MarketsExplorer({ markets }) {
       .sort(sortOptions[sortBy])
   }, [activeCategory, markets, query, sortBy])
 
+  const spotlightMarkets = filteredMarkets.slice(0, 3)
+
   return (
     <section className={styles.explorerShell}>
       <div className={styles.marketToolbarShell}>
@@ -58,7 +60,7 @@ export default function MarketsExplorer({ markets }) {
             <h1 className={styles.marketToolbarTitle}>All markets</h1>
           </div>
           <div className={styles.marketInlineStats}>
-            <span>{filteredMarkets.length} live</span>
+            <span>{filteredMarkets.length} markets</span>
             <span>{categories.length - 1} sectors</span>
           </div>
         </div>
@@ -101,49 +103,132 @@ export default function MarketsExplorer({ markets }) {
         </div>
       </div>
 
-      <div className={styles.marketListShell}>
-        <div className={styles.marketListHeader}>
-          <span>Market</span>
-          <span>Yes</span>
-          <span>No</span>
-          <span>Move</span>
-          <span>Volume</span>
-          <span>Depth</span>
-          <span>Status</span>
-        </div>
+      {spotlightMarkets.length ? (
+        <div className={styles.marketSpotlightGrid}>
+          {spotlightMarkets.map((market) => {
+            const noPrice = 100 - market.probability
+            const moveTone = getMovePoints(market.move) >= 0 ? styles.marketMoveUp : styles.marketMoveDown
 
+            return (
+              <article className={styles.marketSpotlightCard} key={`spotlight-${market.slug}`}>
+                <div className={styles.marketSpotlightTopline}>
+                  <div className={styles.marketIdentityTopline}>
+                    <span className={styles.sectionLabel}>{market.category}</span>
+                    <span className={styles.marketConviction}>{market.conviction}</span>
+                    {market.liveMetadata?.overlaid ? <span className={styles.marketLiveBadge}>Live</span> : null}
+                  </div>
+                  <span className={styles.statusPill}>{market.status}</span>
+                </div>
+
+                <div className={styles.marketIdentityMain}>
+                  {market.liveMetadata?.icon ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img alt="" className={styles.marketIdentityIconLarge} src={market.liveMetadata.icon} />
+                  ) : (
+                    <span className={styles.marketIdentityFallbackLarge}>{market.category.slice(0, 1)}</span>
+                  )}
+
+                  <div className={styles.marketSpotlightBody}>
+                    <Link className={styles.marketQuestionLink} href={`/markets/${market.slug}`}>
+                      {market.title}
+                    </Link>
+                    <p>{market.description}</p>
+                  </div>
+                </div>
+
+                <div className={styles.marketOutcomeBoard}>
+                  <div className={styles.marketOutcomeBuyYes}>
+                    <span>Yes</span>
+                    <strong>{market.probability}c</strong>
+                  </div>
+                  <div className={styles.marketOutcomeBuyNo}>
+                    <span>No</span>
+                    <strong>{noPrice}c</strong>
+                  </div>
+                </div>
+
+                <div className={styles.marketSpotlightMeta}>
+                  <span className={moveTone}>{market.move}</span>
+                  <span>{market.volumeLabel}</span>
+                  <span>{market.participantsLabel}</span>
+                  <span>{market.resolutionDate}</span>
+                </div>
+
+                <div className={styles.marketSignalRow}>
+                  <span>Signal quality</span>
+                  <strong>{market.sourceQuality}</strong>
+                </div>
+              </article>
+            )
+          })}
+        </div>
+      ) : null}
+
+      <div className={styles.marketBoardGrid}>
         {filteredMarkets.map((market) => {
           const negativePrice = 100 - market.probability
           const moveTone = getMovePoints(market.move) >= 0 ? styles.marketMoveUp : styles.marketMoveDown
 
           return (
-            <article className={styles.marketListRow} key={market.slug}>
-              <div className={styles.marketIdentityCell}>
+            <article className={styles.marketEventCard} key={market.slug}>
+              <div className={styles.marketSpotlightTopline}>
                 <div className={styles.marketIdentityTopline}>
                   <span className={styles.sectionLabel}>{market.category}</span>
-                  <span className={styles.marketConviction}>{market.conviction}</span>
                   {market.liveMetadata?.overlaid ? <span className={styles.marketLiveBadge}>Live</span> : null}
                 </div>
-                <Link className={styles.marketQuestionLink} href={`/markets/${market.slug}`}>
-                  {market.title}
-                </Link>
-                <p>{market.tags.join(' / ')}</p>
+                <span className={styles.marketConviction}>{market.conviction}</span>
               </div>
 
-              <div className={styles.marketPriceCell}>
-                <span>Yes</span>
-                <strong>{market.probability}c</strong>
+              <div className={styles.marketIdentityMain}>
+                {market.liveMetadata?.icon ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img alt="" className={styles.marketIdentityIcon} src={market.liveMetadata.icon} />
+                ) : (
+                  <span className={styles.marketIdentityFallback}>{market.category.slice(0, 1)}</span>
+                )}
+
+                <div className={styles.marketIdentityCell}>
+                  <Link className={styles.marketQuestionLink} href={`/markets/${market.slug}`}>
+                    {market.title}
+                  </Link>
+                  <p>{market.tags.join(' / ')}</p>
+                </div>
               </div>
 
-              <div className={styles.marketPriceCell}>
-                <span>No</span>
-                <strong>{negativePrice}c</strong>
+              <div className={styles.marketOutcomeBoardCompact}>
+                <div className={styles.marketOutcomeBuyYes}>
+                  <span>Yes</span>
+                  <strong>{market.probability}c</strong>
+                </div>
+                <div className={styles.marketOutcomeBuyNo}>
+                  <span>No</span>
+                  <strong>{negativePrice}c</strong>
+                </div>
               </div>
 
-              <div className={`${styles.marketStatCell} ${moveTone}`}>{market.move}</div>
-              <div className={styles.marketStatCell}>{market.volumeLabel}</div>
-              <div className={styles.marketStatCell}>{market.liquidityLabel}</div>
-              <div className={styles.marketStatusCell}>
+              <div className={styles.marketEventMetaGrid}>
+                <div>
+                  <span>Move</span>
+                  <strong className={moveTone}>{market.move}</strong>
+                </div>
+                <div>
+                  <span>Volume</span>
+                  <strong>{market.volumeLabel}</strong>
+                </div>
+                <div>
+                  <span>Depth</span>
+                  <strong>{market.liquidityLabel}</strong>
+                </div>
+              </div>
+
+              <div className={styles.marketSignalRow}>
+                <span>Signal quality</span>
+                <strong>{market.sourceQuality}</strong>
+              </div>
+
+              <div className={styles.marketEventFooter}>
+                <span>{market.participantsLabel}</span>
+                <span>{market.resolutionDate}</span>
                 <span className={styles.statusPill}>{market.status}</span>
               </div>
             </article>

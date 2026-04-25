@@ -23,6 +23,7 @@
 
 .heroTopline,
 .heroStats,
+.heroTitleRow,
 .mainGrid,
 .timelineItem,
 .chartMeta,
@@ -92,10 +93,39 @@
 }
 
 .heroCard h1 {
-  margin-top: 14px;
   max-width: 16ch;
   font-size: clamp(2rem, 4.4vw, 3.3rem);
   line-height: 0.95;
+}
+
+.heroTitleRow {
+  align-items: center;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.heroMarketIcon,
+.heroMarketFallback {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+}
+
+.heroMarketIcon {
+  object-fit: cover;
+  background: var(--surface-muted);
+}
+
+.heroMarketFallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #111827;
+  color: #f8fafc;
+  font-family: var(--mono);
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .heroText,
@@ -494,6 +524,7 @@
   }
 
   .heroTopline,
+  .heroTitleRow,
   .chartMeta {
     flex-direction: column;
     align-items: flex-start;
@@ -586,7 +617,10 @@
 
 .orderbookList,
 .compactRelatedList,
-.sidebarStatsCompact {
+.sidebarStatsCompact,
+.marketNarrativeStrip,
+.whyNowGrid,
+.signalTerminalGrid {
   display: grid;
   gap: 10px;
 }
@@ -674,10 +708,87 @@
   margin: 10px 0 0;
 }
 
+.detailSectionHeader,
+.signalTerminalMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.detailSectionHeader {
+  margin-bottom: 16px;
+}
+
+.marketNarrativeStrip {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 2px;
+}
+
+.marketNarrativeStrip div,
+.ruleBlock,
+.driverBlock,
+.signalTerminalCard {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface-muted);
+}
+
+.marketNarrativeStrip span,
+.signalTerminalMeta span {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.marketNarrativeStrip strong,
+.signalTerminalCard h3 {
+  display: block;
+  margin-top: 8px;
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.whyNowGrid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+}
+
+.ruleBlock p,
+.driverBlock p,
+.signalTerminalCard p {
+  margin: 0;
+}
+
+.signalTerminalGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.signalTerminalCard h3 {
+  margin: 10px 0 0;
+}
+
+.signalTerminalCard p {
+  margin-top: 8px;
+}
+
+.signalTerminalMeta {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 12px;
+}
+
 .signalCardCompact p {
   margin: 8px 0 0;
 }
-
+  .sidebarStatsCompact,
+  .marketNarrativeStrip,
+  .signalTerminalGrid {
 @media (max-width: 1100px) {
   .heroQuoteStrip,
   .terminalStatsCompact,
@@ -695,8 +806,17 @@
 @media (max-width: 640px) {
   .heroQuoteStrip,
   .terminalStatsCompact,
-  .sidebarStatsCompact {
+  .sidebarStatsCompact,
+  .marketNarrativeStrip,
+  .signalTerminalGrid,
+  .whyNowGrid {
     grid-template-columns: 1fr;
+  }
+
+  .detailSectionHeader,
+  .signalTerminalMeta {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
@@ -1018,6 +1138,7 @@
 }
 
 .eventFooterMeta span,
+.ticketSummaryGrid span,
 .ticketAmountBlock span,
 .ticketChip,
 .ticketMode {
@@ -1030,6 +1151,7 @@
 }
 
 .eventFooterMeta strong,
+.ticketSummaryGrid strong,
 .ticketAmountBlock strong {
   display: block;
   margin-top: 8px;
@@ -1073,23 +1195,17 @@
   letter-spacing: -0.04em;
 }
 
-.ticketTabs {
-  gap: 8px;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 12px;
+.ticketSummaryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
 }
 
-.ticketTab,
-.ticketTabActive {
-  min-height: 34px;
-  padding: 0.44rem 0.7rem;
-  border-radius: 10px;
-}
-
-.ticketTabActive {
-  border-color: #111827;
-  background: #111827;
-  color: #f8fafc;
+.ticketSummaryGrid div {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-muted);
 }
 
 .ticketOutcomeSwitch {
@@ -1115,28 +1231,21 @@
 
 .ticketAmountBlock strong {
   margin-top: 0;
-  font-size: 2.2rem;
-  color: #94a3b8;
-}
-
-.ticketChipRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.ticketChip {
-  min-height: 32px;
-  padding: 0.4rem 0.55rem;
-  background: var(--surface-muted);
+  font-size: 1.4rem;
+  color: var(--ink);
 }
 
 .tradeSubmitButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-height: 44px;
+  border-radius: 12px;
   background: #2563eb;
   color: #f8fafc;
   font-size: 1rem;
   font-weight: 800;
+  text-decoration: none;
 }
 
 .ticketDisclaimer {
@@ -1168,6 +1277,7 @@
   }
 
   .eventFooterMeta,
+  .ticketSummaryGrid,
   .ticketOutcomeSwitch {
     grid-template-columns: 1fr;
   }

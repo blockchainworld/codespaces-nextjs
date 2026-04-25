@@ -13,6 +13,7 @@ function isActive(pathname, href) {
 export default function SiteLayout({ children, site }) {
   const router = useRouter()
   const navigation = site.navigation || []
+  const metrics = site.metrics || []
 
   return (
     <div className={styles.siteFrame}>
@@ -44,6 +45,27 @@ export default function SiteLayout({ children, site }) {
           ))}
         </nav>
       </div>
+
+      <section className={styles.commandBar} aria-label="Platform status and routing">
+        <div className={styles.commandBarMeta}>
+          <span className={styles.commandBarLabel}>Platform state</span>
+          {metrics.map((metric) => (
+            <div className={styles.commandMetric} key={metric.label}>
+              <span>{metric.label}</span>
+              <strong>{metric.value}</strong>
+            </div>
+          ))}
+        </div>
+
+        <div className={styles.commandBarActions}>
+          <Link className={styles.commandActionPrimary} href="/markets">
+            Open market board
+          </Link>
+          <Link className={styles.commandAction} href="/news">
+            Open signal desk
+          </Link>
+        </div>
+      </section>
 
       {children}
 
