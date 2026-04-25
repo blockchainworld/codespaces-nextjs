@@ -1,0 +1,44 @@
+{
+  "draftId": "draft_fed_cut_2026_09",
+  "title": "US rates cut before September 2026 meeting?",
+  "question": "Will the Federal Reserve lower its target rate before the September 2026 FOMC meeting concludes?",
+  "category": "Macro",
+  "tags": ["Fed", "Rates", "Inflation", "Labor"],
+  "proposedOutcomeType": "binary",
+  "proposedCloseTime": "2026-09-18T18:00:00Z",
+  "proposedResolveTime": "2026-09-18T20:00:00Z",
+  "hypothesis": "Softening growth data raises the probability of an earlier policy cut.",
+  "sourceLinks": [
+    "https://www.federalreserve.gov/",
+    "https://www.bls.gov/",
+    "https://www.bea.gov/"
+  ],
+  "createdBy": "markets-editor@predict.info",
+  "createdAt": "2026-04-25T18:00:00Z",
+  "status": "needs-review",
+  "resolutionSpec": {
+    "questionCanonical": "Resolves YES if the Federal Reserve lowers its target rate before the September 2026 FOMC meeting concludes.",
+    "resolutionRule": "Use the official FOMC rate decision published on federalreserve.gov.",
+    "primaryResolver": "federalreserve.gov",
+    "secondaryResolver": "FOMC statement archive",
+    "disputeWindowHours": 24,
+    "resolutionEvidenceRequirements": [
+      "Official decision statement",
+      "Published effective target range"
+    ],
+    "invalidConditions": [
+      "No official FOMC decision published",
+      "Target range unchanged"
+    ],
+    "timezone": "UTC",
+    "finalResolveDeadline": "2026-09-19T20:00:00Z",
+    "version": 1
+  },
+  "approvalChecklist": {
+    "editorApproval": false,
+    "riskApproval": false,
+    "legalApproval": false,
+    "liquidityApproval": false,
+    "blockedReasons": []
+  }
+}
