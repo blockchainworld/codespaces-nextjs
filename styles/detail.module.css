@@ -786,6 +786,41 @@
 .signalCardCompact p {
   margin: 8px 0 0;
 }
+
+.signalInterpretationGrid,
+.signalRouteGrid {
+  display: grid;
+  gap: 12px;
+}
+
+.signalInterpretationGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.signalInterpretationCard,
+.signalRouteCard {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface-muted);
+}
+
+.signalRouteGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.signalRouteCard h3 {
+  margin: 10px 0 0;
+}
+
+.signalRouteCard p {
+  margin: 8px 0 0;
+}
+
+.signalRouteCard .inlineLink {
+  margin-top: 12px;
+}
   .sidebarStatsCompact,
   .marketNarrativeStrip,
   .signalTerminalGrid {
@@ -931,6 +966,11 @@
 @media (max-width: 1100px) {
   .signalQuoteStrip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .signalInterpretationGrid,
+  .signalRouteGrid {
+    grid-template-columns: 1fr;
   }
 }
 

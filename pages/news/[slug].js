@@ -38,6 +38,8 @@ export async function getStaticProps({ params }) {
 }
 
 export default function NewsDetailPage({ site, story, relatedMarkets, generatedAt }) {
+  const leadMarket = relatedMarkets[0]
+
   return (
     <>
       <Head>
@@ -90,6 +92,21 @@ export default function NewsDetailPage({ site, story, relatedMarkets, generatedA
                 <span>{story.source}</span>
               </div>
             </div>
+
+            <div className={styles.marketNarrativeStrip}>
+              <div>
+                <span>Primary route</span>
+                <strong>{leadMarket ? leadMarket.title : 'Awaiting linked market'}</strong>
+              </div>
+              <div>
+                <span>Evidence quality</span>
+                <strong>{story.sourceQuality}</strong>
+              </div>
+              <div>
+                <span>Market reach</span>
+                <strong>{relatedMarkets.length} linked contracts</strong>
+              </div>
+            </div>
           </section>
 
           <section className={styles.mainGrid}>
@@ -97,8 +114,8 @@ export default function NewsDetailPage({ site, story, relatedMarkets, generatedA
               <section className={styles.tradingCard}>
                 <div className={styles.tradingHeader}>
                   <div>
-                    <p className={styles.sectionLabel}>Signal state</p>
-                    <h2>Classification and evidence quality</h2>
+                    <p className={styles.sectionLabel}>Signal terminal</p>
+                    <h2>What changed and where it flows</h2>
                   </div>
                   <span className={styles.qualityBadge}>{story.sourceQuality}</span>
                 </div>
@@ -131,10 +148,36 @@ export default function NewsDetailPage({ site, story, relatedMarkets, generatedA
                     </div>
                   </article>
                 </div>
+
+                <div className={styles.signalInterpretationGrid}>
+                  <div className={styles.signalInterpretationCard}>
+                    <p className={styles.sectionLabel}>Market implications</p>
+                    <div className={styles.bulletList}>
+                      {story.takeaways.map((item) => (
+                        <p key={item}>{item}</p>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className={styles.signalInterpretationCard}>
+                    <p className={styles.sectionLabel}>Key evidence</p>
+                    <div className={styles.bulletList}>
+                      {story.keyEvidence.map((item) => (
+                        <p key={item}>{item}</p>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </section>
 
               <section className={styles.detailCard}>
-                <p className={styles.sectionLabel}>Signal readout</p>
+                <div className={styles.detailSectionHeader}>
+                  <div>
+                    <p className={styles.sectionLabel}>Signal readout</p>
+                    <h2>Why this input matters for pricing</h2>
+                  </div>
+                  <span className={styles.qualityBadge}>{story.impact}</span>
+                </div>
                 <div className={styles.proseBlock}>
                   {story.body.map((paragraph) => (
                     <p key={paragraph}>{paragraph}</p>
@@ -143,19 +186,34 @@ export default function NewsDetailPage({ site, story, relatedMarkets, generatedA
               </section>
 
               <section className={styles.detailCard}>
-                <p className={styles.sectionLabel}>Market implications</p>
-                <div className={styles.bulletList}>
-                  {story.takeaways.map((item) => (
-                    <p key={item}>{item}</p>
-                  ))}
+                <div className={styles.detailSectionHeader}>
+                  <div>
+                    <p className={styles.sectionLabel}>Contract routing</p>
+                    <h2>Markets currently repricing on this signal</h2>
+                  </div>
+                  <Link className={styles.inlineLink} href="/markets">
+                    Open market board
+                  </Link>
                 </div>
-              </section>
 
-              <section className={styles.detailCard}>
-                <p className={styles.sectionLabel}>Key evidence</p>
-                <div className={styles.bulletList}>
-                  {story.keyEvidence.map((item) => (
-                    <p key={item}>{item}</p>
+                <div className={styles.signalRouteGrid}>
+                  {relatedMarkets.map((market) => (
+                    <article className={styles.signalRouteCard} key={market.slug}>
+                      <div className={styles.signalCardTopline}>
+                        <span>{market.category}</span>
+                        <strong>{market.probability}%</strong>
+                      </div>
+                      <h3>{market.title}</h3>
+                      <p>{market.description}</p>
+                      <div className={styles.signalTerminalMeta}>
+                        <span>{market.move}</span>
+                        <span>{market.volumeLabel}</span>
+                        <span>{market.resolutionDate}</span>
+                      </div>
+                      <Link className={styles.inlineLink} href={`/markets/${market.slug}`}>
+                        Open market
+                      </Link>
+                    </article>
                   ))}
                 </div>
               </section>
@@ -185,27 +243,6 @@ export default function NewsDetailPage({ site, story, relatedMarkets, generatedA
                     <span>Desk</span>
                     <strong>{story.desk}</strong>
                   </div>
-                </div>
-              </section>
-
-              <section className={styles.sidebarCard}>
-                <p className={styles.sectionLabel}>Moves these contracts</p>
-                <div className={styles.relatedContractList}>
-                  {relatedMarkets.map((market) => (
-                    <article className={styles.relatedContractRow} key={market.slug}>
-                      <div>
-                        <span>{market.category}</span>
-                        <h3>{market.title}</h3>
-                      </div>
-                      <div className={styles.relatedContractStats}>
-                        <strong>{market.probability}c</strong>
-                        <span>{market.move}</span>
-                      </div>
-                      <Link className={styles.inlineLink} href={`/markets/${market.slug}`}>
-                        Open market
-                      </Link>
-                    </article>
-                  ))}
                 </div>
               </section>
             </aside>
