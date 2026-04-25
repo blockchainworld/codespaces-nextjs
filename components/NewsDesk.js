@@ -144,7 +144,7 @@ export default function NewsDesk({ generatedAt, markets, newsStories }) {
               </article>
             )
           })}
-        </div>
+        </section>
       ) : null}
 
       <section className={styles.signalBoardGrid}>
