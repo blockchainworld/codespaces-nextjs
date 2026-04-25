@@ -219,6 +219,17 @@ export default function MarketsExplorer({ markets }) {
                   <span>Signal quality</span>
                   <strong>{market.sourceQuality}</strong>
                 </div>
+
+                <div className={styles.marketConnectionGrid}>
+                  <div>
+                    <span>Linked signals</span>
+                    <strong>{market.relatedNewsSlugs.length}</strong>
+                  </div>
+                  <div>
+                    <span>Evidence events</span>
+                    <strong>{market.timeline.length}</strong>
+                  </div>
+                </div>
               </article>
             )
           })}
@@ -285,6 +296,17 @@ export default function MarketsExplorer({ markets }) {
               <div className={styles.marketSignalRow}>
                 <span>Signal quality</span>
                 <strong>{market.sourceQuality}</strong>
+              </div>
+
+              <div className={styles.marketConnectionGrid}>
+                <div>
+                  <span>Signals</span>
+                  <strong>{market.relatedNewsSlugs.length}</strong>
+                </div>
+                <div>
+                  <span>Evidence</span>
+                  <strong>{market.timeline.length}</strong>
+                </div>
               </div>
 
               <div className={styles.marketEventFooter}>

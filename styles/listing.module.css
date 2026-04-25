@@ -565,6 +565,7 @@
 .marketOutcomeBoardCompact,
 .marketEventMetaGrid,
 .marketSignalRow,
+.marketConnectionGrid,
 .marketScanGrid,
 .marketScanList {
   display: grid;
@@ -802,6 +803,35 @@
   line-height: 1.35;
 }
 
+.marketConnectionGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.marketConnectionGrid div {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.marketConnectionGrid span {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.marketConnectionGrid strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
 .marketEventMetaGrid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -835,6 +865,7 @@
   .marketSpotlightGrid,
   .marketScanGrid,
   .marketBoardGrid,
+  .marketConnectionGrid,
   .marketEventMetaGrid {
     grid-template-columns: 1fr;
   }
