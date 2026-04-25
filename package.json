@@ -9,6 +9,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@walletconnect/ethereum-provider": "^2.23.9",
+    "ethers": "^6.16.0",
     "next": "^16.1.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

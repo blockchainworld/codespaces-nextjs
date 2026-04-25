@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import styles from '../styles/siteLayout.module.css'
+import { useWalletSession } from './WalletSessionProvider'
 
 function isActive(pathname, href) {
   if (href === '/') {
@@ -14,6 +15,10 @@ export default function SiteLayout({ children, site }) {
   const router = useRouter()
   const navigation = site.navigation || []
   const metrics = site.metrics || []
+  const { address, chainName, connect, disconnect, errorMessage, hasProvider, isConnected, status, walletLabel } =
+    useWalletSession()
+
+  const shortAddress = address ? `${address.slice(0, 6)}...${address.slice(-4)}` : ''
 
   return (
     <div className={styles.siteFrame}>
@@ -30,7 +35,37 @@ export default function SiteLayout({ children, site }) {
             <span className={styles.searchPlaceholder}>Search markets, topics, signals...</span>
           </Link>
         </div>
+
+        <div className={styles.headerActions}>
+          {isConnected ? (
+            <>
+              <div className={styles.walletStatus}>
+                <span>{walletLabel}</span>
+                <strong>{shortAddress}</strong>
+                <em>{chainName}</em>
+              </div>
+              <button className={styles.walletDisconnect} onClick={disconnect} type="button">
+                Log out
+              </button>
+            </>
+          ) : hasProvider ? (
+            <button className={styles.walletConnect} onClick={connect} type="button">
+              {status === 'connecting' ? 'Signing...' : 'Sign in with wallet'}
+            </button>
+          ) : (
+            <a
+              className={styles.walletInstall}
+              href="https://metamask.io/download/"
+              rel="noreferrer"
+              target="_blank"
+            >
+              Install wallet
+            </a>
+          )}
+        </div>
       </header>
+
+      {errorMessage ? <p className={styles.walletNotice}>{errorMessage}</p> : null}
 
       <div className={styles.categoryBar}>
         <nav className={styles.nav} aria-label="Primary navigation">
