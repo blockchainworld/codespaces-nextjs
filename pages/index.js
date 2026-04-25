@@ -4,6 +4,8 @@ import SiteLayout from '../components/SiteLayout'
 import { getHomepageContent } from '../lib/contentApi'
 import styles from '../styles/home.module.css'
 
+const topicTabs = ['Trending', 'Breaking', 'New', 'Politics', 'Sports', 'Crypto', 'Tech', 'Economy', 'More']
+
 export async function getStaticProps() {
   const { site, markets, newsStories } = await getHomepageContent()
 
@@ -13,17 +15,19 @@ export async function getStaticProps() {
       markets,
       newsStories,
       principles: site.principles,
-      siteMetrics: site.metrics,
     },
   }
 }
 
-function Home({ site, markets, newsStories, principles, siteMetrics }) {
+function Home({ site, markets, newsStories, principles }) {
   const featuredMarket = markets[0]
-  const featuredSignals = newsStories.slice(0, 3)
-  const topMovers = [...markets]
+  const breakingStories = newsStories.slice(0, 3)
+  const hotTopics = [...markets]
     .sort((left, right) => Number.parseInt(right.move, 10) - Number.parseInt(left.move, 10))
-    .slice(0, 3)
+    .slice(0, 5)
+  const marketTabs = Array.from(
+    new Set(['All', ...markets.map((market) => market.category), ...markets.flatMap((market) => market.tags)])
+  ).slice(0, 10)
 
   return (
     <>
@@ -37,202 +41,186 @@ function Home({ site, markets, newsStories, principles, siteMetrics }) {
 
       <SiteLayout site={site}>
         <main className={styles.pageShell}>
-          <section className={styles.hero}>
-            <section className={styles.marketBoard}>
-              <div className={styles.boardLeadBar}>
+          <nav className={styles.topicBar} aria-label="Market topic filters">
+            {topicTabs.map((topic, index) => (
+              <Link className={index === 0 ? styles.topicTabActive : styles.topicTab} href="/markets" key={topic}>
+                {topic}
+              </Link>
+            ))}
+          </nav>
+
+          <section className={styles.heroGrid}>
+            <article className={styles.featureEventCard}>
+              <div className={styles.featureEventTopline}>
                 <div>
-                  <p className={styles.eyebrow}>Market overview</p>
-                  <h1>Trade the questions moving now.</h1>
+                  <p className={styles.eyebrow}>{featuredMarket.category}</p>
+                  <h1>{featuredMarket.title}</h1>
                 </div>
-                <div className={styles.boardActions}>
-                  <Link className={styles.primaryCta} href="/markets">
-                    All markets
-                  </Link>
-                  <Link className={styles.secondaryCta} href="/news">
-                    Signal desk
-                  </Link>
+                <div className={styles.featureActions}>
+                  <button className={styles.iconGhost} type="button" aria-label="Copy market link">
+                    ↗
+                  </button>
+                  <button className={styles.iconGhost} type="button" aria-label="Save market">
+                    ☆
+                  </button>
                 </div>
               </div>
 
-              <div className={styles.metricStrip}>
-                {siteMetrics.map((metric) => (
-                  <div className={styles.metaCard} key={metric.label}>
-                    <span className={styles.metricLabel}>{metric.label}</span>
-                    <strong>{metric.value}</strong>
-                  </div>
-                ))}
-              </div>
-
-              <div className={styles.marketTable}>
-                <div className={styles.tableHeader}>
-                  <span>Market</span>
-                  <span>Chance</span>
-                  <span>Move</span>
-                  <span>Volume</span>
-                  <span>Ends</span>
-                </div>
-                {markets.map((market) => {
-                  const moveTone = market.move.startsWith('+') ? styles.positiveMove : styles.negativeMove
+              <div className={styles.featureMarketGrid}>
+                {featuredMarket.timeline.map((item, index) => {
+                  const isPrimary = index === featuredMarket.timeline.length - 1
+                  const price = Math.max(1, Math.round(featuredMarket.curve[index] || featuredMarket.probability))
+                  const noPrice = 100 - price
 
                   return (
-                    <article className={styles.tableRow} key={market.slug}>
-                      <div className={styles.tableMarket}>
-                        <span className={styles.marketCategory}>{market.category}</span>
-                        <Link className={styles.marketLink} href={`/markets/${market.slug}`}>
-                          {market.title}
-                        </Link>
-                        <p>{market.liquidityLabel}</p>
+                    <article className={styles.outcomeRow} key={`${item.date}-${item.title}`}>
+                      <div className={styles.outcomeDateBlock}>
+                        <strong>{item.date}</strong>
+                        <span>{featuredMarket.orderBook.yes[index]?.size || featuredMarket.volumeLabel}</span>
                       </div>
-                      <div className={styles.tableCellStrong}>{market.probability}%</div>
-                      <div className={`${styles.tableCell} ${moveTone}`}>{market.move}</div>
-                      <div className={styles.tableCell}>{market.volumeLabel}</div>
-                      <div className={styles.tableCell}>{market.resolutionDate}</div>
+                      <div className={styles.outcomeProbabilityBlock}>
+                        <strong>{price}%</strong>
+                        <span className={isPrimary ? styles.reviewState : styles.moveState}>
+                          {isPrimary ? 'In review' : item.impact}
+                        </span>
+                      </div>
+                      <button className={styles.buyYesRowButton} type="button">
+                        Buy Yes {price}c
+                      </button>
+                      <button className={styles.buyNoRowButton} type="button">
+                        Buy No {noPrice}c
+                      </button>
                     </article>
                   )
                 })}
               </div>
-            </section>
 
-            <aside className={styles.heroRail}>
-              <article className={styles.featuredCard}>
-                <div className={styles.featuredTopline}>
-                  <span className={styles.panelLabel}>Lead market</span>
-                  <span className={styles.panelMeta}>{featuredMarket.move}</span>
-                </div>
-                <h2>{featuredMarket.title}</h2>
-                <div className={styles.featuredPriceGrid}>
-                  <div className={styles.priceCard}>
-                    <span>Yes</span>
-                    <strong>{featuredMarket.probability}c</strong>
-                  </div>
-                  <div className={styles.priceCard}>
-                    <span>No</span>
-                    <strong>{100 - featuredMarket.probability}c</strong>
-                  </div>
-                </div>
-                <p className={styles.featuredDescription}>{featuredMarket.description}</p>
-                <div className={styles.probabilityTrack}>
-                  <span style={{ width: `${featuredMarket.probability}%` }} />
-                </div>
-                <div className={styles.featuredMetaGrid}>
-                  <div>
-                    <span>Volume</span>
-                    <strong>{featuredMarket.volumeLabel}</strong>
-                  </div>
-                  <div>
-                    <span>Depth</span>
-                    <strong>{featuredMarket.liquidityLabel}</strong>
-                  </div>
-                  <div>
-                    <span>Traders</span>
-                    <strong>{featuredMarket.participantsLabel}</strong>
-                  </div>
-                  <div>
-                    <span>Ends</span>
-                    <strong>{featuredMarket.resolutionDate}</strong>
-                  </div>
-                </div>
-                <Link className={styles.inlineLink} href={`/markets/${featuredMarket.slug}`}>
-                  Open market detail
-                </Link>
-              </article>
-
-              <article className={styles.signalBoard}>
-                <div className={styles.boardHeader}>
-                  <div>
-                    <span className={styles.panelLabel}>Signal feed</span>
-                    <h2>News that changes price.</h2>
-                  </div>
-                  <Link className={styles.inlineLink} href="/news">
-                    View all
-                  </Link>
-                </div>
-                <div className={styles.signalList}>
-                  {featuredSignals.map((story) => (
-                    <article className={styles.signalItem} key={story.slug}>
-                      <div className={styles.signalItemTopline}>
-                        <span className={styles.signalCategory}>{story.desk}</span>
-                        <strong>{story.signalScore}</strong>
-                      </div>
-                      <Link className={styles.signalHeadline} href={`/news/${story.slug}`}>
-                        {story.headline}
-                      </Link>
-                      <div className={styles.signalMetaRow}>
+              <div className={styles.featureContextStrip}>
+                <div className={styles.featureContextLead}>
+                  <p>{featuredMarket.description}</p>
+                  <div className={styles.featureSourceList}>
+                    {breakingStories.slice(0, 2).map((story) => (
+                      <div className={styles.featureSourceItem} key={story.slug}>
                         <span>{story.source}</span>
-                        <span>{story.updateLag}</span>
+                        <p>{story.headline}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className={styles.featureChartShell}>
+                  {featuredMarket.curve.map((point, index) => (
+                    <span className={styles.chartBar} key={`${point}-${index}`} style={{ height: `${Math.max(point, 8)}%` }} />
+                  ))}
+                </div>
+              </div>
+
+              <div className={styles.featureFooter}>
+                <span>{featuredMarket.volumeLabel}</span>
+                <span>Ends {featuredMarket.resolutionDate}</span>
+                <Link className={styles.inlineLink} href={`/markets/${featuredMarket.slug}`}>
+                  Open market
+                </Link>
+              </div>
+            </article>
+
+            <aside className={styles.sideRail}>
+              <section className={styles.sidePanel}>
+                <div className={styles.sidePanelHeader}>
+                  <h2>Breaking news</h2>
+                  <span>›</span>
+                </div>
+                <div className={styles.sidePanelList}>
+                  {breakingStories.map((story, index) => (
+                    <article className={styles.breakingRow} key={story.slug}>
+                      <span className={styles.ranking}>{index + 1}</span>
+                      <div>
+                        <Link className={styles.breakingLink} href={`/news/${story.slug}`}>
+                          {story.headline}
+                        </Link>
+                      </div>
+                      <div className={styles.breakingScore}>
+                        <strong>{story.signalScore}%</strong>
+                        <span>{story.impact}</span>
                       </div>
                     </article>
                   ))}
                 </div>
-              </article>
+              </section>
+
+              <section className={styles.sidePanel}>
+                <div className={styles.sidePanelHeader}>
+                  <h2>Hot topics</h2>
+                  <span>›</span>
+                </div>
+                <div className={styles.sidePanelList}>
+                  {hotTopics.map((market, index) => (
+                    <article className={styles.hotTopicRow} key={market.slug}>
+                      <span className={styles.ranking}>{index + 1}</span>
+                      <div>
+                        <Link className={styles.hotTopicLink} href={`/markets/${market.slug}`}>
+                          {market.tags[0] || market.category}
+                        </Link>
+                      </div>
+                      <div className={styles.hotTopicMeta}>
+                        <strong>{market.liquidityLabel.replace(' depth', '')}</strong>
+                        <span>{market.move}</span>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+                <Link className={styles.exploreAllButton} href="/markets">
+                  Explore all
+                </Link>
+              </section>
             </aside>
           </section>
 
-          <section className={styles.secondaryGrid}>
-            <section className={styles.newsBoard}>
-              <div className={styles.sectionIntro}>
-                <p className={styles.sectionLabel}>Linked evidence</p>
-                <h2>Signals tied directly to active markets.</h2>
+          <section className={styles.marketDeck}>
+            <div className={styles.deckHeader}>
+              <h2>All markets</h2>
+              <div className={styles.deckActions}>
+                <button className={styles.iconGhost} type="button" aria-label="Search all markets">
+                  ⌕
+                </button>
+                <button className={styles.iconGhost} type="button" aria-label="Filter markets">
+                  ≡
+                </button>
               </div>
-              <div className={styles.feedList}>
-                {featuredSignals.map((item) => (
-                  <article className={styles.feedItem} key={item.slug}>
-                    <div className={styles.feedTopline}>
-                      <p className={styles.feedSource}>{item.source}</p>
-                      <span className={styles.feedDate}>{item.publishedAt}</span>
-                    </div>
-                    <h3>{item.headline}</h3>
-                    <p>{item.summary}</p>
-                    <div className={styles.feedMetaRow}>
-                      <span>{item.impact} impact</span>
-                      <span>{item.updateLag}</span>
-                    </div>
-                    <Link className={styles.inlineLink} href={`/news/${item.slug}`}>
-                      Open source detail
-                    </Link>
-                  </article>
-                ))}
-              </div>
-            </section>
+            </div>
 
-            <aside className={styles.insightBoard}>
-              <div className={styles.sectionIntro}>
-                <p className={styles.sectionLabel}>Market structure</p>
-                <h2>Rules first. Narrative second.</h2>
-              </div>
-              <div className={styles.principlesList}>
-                {principles.map((principle, index) => (
-                  <div className={styles.principleItem} key={principle}>
-                    <span>0{index + 1}</span>
-                    <p>{principle}</p>
+            <div className={styles.marketTabRow}>
+              {marketTabs.map((tab, index) => (
+                <Link className={index === 0 ? styles.marketFilterActive : styles.marketFilter} href="/markets" key={tab}>
+                  {tab}
+                </Link>
+              ))}
+            </div>
+
+            <div className={styles.marketList}>
+              {markets.map((market) => (
+                <article className={styles.marketListRow} key={market.slug}>
+                  <div className={styles.marketIdentity}>
+                    <span>{market.category}</span>
+                    <Link className={styles.marketQuestion} href={`/markets/${market.slug}`}>
+                      {market.title}
+                    </Link>
                   </div>
-                ))}
-              </div>
-              <div className={styles.momentumBoard}>
-                <div className={styles.boardHeader}>
-                  <div>
-                    <span className={styles.panelLabel}>Momentum</span>
-                    <h2>Fastest repricing</h2>
+                  <div className={styles.marketListStats}>
+                    <strong>{market.probability}%</strong>
+                    <span>{market.move}</span>
                   </div>
-                </div>
-                <div className={styles.momentumList}>
-                  {topMovers.map((market) => (
-                    <article className={styles.momentumItem} key={market.slug}>
-                      <div>
-                        <span className={styles.marketCategory}>{market.category}</span>
-                        <p>{market.title}</p>
-                      </div>
-                      <div className={styles.momentumStats}>
-                        <strong>{market.probability}%</strong>
-                        <span className={market.move.startsWith('+') ? styles.positiveMove : styles.negativeMove}>
-                          {market.move}
-                        </span>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </div>
-            </aside>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className={styles.advantageStrip}>
+            {principles.map((principle, index) => (
+              <article className={styles.advantageCard} key={principle}>
+                <span>0{index + 1}</span>
+                <p>{principle}</p>
+              </article>
+            ))}
           </section>
         </main>
       </SiteLayout>

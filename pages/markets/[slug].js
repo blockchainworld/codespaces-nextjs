@@ -38,6 +38,28 @@ export async function getStaticProps({ params }) {
 export default function MarketDetailPage({ site, market, relatedNews }) {
   const noProbability = 100 - market.probability
   const moveTone = market.move.startsWith('+') ? styles.metricToneUp : styles.metricToneDown
+  const quickBookRows = [
+    {
+      label: 'Market price',
+      detail: market.volumeLabel,
+      probability: market.probability,
+      move: market.move,
+      yesPrice: market.probability,
+      noPrice: noProbability,
+    },
+    ...market.orderBook.yes.map((level, index) => {
+      const yesPrice = Math.round(level.price * 100)
+
+      return {
+        label: `Offer ${index + 1}`,
+        detail: level.size,
+        probability: yesPrice,
+        move: index === 0 ? market.move : `${yesPrice - market.probability > 0 ? '+' : ''}${yesPrice - market.probability} pts`,
+        yesPrice,
+        noPrice: 100 - yesPrice,
+      }
+    }),
+  ].slice(0, 4)
 
   return (
     <>
@@ -59,86 +81,53 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
               </Link>
             </div>
             <h1>{market.title}</h1>
-            <div className={styles.heroQuoteStrip}>
-              <div className={styles.heroQuoteCard}>
-                <span className={styles.statLabel}>Yes</span>
-                <strong>{market.probability}c</strong>
-              </div>
-              <div className={styles.heroQuoteCard}>
-                <span className={styles.statLabel}>No</span>
-                <strong>{noProbability}c</strong>
-              </div>
-              <div className={styles.heroQuoteCard}>
-                <span className={styles.statLabel}>24h move</span>
-                <strong className={moveTone}>{market.move}</strong>
-              </div>
-              <div className={styles.heroQuoteCard}>
-                <span className={styles.statLabel}>Volume</span>
-                <strong>{market.volumeLabel}</strong>
-              </div>
-              <div className={styles.heroQuoteCard}>
-                <span className={styles.statLabel}>Resolves</span>
-                <strong>{market.resolutionDate}</strong>
-              </div>
-            </div>
-            <div className={styles.topRuleBar}>
-              <div>
-                <span className={styles.ruleLabel}>Settlement rule</span>
-                <p className={styles.ruleText}>{market.settlementRule}</p>
-              </div>
-              <div className={styles.ruleMeta}>
-                <span>{market.conviction} conviction</span>
-                <span>{market.participantsLabel}</span>
-              </div>
+            <div className={styles.marketHeaderMeta}>
+              <span>{market.volumeLabel}</span>
+              <span>{market.resolutionDate}</span>
             </div>
           </section>
 
           <section className={styles.mainGrid}>
             <div className={styles.primaryColumn}>
-              <section className={styles.tradingCard}>
-                <div className={styles.tradingHeader}>
+              <section className={styles.eventSurface}>
+                <div className={styles.eventSurfaceHeader}>
                   <div>
-                    <p className={styles.sectionLabel}>Market book</p>
-                    <h2>Order depth and live pricing</h2>
+                    <p className={styles.sectionLabel}>Market</p>
+                    <h2>{market.title}</h2>
                   </div>
-                  <span className={styles.qualityBadge}>{market.conviction} conviction</span>
+                  <div className={styles.eventHeaderActions}>
+                    <span className={styles.qualityBadge}>{market.conviction}</span>
+                    <span className={styles.bookmarkGhost}>Save</span>
+                  </div>
                 </div>
 
-                <div className={styles.terminalTradingGrid}>
-                  <article className={styles.tradePanelYes}>
-                    <div className={styles.tradePanelHeader}>
-                      <span className={styles.sideLabel}>Yes</span>
-                      <strong>{market.probability}c</strong>
-                    </div>
-                    <p className={styles.tradeCaption}>{market.yesLabel}</p>
-                    <div className={styles.orderbookList}>
-                      {market.orderBook.yes.map((level) => (
-                        <div className={styles.orderbookLine} key={`${market.slug}-yes-${level.price}`}>
-                          <span>{Math.round(level.price * 100)}c</span>
-                          <strong>{level.size}</strong>
-                        </div>
-                      ))}
-                    </div>
-                  </article>
-
-                  <article className={styles.tradePanelNo}>
-                    <div className={styles.tradePanelHeader}>
-                      <span className={styles.sideLabel}>No</span>
-                      <strong>{noProbability}c</strong>
-                    </div>
-                    <p className={styles.tradeCaption}>{market.noLabel}</p>
-                    <div className={styles.orderbookList}>
-                      {market.orderBook.no.map((level) => (
-                        <div className={styles.orderbookLine} key={`${market.slug}-no-${level.price}`}>
-                          <span>{Math.round(level.price * 100)}c</span>
-                          <strong>{level.size}</strong>
-                        </div>
-                      ))}
-                    </div>
-                  </article>
+                <div className={styles.eventQuestionMeta}>
+                  <span>{market.category}</span>
+                  <span>{market.sourceQuality}</span>
                 </div>
 
-                <div className={styles.terminalStatsCompact}>
+                <div className={styles.quickBookList}>
+                  {quickBookRows.map((row) => (
+                    <article className={styles.quickBookRow} key={row.label}>
+                      <div className={styles.quickBookLabelBlock}>
+                        <strong className={styles.quickBookLabel}>{row.label}</strong>
+                        <span className={styles.quickBookDetail}>{row.detail}</span>
+                      </div>
+                      <div className={styles.quickBookProbability}>{row.probability}%</div>
+                      <div className={`${styles.quickBookDelta} ${row.move.startsWith('+') ? styles.metricToneUp : styles.metricToneDown}`}>
+                        {row.move}
+                      </div>
+                      <button className={styles.buyYesButton} type="button">
+                        Buy Yes {row.yesPrice}c
+                      </button>
+                      <button className={styles.buyNoButton} type="button">
+                        Buy No {row.noPrice}c
+                      </button>
+                    </article>
+                  ))}
+                </div>
+
+                <div className={styles.eventFooterMeta}>
                   <div>
                     <span>Depth</span>
                     <strong>{market.liquidityLabel}</strong>
@@ -158,17 +147,27 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
                 </div>
               </section>
 
-              <ProbabilityChart points={market.curve} />
-
               <section className={styles.detailCard}>
-                <p className={styles.sectionLabel}>Key drivers</p>
-                <h2>{market.thesis}</h2>
+                <div className={styles.sectionTabs}>
+                  <span className={styles.sectionTabActive}>Rules</span>
+                  <span className={styles.sectionTab}>Market Context</span>
+                </div>
+                <div className={styles.ruleBlock}>
+                  <p className={styles.sectionLabel}>Rules</p>
+                  <p className={styles.ruleBody}>{market.settlementRule}</p>
+                </div>
+                <div className={styles.contextBlock}>
+                  <p className={styles.sectionLabel}>Market Context</p>
+                  <h2>{market.thesis}</h2>
+                </div>
                 <div className={styles.bulletList}>
                   {market.keyDrivers.map((driver) => (
                     <p key={driver}>{driver}</p>
                   ))}
                 </div>
               </section>
+
+              <ProbabilityChart points={market.curve} />
 
               <section className={styles.detailCard}>
                 <p className={styles.sectionLabel}>Evidence timeline</p>
@@ -196,16 +195,59 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
             </div>
 
             <aside className={styles.sidebarColumn}>
+              <section className={styles.tradeTicketCard}>
+                <div className={styles.ticketHeader}>
+                  <div>
+                    <span className={styles.sectionLabel}>Trade ticket</span>
+                    <h3>{market.timeline[market.timeline.length - 1]?.date || market.resolutionDate}</h3>
+                  </div>
+                  <span className={styles.ticketMode}>Market</span>
+                </div>
+
+                <div className={styles.ticketTabs}>
+                  <button className={styles.ticketTabActive} type="button">
+                    Buy
+                  </button>
+                  <button className={styles.ticketTab} type="button">
+                    Sell
+                  </button>
+                </div>
+
+                <div className={styles.ticketOutcomeSwitch}>
+                  <button className={styles.ticketOutcomeYes} type="button">
+                    Yes {market.probability}c
+                  </button>
+                  <button className={styles.ticketOutcomeNo} type="button">
+                    No {noProbability}c
+                  </button>
+                </div>
+
+                <div className={styles.ticketAmountBlock}>
+                  <span>Amount</span>
+                  <strong>$0</strong>
+                </div>
+
+                <div className={styles.ticketChipRow}>
+                  {['+$1', '+$5', '+$10', '+$100', 'Max'].map((chip) => (
+                    <button className={styles.ticketChip} key={chip} type="button">
+                      {chip}
+                    </button>
+                  ))}
+                </div>
+
+                <button className={styles.tradeSubmitButton} type="button">
+                  Trade
+                </button>
+
+                <p className={styles.ticketDisclaimer}>By trading, you agree to the Terms of Use.</p>
+              </section>
+
               <section className={styles.sidebarCard}>
                 <p className={styles.sectionLabel}>Contract snapshot</p>
                 <div className={styles.sidebarStatsCompact}>
                   <div>
                     <span>Conviction</span>
                     <strong>{market.conviction}</strong>
-                  </div>
-                  <div>
-                    <span>Source quality</span>
-                    <strong>{market.sourceQuality}</strong>
                   </div>
                   <div>
                     <span>Participants</span>
@@ -216,20 +258,9 @@ export default function MarketDetailPage({ site, market, relatedNews }) {
                     <strong>{market.status}</strong>
                   </div>
                   <div>
-                    <span>Resolves</span>
-                    <strong>{market.resolutionDate}</strong>
+                    <span>Tags</span>
+                    <strong>{market.tags.join(', ')}</strong>
                   </div>
-                </div>
-              </section>
-
-              <section className={styles.sidebarCard}>
-                <p className={styles.sectionLabel}>Tags</p>
-                <div className={styles.tagRow}>
-                  {market.tags.map((tag) => (
-                    <span className={styles.tag} key={tag}>
-                      {tag}
-                    </span>
-                  ))}
                 </div>
               </section>
 

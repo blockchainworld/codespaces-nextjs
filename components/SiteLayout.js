@@ -22,28 +22,44 @@ export default function SiteLayout({ children, site }) {
             <span className={styles.brandMark} aria-hidden="true" />
             {site.brand}
           </Link>
-          <nav className={styles.nav} aria-label="Primary navigation">
-            {navigation.map((item) => (
-              <Link
-                className={isActive(router.pathname, item.href) ? styles.navLinkActive : styles.navLink}
-                href={item.href}
-                key={item.href}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+          <Link className={styles.searchBar} href="/markets">
+            <span className={styles.searchIcon} aria-hidden="true">
+              ⌕
+            </span>
+            <span className={styles.searchPlaceholder}>Search markets, topics, signals...</span>
+          </Link>
         </div>
-        <div className={styles.headerActions}>
-          <Link className={styles.searchLink} href="/markets">
-            <span className={styles.searchHint}>Search</span>
-            <span className={styles.searchTarget}>markets, signals</span>
+        <div className={styles.headerUtility}>
+          <Link className={styles.utilityLink} href="/about">
+            How it works
           </Link>
-          <Link className={styles.headerCta} href="/markets">
-            Trade markets
+          <Link className={styles.utilityGhost} href="/markets">
+            Log in
           </Link>
+          <Link className={styles.utilityPrimary} href="/markets">
+            Sign Up
+          </Link>
+          <button className={styles.menuButton} type="button" aria-label="Open navigation menu">
+            <span />
+            <span />
+            <span />
+          </button>
         </div>
       </header>
+
+      <div className={styles.categoryBar}>
+        <nav className={styles.nav} aria-label="Primary navigation">
+          {navigation.map((item) => (
+            <Link
+              className={isActive(router.pathname, item.href) ? styles.navLinkActive : styles.navLink}
+              href={item.href}
+              key={item.href}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+      </div>
 
       {children}
 
