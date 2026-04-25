@@ -1,15 +1,16 @@
 import Head from 'next/head'
 import NewsDesk from '../../components/NewsDesk'
 import SiteLayout from '../../components/SiteLayout'
-import { getGeneratedAt, getNewsStories, getSiteContent } from '../../lib/contentApi'
+import { getGeneratedAt, getMarkets, getNewsStories, getSiteContent } from '../../lib/contentApi'
 import styles from '../../styles/listing.module.css'
 
 export async function getStaticProps() {
-  const [site, newsStories] = await Promise.all([getSiteContent(), getNewsStories()])
+  const [site, newsStories, markets] = await Promise.all([getSiteContent(), getNewsStories(), getMarkets()])
 
   return {
     props: {
       generatedAt: getGeneratedAt(),
+      markets,
       site,
       newsStories,
     },
@@ -17,7 +18,7 @@ export async function getStaticProps() {
   }
 }
 
-export default function NewsPage({ site, newsStories, generatedAt }) {
+export default function NewsPage({ site, newsStories, markets, generatedAt }) {
   return (
     <>
       <Head>
@@ -30,7 +31,7 @@ export default function NewsPage({ site, newsStories, generatedAt }) {
 
       <SiteLayout site={site}>
         <main className={styles.pageShell}>
-          <NewsDesk generatedAt={generatedAt} newsStories={newsStories} />
+          <NewsDesk generatedAt={generatedAt} markets={markets} newsStories={newsStories} />
         </main>
       </SiteLayout>
     </>

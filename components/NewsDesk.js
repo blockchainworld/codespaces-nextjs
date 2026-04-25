@@ -20,7 +20,7 @@ function impactRank(value) {
   return 1
 }
 
-export default function NewsDesk({ generatedAt, newsStories }) {
+export default function NewsDesk({ generatedAt, markets, newsStories }) {
   const desks = ['All', ...new Set(newsStories.map((story) => story.desk))]
   const [activeDesk, setActiveDesk] = useState('All')
   const [sortBy, setSortBy] = useState('latest')
@@ -46,6 +46,12 @@ export default function NewsDesk({ generatedAt, newsStories }) {
       })
       .sort(sortOptions[sortBy])
   }, [activeDesk, newsStories, query, sortBy])
+
+  const spotlightStories = filteredStories.slice(0, 3)
+
+  function getRelatedMarkets(story) {
+    return markets.filter((market) => story.relatedMarketSlugs?.includes(market.slug)).slice(0, 2)
+  }
 
   return (
     <section className={styles.explorerShell}>
@@ -98,36 +104,99 @@ export default function NewsDesk({ generatedAt, newsStories }) {
         </div>
       </div>
 
-      <section className={styles.signalFeedShell}>
-        <div className={styles.signalFeedHeader}>
-          <span>Signal</span>
-          <span>Desk</span>
-          <span>Score</span>
-          <span>Impact</span>
-          <span>Lag</span>
-          <span>Source</span>
-        </div>
+      {spotlightStories.length ? (
+        <section className={styles.signalSpotlightGrid}>
+          {spotlightStories.map((story) => {
+            const relatedMarkets = getRelatedMarkets(story)
 
-        {filteredStories.map((story) => (
-          <article className={styles.signalFeedRow} key={story.slug}>
-            <div className={styles.signalIdentityCell}>
+            return (
+              <article className={styles.signalSpotlightCard} key={`spotlight-${story.slug}`}>
+                <div className={styles.signalIdentityTopline}>
+                  <span className={styles.statusPill}>{story.urgency}</span>
+                  <span className={styles.signalQuality}>{story.sourceQuality}</span>
+                </div>
+
+                <Link className={styles.signalHeadlineLink} href={`/news/${story.slug}`}>
+                  {story.headline}
+                </Link>
+
+                <p className={styles.signalSpotlightSummary}>{story.summary}</p>
+
+                <div className={styles.signalOutcomeBoard}>
+                  <div className={styles.signalScoreBlock}>
+                    <span>Score</span>
+                    <strong>{story.signalScore}</strong>
+                  </div>
+                  <div className={styles.signalScoreBlock}>
+                    <span>Impact</span>
+                    <strong>{story.impact}</strong>
+                  </div>
+                </div>
+
+                <div className={styles.signalRouteMiniGrid}>
+                  {relatedMarkets.map((market) => (
+                    <Link className={styles.signalRouteMiniCard} href={`/markets/${market.slug}`} key={market.slug}>
+                      <span>{market.category}</span>
+                      <strong>{market.title}</strong>
+                    </Link>
+                  ))}
+                </div>
+              </article>
+            )
+          })}
+        </div>
+      ) : null}
+
+      <section className={styles.signalBoardGrid}>
+        {filteredStories.map((story) => {
+          const relatedMarkets = getRelatedMarkets(story)
+
+          return (
+            <article className={styles.signalEventCard} key={story.slug}>
               <div className={styles.signalIdentityTopline}>
                 <span className={styles.statusPill}>{story.urgency}</span>
                 <span className={styles.signalQuality}>{story.sourceQuality}</span>
               </div>
-              <Link className={styles.signalHeadlineLink} href={`/news/${story.slug}`}>
-                {story.headline}
-              </Link>
-              <p>{story.summary}</p>
-            </div>
 
-            <div className={styles.signalMetaCell}>{story.desk}</div>
-            <div className={styles.signalScoreCell}>{story.signalScore}</div>
-            <div className={styles.signalMetaCell}>{story.impact}</div>
-            <div className={styles.signalMetaCell}>{story.updateLag}</div>
-            <div className={styles.signalMetaCell}>{story.source}</div>
-          </article>
-        ))}
+              <div className={styles.signalIdentityCell}>
+                <Link className={styles.signalHeadlineLink} href={`/news/${story.slug}`}>
+                  {story.headline}
+                </Link>
+                <p>{story.summary}</p>
+              </div>
+
+              <div className={styles.signalEventMetaGrid}>
+                <div>
+                  <span>Desk</span>
+                  <strong>{story.desk}</strong>
+                </div>
+                <div>
+                  <span>Score</span>
+                  <strong>{story.signalScore}</strong>
+                </div>
+                <div>
+                  <span>Lag</span>
+                  <strong>{story.updateLag}</strong>
+                </div>
+              </div>
+
+              <div className={styles.signalRouteMiniGrid}>
+                {relatedMarkets.map((market) => (
+                  <Link className={styles.signalRouteMiniCard} href={`/markets/${market.slug}`} key={market.slug}>
+                    <span>{market.category}</span>
+                    <strong>{market.title}</strong>
+                  </Link>
+                ))}
+              </div>
+
+              <div className={styles.signalEventFooter}>
+                <span>{story.source}</span>
+                <span>{story.impact}</span>
+                <span>{story.publishedAt}</span>
+              </div>
+            </article>
+          )
+        })}
       </section>
     </section>
   )

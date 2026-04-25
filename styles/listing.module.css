@@ -930,6 +930,97 @@
   overflow: hidden;
 }
 
+.signalSpotlightGrid,
+.signalBoardGrid,
+.signalOutcomeBoard,
+.signalRouteMiniGrid,
+.signalEventMetaGrid {
+  display: grid;
+  gap: 14px;
+}
+
+.signalSpotlightGrid,
+.signalBoardGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.signalSpotlightCard,
+.signalEventCard,
+.signalRouteMiniCard,
+.signalScoreBlock,
+.signalEventMetaGrid div {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.05);
+}
+
+.signalSpotlightCard,
+.signalEventCard {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+}
+
+.signalSpotlightSummary {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.signalOutcomeBoard,
+.signalEventMetaGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.signalScoreBlock,
+.signalEventMetaGrid div,
+.signalRouteMiniCard {
+  padding: 12px 14px;
+  background: #f8fafc;
+}
+
+.signalScoreBlock span,
+.signalEventMetaGrid span,
+.signalRouteMiniCard span,
+.signalEventFooter {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.signalScoreBlock strong,
+.signalEventMetaGrid strong,
+.signalRouteMiniCard strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--ink);
+  font-size: 0.98rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.35;
+}
+
+.signalRouteMiniGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.signalRouteMiniCard {
+  text-decoration: none;
+}
+
+.signalEventFooter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
 .signalFeedHeader,
 .signalFeedRow {
   display: grid;
@@ -982,6 +1073,15 @@
 }
 
 @media (max-width: 1080px) {
+  .signalSpotlightGrid,
+  .signalBoardGrid,
+  .signalRouteMiniGrid,
+  .signalToolbarLabelRow,
+  .signalToolbarTopline,
+  .signalControlsRow {
+    grid-template-columns: 1fr;
+  }
+
   .signalToolbarLabelRow,
   .signalToolbarTopline,
   .signalControlsRow {
@@ -1005,6 +1105,12 @@
 @media (max-width: 720px) {
   .signalToolbarShell {
     padding: 12px;
+  }
+
+  .signalOutcomeBoard,
+  .signalEventMetaGrid,
+  .signalRouteMiniGrid {
+    grid-template-columns: 1fr;
   }
 
   .signalFeedHeader {
