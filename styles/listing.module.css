@@ -1017,6 +1017,7 @@
 .signalSpotlightGrid,
 .signalBoardGrid,
 .signalOutcomeBoard,
+.signalReachGrid,
 .signalRouteMiniGrid,
 .signalEventMetaGrid {
   display: grid;
@@ -1059,6 +1060,7 @@
 }
 
 .signalScoreBlock,
+.signalReachGrid div,
 .signalEventMetaGrid div,
 .signalRouteMiniCard {
   padding: 12px 14px;
@@ -1066,6 +1068,7 @@
 }
 
 .signalScoreBlock span,
+.signalReachGrid span,
 .signalEventMetaGrid span,
 .signalRouteMiniCard span,
 .signalEventFooter {
@@ -1078,6 +1081,7 @@
 }
 
 .signalScoreBlock strong,
+.signalReachGrid strong,
 .signalEventMetaGrid strong,
 .signalRouteMiniCard strong {
   display: block;
@@ -1087,6 +1091,10 @@
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.35;
+}
+
+.signalReachGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .signalRouteMiniGrid {
@@ -1159,6 +1167,7 @@
 @media (max-width: 1080px) {
   .signalSpotlightGrid,
   .signalBoardGrid,
+  .signalReachGrid,
   .signalRouteMiniGrid,
   .signalToolbarLabelRow,
   .signalToolbarTopline,
@@ -1192,6 +1201,7 @@
   }
 
   .signalOutcomeBoard,
+  .signalReachGrid,
   .signalEventMetaGrid,
   .signalRouteMiniGrid {
     grid-template-columns: 1fr;

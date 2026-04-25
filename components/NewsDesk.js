@@ -49,8 +49,12 @@ export default function NewsDesk({ generatedAt, markets, newsStories }) {
 
   const spotlightStories = filteredStories.slice(0, 3)
 
+  function getConnectedMarkets(story) {
+    return markets.filter((market) => story.relatedMarketSlugs?.includes(market.slug))
+  }
+
   function getRelatedMarkets(story) {
-    return markets.filter((market) => story.relatedMarketSlugs?.includes(market.slug)).slice(0, 2)
+    return getConnectedMarkets(story).slice(0, 2)
   }
 
   return (
@@ -107,6 +111,7 @@ export default function NewsDesk({ generatedAt, markets, newsStories }) {
       {spotlightStories.length ? (
         <section className={styles.signalSpotlightGrid}>
           {spotlightStories.map((story) => {
+            const connectedMarkets = getConnectedMarkets(story)
             const relatedMarkets = getRelatedMarkets(story)
 
             return (
@@ -133,6 +138,17 @@ export default function NewsDesk({ generatedAt, markets, newsStories }) {
                   </div>
                 </div>
 
+                <div className={styles.signalReachGrid}>
+                  <div>
+                    <span>Contracts touched</span>
+                    <strong>{connectedMarkets.length}</strong>
+                  </div>
+                  <div>
+                    <span>Primary route</span>
+                    <strong>{connectedMarkets[0]?.category || 'Awaiting'}</strong>
+                  </div>
+                </div>
+
                 <div className={styles.signalRouteMiniGrid}>
                   {relatedMarkets.map((market) => (
                     <Link className={styles.signalRouteMiniCard} href={`/markets/${market.slug}`} key={market.slug}>
@@ -149,6 +165,7 @@ export default function NewsDesk({ generatedAt, markets, newsStories }) {
 
       <section className={styles.signalBoardGrid}>
         {filteredStories.map((story) => {
+          const connectedMarkets = getConnectedMarkets(story)
           const relatedMarkets = getRelatedMarkets(story)
 
           return (
@@ -177,6 +194,17 @@ export default function NewsDesk({ generatedAt, markets, newsStories }) {
                 <div>
                   <span>Lag</span>
                   <strong>{story.updateLag}</strong>
+                </div>
+              </div>
+
+              <div className={styles.signalReachGrid}>
+                <div>
+                  <span>Contracts touched</span>
+                  <strong>{connectedMarkets.length}</strong>
+                </div>
+                <div>
+                  <span>Primary route</span>
+                  <strong>{connectedMarkets[0]?.title || 'Awaiting route'}</strong>
                 </div>
               </div>
 
