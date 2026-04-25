@@ -1,0 +1,38 @@
+[
+  {
+    "id": "fed-press-all",
+    "label": "Federal Reserve Press Releases",
+    "kind": "official",
+    "desk": "Macro",
+    "sourceQuality": "Official central bank feed",
+    "url": "https://www.federalreserve.gov/feeds/press_all.xml",
+    "enabledByDefault": true
+  },
+  {
+    "id": "fed-speeches",
+    "label": "Federal Reserve Speeches",
+    "kind": "official",
+    "desk": "Macro",
+    "sourceQuality": "Official central bank speeches",
+    "url": "https://www.federalreserve.gov/feeds/speeches.xml",
+    "enabledByDefault": true
+  },
+  {
+    "id": "openai-news",
+    "label": "OpenAI News",
+    "kind": "official",
+    "desk": "Technology",
+    "sourceQuality": "Official company blog",
+    "url": "https://openai.com/news/rss.xml",
+    "enabledByDefault": true
+  },
+  {
+    "id": "sec-press",
+    "label": "SEC Press Releases",
+    "kind": "official",
+    "desk": "Politics",
+    "sourceQuality": "Official regulatory feed",
+    "url": "https://www.sec.gov/rss/news/press.xml",
+    "enabledByDefault": false
+  }
+]
