@@ -24,12 +24,17 @@ function Home({ site, markets, newsStories }) {
   const rankedMarkets = sortMarketsByActivity(markets)
   const featuredMarket = rankedMarkets[0]
   const breakingStories = newsStories.slice(0, 3)
+  const marketMapStories = newsStories.slice(0, 4)
   const marketTabs = Array.from(
     new Set(['All', ...rankedMarkets.map((market) => market.category), ...rankedMarkets.flatMap((market) => market.tags)])
   ).slice(0, 10)
   const signalMap = breakingStories.map((story) => ({
     story,
     relatedMarkets: rankedMarkets.filter((market) => story.relatedMarketSlugs?.includes(market.slug)).slice(0, 2),
+  }))
+  const marketMap = marketMapStories.map((story) => ({
+    story,
+    relatedMarkets: rankedMarkets.filter((market) => story.relatedMarketSlugs?.includes(market.slug)).slice(0, 3),
   }))
 
   return (
@@ -108,31 +113,72 @@ function Home({ site, markets, newsStories }) {
             ))}
           </nav>
 
-            <section className={styles.spotlightStrip}>
-              <div className={styles.spotlightCluster}>
-                <span className={styles.spotlightPill}>Featured</span>
-                {featuredMarket.tags.slice(0, 2).map((tag) => (
-                  <span className={styles.spotlightChip} key={tag}>
-                    {tag}
-                  </span>
-                ))}
-                <span className={styles.spotlightChip}>{featuredMarket.category}</span>
+          <section className={styles.marketMapSection}>
+            <div className={styles.marketMapHeader}>
+              <div>
+                <p className={styles.eyebrow}>Signal market map</p>
+                <h2>Which inputs are repricing which contracts</h2>
               </div>
-              <Link className={styles.spotlightAction} href="/markets">
-                Explore all
+              <Link className={styles.inlineLink} href="/news">
+                Open signal desk
               </Link>
-            </section>
+            </div>
 
-            <section className={styles.newsTicker}>
-              <span className={styles.tickerLabel}>Breaking</span>
-              <div className={styles.tickerTrack}>
-                {breakingStories.map((story) => (
-                  <Link className={styles.tickerLink} href={`/news/${story.slug}`} key={story.slug}>
-                    {story.headline}
-                  </Link>
-                ))}
-              </div>
-            </section>
+            <div className={styles.marketMapGrid}>
+              {marketMap.map(({ story, relatedMarkets }) => (
+                <article className={styles.marketMapRow} key={story.slug}>
+                  <div className={styles.marketMapStory}>
+                    <div className={styles.marketMapStoryMeta}>
+                      <span>{story.source}</span>
+                      <span>{story.impact}</span>
+                      <span>Score {story.signalScore}</span>
+                    </div>
+                    <Link className={styles.marketMapHeadline} href={`/news/${story.slug}`}>
+                      {story.headline}
+                    </Link>
+                  </div>
+
+                  <div className={styles.marketMapContracts}>
+                    {relatedMarkets.map((market) => (
+                      <Link className={styles.marketMapContract} href={`/markets/${market.slug}`} key={market.slug}>
+                        <span>{market.category}</span>
+                        <strong>{market.title}</strong>
+                        <em>
+                          {market.probability}% / {market.move}
+                        </em>
+                      </Link>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className={styles.spotlightStrip}>
+            <div className={styles.spotlightCluster}>
+              <span className={styles.spotlightPill}>Featured</span>
+              {featuredMarket.tags.slice(0, 2).map((tag) => (
+                <span className={styles.spotlightChip} key={tag}>
+                  {tag}
+                </span>
+              ))}
+              <span className={styles.spotlightChip}>{featuredMarket.category}</span>
+            </div>
+            <Link className={styles.spotlightAction} href="/markets">
+              Explore all
+            </Link>
+          </section>
+
+          <section className={styles.newsTicker}>
+            <span className={styles.tickerLabel}>Breaking</span>
+            <div className={styles.tickerTrack}>
+              {breakingStories.map((story) => (
+                <Link className={styles.tickerLink} href={`/news/${story.slug}`} key={story.slug}>
+                  {story.headline}
+                </Link>
+              ))}
+            </div>
+          </section>
 
           <section className={styles.marketDeck}>
             <div className={styles.deckHeader}>
