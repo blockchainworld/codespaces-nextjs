@@ -50,6 +50,11 @@ export default function MarketsExplorer({ markets }) {
   }, [activeCategory, markets, query, sortBy])
 
   const spotlightMarkets = filteredMarkets.slice(0, 3)
+  const topMovers = [...filteredMarkets].sort(sortOptions.movers).slice(0, 3)
+  const highProbabilityMarkets = [...filteredMarkets].sort(sortOptions.probability).slice(0, 3)
+  const closingSoonMarkets = [...filteredMarkets]
+    .sort((left, right) => new Date(left.resolutionDate) - new Date(right.resolutionDate))
+    .slice(0, 3)
 
   return (
     <section className={styles.explorerShell}>
@@ -102,6 +107,62 @@ export default function MarketsExplorer({ markets }) {
           </label>
         </div>
       </div>
+
+      <section className={styles.marketScanGrid}>
+        <article className={styles.marketScanCard}>
+          <div className={styles.marketScanHeader}>
+            <p className={styles.sectionLabel}>Cross-market scan</p>
+            <span className={styles.marketScanLabel}>Largest move</span>
+          </div>
+          <div className={styles.marketScanList}>
+            {topMovers.map((market) => (
+              <Link className={styles.marketScanRow} href={`/markets/${market.slug}`} key={`move-${market.slug}`}>
+                <div>
+                  <span>{market.category}</span>
+                  <strong>{market.title}</strong>
+                </div>
+                <em className={getMovePoints(market.move) >= 0 ? styles.marketMoveUp : styles.marketMoveDown}>{market.move}</em>
+              </Link>
+            ))}
+          </div>
+        </article>
+
+        <article className={styles.marketScanCard}>
+          <div className={styles.marketScanHeader}>
+            <p className={styles.sectionLabel}>Cross-market scan</p>
+            <span className={styles.marketScanLabel}>Highest yes</span>
+          </div>
+          <div className={styles.marketScanList}>
+            {highProbabilityMarkets.map((market) => (
+              <Link className={styles.marketScanRow} href={`/markets/${market.slug}`} key={`prob-${market.slug}`}>
+                <div>
+                  <span>{market.category}</span>
+                  <strong>{market.title}</strong>
+                </div>
+                <em>{market.probability}% yes</em>
+              </Link>
+            ))}
+          </div>
+        </article>
+
+        <article className={styles.marketScanCard}>
+          <div className={styles.marketScanHeader}>
+            <p className={styles.sectionLabel}>Cross-market scan</p>
+            <span className={styles.marketScanLabel}>Closing soon</span>
+          </div>
+          <div className={styles.marketScanList}>
+            {closingSoonMarkets.map((market) => (
+              <Link className={styles.marketScanRow} href={`/markets/${market.slug}`} key={`close-${market.slug}`}>
+                <div>
+                  <span>{market.category}</span>
+                  <strong>{market.title}</strong>
+                </div>
+                <em>{market.resolutionDate}</em>
+              </Link>
+            ))}
+          </div>
+        </article>
+      </section>
 
       {spotlightMarkets.length ? (
         <div className={styles.marketSpotlightGrid}>
